@@ -1475,3 +1475,8 @@
 2026-08-11 16:01:35,704 | fase9_relatorio | INFO | fichas individuais geradas: 9
 2026-08-11 16:01:35,771 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
 2026-08-11 16:01:35,771 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0
+2026-08-11 16:02:05,148 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-11 16:02:06,645 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-11 16:02:06,930 | fase9_relatorio | INFO | fichas individuais geradas: 9
+2026-08-11 16:02:06,993 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
+2026-08-11 16:02:06,993 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0

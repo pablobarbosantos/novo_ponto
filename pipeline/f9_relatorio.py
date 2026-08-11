@@ -120,6 +120,11 @@ CHECKLIST = [
         "Multa rescisória e garantia exigida",
         "Quem paga IPTU e taxas",
         "Autorização para reforma e letreiro",
+        # M4 (CORRECOES.md) — zoneamento é limitação legítima do pipeline (lei não
+        # acessível automaticamente, ver Metodologia/Limitações); a verificação manual
+        # antes de assinar fica formalizada aqui, no checklist que a pessoa realmente leva
+        # na visita.
+        "Confirmar uso permitido na Prefeitura antes de assinar — inclui depósito e possibilidade futura de banho e tosa",
     ]),
     ("Do entorno", [
         "Contagem de fluxo nos 3 horários",
