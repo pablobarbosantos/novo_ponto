@@ -14,10 +14,12 @@ from __future__ import annotations
 
 import hashlib
 import logging
+import re as _re
 import sys
 import time
 from pathlib import Path
 
+import pandas as pd
 import requests
 import yaml
 from dotenv import load_dotenv
@@ -211,3 +213,102 @@ def coord_hash(*coords: float) -> str:
     """Hash estável de um conjunto de coordenadas — chave de cache (Fase 5)."""
     raw = ",".join(f"{c:.6f}" for c in coords)
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
+
+
+# ---------------------------------------------------------------------------
+# Listagem de diretório remoto (FTP do IBGE e afins servem index HTML) —
+# nunca hardcodar nome de arquivo com data no meio, listar e pegar o mais
+# recente (spec §2 Fase 1, passo 1).
+# ---------------------------------------------------------------------------
+
+def list_remote_dir(url: str, logger: logging.Logger) -> list[str]:
+    """
+    Retorna os nomes (relativos) listados num index HTTP tipo Apache/FTP.
+    Filtra links de ordenação (?C=...), link do diretório-pai e links
+    absolutos para outros domínios (rodapé/redes sociais).
+    """
+    resp = get_with_retry(url, logger, timeout=60)
+    hrefs = _re.findall(r'href="([^"]+)"', resp.text)
+    names = []
+    for h in hrefs:
+        if h.startswith("?") or h.startswith("http://") or h.startswith("https://"):
+            continue
+        if h.startswith("/"):
+            continue
+        names.append(h)
+    return names
+
+
+def find_latest(names: list[str], prefix: str, suffix: str) -> str | None:
+    """
+    Entre `names`, filtra os que começam com `prefix` e terminam com
+    `suffix`, e retorna o "maior" (ordenação lexicográfica funciona porque
+    os sufixos de data do IBGE são YYYYMMDD). None se não houver nenhum.
+    """
+    candidates = sorted(n for n in names if n.startswith(prefix) and n.endswith(suffix))
+    return candidates[-1] if candidates else None
+
+
+# ---------------------------------------------------------------------------
+# Leitura robusta de CSV do IBGE (spec §6 Fase 1 — "armadilhas conhecidas")
+# ---------------------------------------------------------------------------
+
+_SPECIAL_NA = {"X", "x", "-", "..", "...", "", "NA", "N/A"}
+
+
+def read_ibge_csv(path: Path, logger: logging.Logger, usecols: list[str] | None = None):
+    """
+    Lê um CSV do IBGE (separador ';', tudo como string por enquanto) e
+    detecta encoding/decimal por amostragem em vez de assumir.
+
+    - chardet costuma dar confiança baixa/errada nesses arquivos (poucos
+      bytes não-ASCII); usamos como referência no log, mas o fallback real é
+      cp1252, que é um superset seguro de ASCII e decodifica corretamente
+      tanto os arquivos puramente numéricos quanto os que têm nomes de
+      lugar acentuados (ex.: "Uberlândia").
+    - o separador decimal varia por arquivo dentro do próprio IBGE (a malha
+      básica usa vírgula; as tabelas V-numeradas mais novas usam ponto) —
+      detectado por amostragem, nunca hardcodado.
+
+    Retorna (DataFrame com todas as colunas como string, separador decimal
+    detectado). A conversão para numérico fica a cargo de `clean_numeric`,
+    chamada só nas colunas que a fase realmente usa.
+    """
+    import chardet
+
+    with open(path, "rb") as f:
+        sample = f.read(500_000)
+    detected = chardet.detect(sample)
+    encoding = "cp1252"
+    logger.info(
+        "%s: chardet sugeriu %s (confiança=%.3f); usando %s",
+        path.name, detected.get("encoding"), detected.get("confidence") or 0.0, encoding,
+    )
+
+    text_sample = sample.decode(encoding, errors="replace")
+    comma_decimals = len(_re.findall(r'"\d+,\d+"', text_sample))
+    dot_decimals = len(_re.findall(r'"\d+\.\d+"', text_sample))
+    decimal = "," if comma_decimals > dot_decimals else "."
+    logger.info(
+        "%s: separador decimal detectado='%s' (amostra: vírgula=%d ponto=%d)",
+        path.name, decimal, comma_decimals, dot_decimals,
+    )
+
+    df = pd.read_csv(
+        path, sep=";", encoding=encoding, dtype=str, usecols=usecols, quotechar='"'
+    )
+    df.columns = [c.strip() for c in df.columns]
+    return df, decimal
+
+
+def clean_numeric(series: "pd.Series", decimal_sep: str = ".") -> "pd.Series":
+    """
+    Converte uma coluna string do IBGE para numérico: valores especiais
+    (X, -, vazio → sigilo estatístico) viram NaN, nunca zero (spec §6).
+    """
+    s = series.astype("string").str.strip()
+    s = s.where(~s.isin(_SPECIAL_NA), other=pd.NA)
+    if decimal_sep == ",":
+        s = s.str.replace(".", "", regex=False)  # separador de milhar, se houver
+        s = s.str.replace(",", ".", regex=False)
+    return pd.to_numeric(s, errors="coerce")
