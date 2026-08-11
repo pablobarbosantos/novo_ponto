@@ -468,7 +468,7 @@ def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoData
             <tr><th>Score final</th><td>{_fmt(row['score_final'], 3)}</td></tr>
             <tr><th>Domicílios (captação efetiva)</th><td>{_fmt(row['domicilios_efetivo'])}</td></tr>
             <tr><th>% apartamento (captação efetiva)</th><td>{_fmt(row['pct_apartamento_efetivo']*100 if pd.notna(row['pct_apartamento_efetivo']) else None, 1, sufixo='%')}</td></tr>
-            <tr><th>Renda média do responsável (captação efetiva)</th><td>{_fmt(row['renda_media_efetivo'], 0, 'R$ ')}</td></tr>
+            <tr><th>Renda média do responsável (captação efetiva) <span class="badge" title="R$ nominal/mês — rendimento médio da pessoa responsável pelo domicílio, não soma domiciliar nem salários mínimos (M3, dicionário oficial IBGE)">R$/mês, do responsável</span></th><td>{_fmt(row['renda_media_efetivo'], 0, 'R$ ')}</td></tr>
             <tr><th>Potencial mensal da área</th><td>{_fmt(row['potencial_mensal'], 0, 'R$ ')}</td></tr>
             <tr><th>Concorrentes (15min)</th><td>{_fmt(row['n_concorrentes_15min'])}</td></tr>
             <tr><th>Força da concorrência</th><td>{_fmt(row['forca_concorrencia'], 1)}</td></tr>
@@ -657,7 +657,7 @@ def _montar_html(**kw) -> str:
         <th data-tipo="texto">Bairro / eixo</th>
         <th data-tipo="num">Domicílios (captação efetiva)</th>
         <th data-tipo="num">% apto</th>
-        <th data-tipo="num">Renda resp.</th>
+        <th data-tipo="num" title="R$ nominal/mês, do responsável pelo domicílio — não soma domiciliar, não salários mínimos">Renda resp. (R$/mês)</th>
         <th data-tipo="num">Concorrentes</th>
         <th data-tipo="num">Força concorrência</th>
         <th data-tipo="num">Clínicas s/ loja</th>

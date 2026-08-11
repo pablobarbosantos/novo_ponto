@@ -11,6 +11,7 @@ Roda sozinho: `python pipeline/f1_ibge.py`
 
 from __future__ import annotations
 
+import json
 import sys
 import zipfile
 from pathlib import Path
@@ -268,6 +269,24 @@ def run() -> Path:
         nao_casou = setores[chave_checagem].isna().sum()
         LOGGER.info("merge com %s: %d->%d linhas, %d setores sem correspondência nessa tabela", nome, antes, len(setores), nao_casou)
 
+    # M2 (CORRECOES.md) — auditar os setores sem domicilio1/demografia/renda: rurais,
+    # industriais/não-residenciais (população ~0) ou de fato suprimidos por sigilo
+    # (população conhecida > 0 mas sem dado de domicílio)? Registrado por categoria, não
+    # deixado como "90 setores sem explicação".
+    sem_dom = setores[setores["domicilios_ocupados"].isna()]
+    if len(sem_dom):
+        pop = pd.to_numeric(sem_dom["populacao_total_setor"], errors="coerce")
+        n_rural = int((sem_dom["situacao_setor"] == "Rural").sum())
+        n_urbano_vazio = int(((sem_dom["situacao_setor"] == "Urbana") & (pop.fillna(0) == 0)).sum())
+        n_urbano_com_pop = int(((sem_dom["situacao_setor"] == "Urbana") & (pop.fillna(0) > 0)).sum())
+        n_outros = len(sem_dom) - n_rural - n_urbano_vazio - n_urbano_com_pop
+        LOGGER.info(
+            "M2 — %d setores sem domicilio1/demografia/renda, por categoria: rural=%d, "
+            "urbano sem população registrada (industrial/área não-residencial, provável)=%d, "
+            "urbano com população>0 mas sem domicílio (sigilo real, provável)=%d, outros=%d",
+            len(sem_dom), n_rural, n_urbano_vazio, n_urbano_com_pop, n_outros,
+        )
+
     setores = setores.to_crs(crs_metrico)
     LOGGER.info("reprojetado de %s para %s (spec: sempre métrico antes de cálculo de distância/área)", crs_geografico, crs_metrico)
 
@@ -289,6 +308,28 @@ def run() -> Path:
         LOGGER.warning("ACEITE — %s", p)
     if not problemas:
         LOGGER.info("ACEITE — todos os critérios da Fase 1 passaram (n_setores=%d, soma_domicilios=%d)", n_saida, soma_domicilios)
+
+    # M3 (CORRECOES.md) — unidade de renda_media_responsavel/renda_mediana_responsavel
+    # conferida contra o dicionário oficial (data/interim/md/dicionario_de_dados_renda_
+    # responsavel*.md): V06004/V06006 = "valor do rendimento nominal ... mensal DAS PESSOAS
+    # RESPONSÁVEIS" — R$ nominal por mês, média/mediana do responsável (não soma domiciliar,
+    # não salário mínimo). Gravado como metadado pra f9_relatorio.py rotular no cabeçalho.
+    dicionario_path = DATA_PROCESSED / "dicionario_variaveis.json"
+    dicionario_path.write_text(json.dumps({
+        "renda_media_responsavel": {
+            "variavel_ibge": VAR_RENDA_MEDIA,
+            "unidade": "R$ nominal/mês",
+            "definicao": "Rendimento nominal médio mensal das pessoas responsáveis por domicílio (não é soma domiciliar, não é em salários mínimos)",
+            "fonte": "dicionario_de_dados_renda_responsavel — Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel",
+        },
+        "renda_mediana_responsavel": {
+            "variavel_ibge": VAR_RENDA_MEDIANA,
+            "unidade": "R$ nominal/mês",
+            "definicao": "Rendimento nominal mediano mensal das pessoas responsáveis por domicílio",
+            "fonte": "dicionario_de_dados_renda_responsavel — Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel",
+        },
+    }, indent=2, ensure_ascii=False), encoding="utf-8")
+    LOGGER.info("M3 — gravado: %s (unidade de renda confirmada contra o dicionário oficial: R$ nominal/mês, do responsável)", dicionario_path)
 
     out_path = DATA_PROCESSED / "setores.gpkg"
     setores.to_file(out_path, layer="setores", driver="GPKG")

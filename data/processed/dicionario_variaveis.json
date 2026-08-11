@@ -1,0 +1,14 @@
+{
+  "renda_media_responsavel": {
+    "variavel_ibge": "V06004",
+    "unidade": "R$ nominal/mês",
+    "definicao": "Rendimento nominal médio mensal das pessoas responsáveis por domicílio (não é soma domiciliar, não é em salários mínimos)",
+    "fonte": "dicionario_de_dados_renda_responsavel — Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel"
+  },
+  "renda_mediana_responsavel": {
+    "variavel_ibge": "V06006",
+    "unidade": "R$ nominal/mês",
+    "definicao": "Rendimento nominal mediano mensal das pessoas responsáveis por domicílio",
+    "fonte": "dicionario_de_dados_renda_responsavel — Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel"
+  }
+}

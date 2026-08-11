@@ -1427,3 +1427,51 @@
 2026-08-11 15:58:13,937 | fase9_relatorio | INFO | fichas individuais geradas: 9
 2026-08-11 15:58:14,039 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
 2026-08-11 15:58:14,039 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0
+2026-08-11 16:00:51,848 | fase1_ibge | INFO | === Fase 1: base demográfica IBGE — município 3170206 ===
+2026-08-11 16:00:53,154 | fase1_ibge | INFO | URL mais recente para basico: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/Agregados_por_setores_basico_BR_20260520.zip
+2026-08-11 16:00:53,155 | fase1_ibge | INFO | URL mais recente para domicilio1: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/Agregados_por_setores_caracteristicas_domicilio1_BR.zip
+2026-08-11 16:00:53,155 | fase1_ibge | INFO | URL mais recente para demografia: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/Agregados_por_setores_demografia_BR.zip
+2026-08-11 16:00:53,155 | fase1_ibge | INFO | URL mais recente para dicionario: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx
+2026-08-11 16:00:53,155 | fase1_ibge | INFO | URL mais recente para malha: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/gpkg/UF/MG/MG_setores_CD2022.gpkg
+2026-08-11 16:00:53,155 | fase1_ibge | INFO | URL mais recente para renda_zip: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/Agregados_por_setores_renda_responsavel_BR_20260508_xlsx.zip
+2026-08-11 16:00:53,155 | fase1_ibge | INFO | URL mais recente para renda_dicionario: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/dicionario_de_dados_renda_responsavel_20260508.xlsx
+2026-08-11 16:00:53,156 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_basico_BR_20260520.zip
+2026-08-11 16:00:53,156 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_caracteristicas_domicilio1_BR.zip
+2026-08-11 16:00:53,157 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_demografia_BR.zip
+2026-08-11 16:00:53,157 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx
+2026-08-11 16:00:53,158 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\MG_setores_CD2022.gpkg
+2026-08-11 16:00:53,158 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_renda_responsavel_BR_20260508_xlsx.zip
+2026-08-11 16:00:53,158 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\dicionario_de_dados_renda_responsavel_20260508.xlsx
+2026-08-11 16:00:53,158 | fase1_ibge | INFO | markitdown já convertido, pulando: C:\projetos\novo_ponto\data\interim\md\dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx.md
+2026-08-11 16:00:53,159 | fase1_ibge | INFO | markitdown já convertido, pulando: C:\projetos\novo_ponto\data\interim\md\dicionario_de_dados_renda_responsavel_20260508.xlsx.md
+2026-08-11 16:00:53,159 | fase1_ibge | INFO | lendo malha geográfica de MG (pode demorar, é um gpkg grande)
+2026-08-11 16:00:56,352 | fase1_ibge | INFO | malha: 51392 setores em MG, 1988 em Uberlândia (CD_MUN=3170206)
+2026-08-11 16:00:56,354 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_basico_BR_20260520.zip
+2026-08-11 16:00:56,355 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_caracteristicas_domicilio1_BR.zip
+2026-08-11 16:00:56,355 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_demografia_BR.zip
+2026-08-11 16:00:56,356 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_renda_responsavel_BR_20260508_xlsx.zip
+2026-08-11 16:00:56,536 | fase1_ibge | INFO | Agregados_por_setores_basico_BR.csv: chardet sugeriu ISO-8859-1 (confiança=0.006); usando cp1252
+2026-08-11 16:00:56,546 | fase1_ibge | INFO | Agregados_por_setores_basico_BR.csv: separador decimal detectado=',' (amostra: vírgula=5194 ponto=0)
+2026-08-11 16:01:00,901 | fase1_ibge | INFO | Agregados_por_setores_caracteristicas_domicilio1_BR.csv: chardet sugeriu ascii (confiança=1.000); usando cp1252
+2026-08-11 16:01:00,910 | fase1_ibge | INFO | Agregados_por_setores_caracteristicas_domicilio1_BR.csv: separador decimal detectado='.' (amostra: vírgula=0 ponto=0)
+2026-08-11 16:01:10,605 | fase1_ibge | INFO | Agregados_por_setores_demografia_BR.csv: chardet sugeriu ascii (confiança=1.000); usando cp1252
+2026-08-11 16:01:10,620 | fase1_ibge | INFO | Agregados_por_setores_demografia_BR.csv: separador decimal detectado='.' (amostra: vírgula=0 ponto=0)
+2026-08-11 16:01:14,331 | fase1_ibge | INFO | Agregados_por_setores_renda_responsavel_BR.csv: chardet sugeriu ascii (confiança=1.000); usando cp1252
+2026-08-11 16:01:14,342 | fase1_ibge | INFO | Agregados_por_setores_renda_responsavel_BR.csv: separador decimal detectado='.' (amostra: vírgula=0 ponto=20283)
+2026-08-11 16:01:15,553 | fase1_ibge | INFO | linhas filtradas para Uberlândia: básico=1988 domicilio1=1924 demografia=1924 renda=1924
+2026-08-11 16:01:15,594 | fase1_ibge | INFO | G1 — domicilios_apartamento preenchido por diferença (casa+ocupados conhecidos): 220 setor(es); domicilios_casa preenchido por diferença (apartamento+ocupados conhecidos): 5 setor(es); mantidos nulos por divergência >5% entre soma e ocupados (sigilo real, não zero): 0 setor(es)
+2026-08-11 16:01:15,839 | fase1_ibge | INFO | merge com básico: 1988->1988 linhas, 0 setores sem correspondência nessa tabela
+2026-08-11 16:01:16,042 | fase1_ibge | INFO | merge com domicilio1: 1988->1988 linhas, 90 setores sem correspondência nessa tabela
+2026-08-11 16:01:16,055 | fase1_ibge | INFO | merge com demografia: 1988->1988 linhas, 90 setores sem correspondência nessa tabela
+2026-08-11 16:01:16,064 | fase1_ibge | INFO | merge com renda: 1988->1988 linhas, 90 setores sem correspondência nessa tabela
+2026-08-11 16:01:16,071 | fase1_ibge | INFO | M2 — 90 setores sem domicilio1/demografia/renda, por categoria: rural=5, urbano sem população registrada (industrial/área não-residencial, provável)=62, urbano com população>0 mas sem domicílio (sigilo real, provável)=23, outros=0
+2026-08-11 16:01:16,123 | fase1_ibge | INFO | reprojetado de EPSG:4674 para EPSG:31982 (spec: sempre métrico antes de cálculo de distância/área)
+2026-08-11 16:01:16,124 | fase1_ibge | INFO | ACEITE — todos os critérios da Fase 1 passaram (n_setores=1988, soma_domicilios=267966)
+2026-08-11 16:01:16,127 | fase1_ibge | INFO | M3 — gravado: C:\projetos\novo_ponto\data\processed\dicionario_variaveis.json (unidade de renda confirmada contra o dicionário oficial: R$ nominal/mês, do responsável)
+2026-08-11 16:01:16,395 | fase1_ibge | INFO | gravado: C:\projetos\novo_ponto\data\processed\setores.gpkg
+2026-08-11 16:01:16,395 | fase1_ibge | INFO | RESUMO — entrada=1988 saida=1988 descartados=0 motivo='setores fora de Uberlândia (filtro CD_MUN) já removidos na malha de origem'
+2026-08-11 16:01:33,704 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-11 16:01:35,388 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-11 16:01:35,704 | fase9_relatorio | INFO | fichas individuais geradas: 9
+2026-08-11 16:01:35,771 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
+2026-08-11 16:01:35,771 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0
