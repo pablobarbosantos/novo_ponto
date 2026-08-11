@@ -1,0 +1,24 @@
+{
+  "metodo": "quartis",
+  "confianca": "baixa",
+  "n_amostra": 159,
+  "detalhes_estatisticos": {
+    "n_quartil_superior": 40,
+    "n_quartil_inferior": 40
+  },
+  "pesos_variaveis_entorno": {
+    "domicilios": 0.0984694975697574,
+    "pct_apartamento": 0.12631849368465828,
+    "renda": 0.2327741575425647,
+    "densidade": 0.08441297260906934,
+    "n_concorrentes": 0.1785099576480557,
+    "n_clinicas_sem_loja": 0.2795149209458945
+  },
+  "pesos_eixos_score_final": {
+    "demanda_estimada": 0.35228382891393245,
+    "saturacao": 0.2977161710860676,
+    "oferta_imovel": 0.2,
+    "acesso": 0.15
+  },
+  "nota_metodologica": "A regressão de análogos (avaliações ~ variáveis do entorno de 1km dos pet shops independentes de Uberlândia) não tem nenhuma variável de oferta de imóvel nem de hierarquia viária/acesso — por isso só a divisão entre os eixos 'demanda estimada' e 'saturação' (65% do peso total) foi recalibrada pelos dados locais. 'Oferta de imóvel' (20%) e 'acesso' (15%) permanecem nos valores provisórios do plano de negócio (PLANO_ESCOLHA_DO_PONTO.md, Parte 2)."
+}

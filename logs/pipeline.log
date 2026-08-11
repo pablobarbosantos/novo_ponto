@@ -902,3 +902,33 @@
 2026-08-10 22:47:48,771 | fase5_isocronas | INFO | demanda calculada: 300/300 candidatos com isócrona completa (0 ainda sem)
 2026-08-10 22:47:48,980 | fase5_isocronas | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos_com_demanda.gpkg (camadas: candidatos_com_demanda, isocronas_10min)
 2026-08-10 22:47:48,980 | fase5_isocronas | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 22:51:06,699 | fase6_calibracao | INFO | === Fase 6: calibração por análogos ===
+2026-08-10 22:51:06,941 | fase6_calibracao | INFO | pet shops independentes com avaliações conhecidas: 159
+2026-08-10 22:51:08,389 | fase6_calibracao | INFO | regressão OLS: n=159, R²=0.086, R² ajustado=0.056
+2026-08-10 22:51:08,392 | fase6_calibracao | INFO |   domicilios: coef=0.00011 p=0.109
+2026-08-10 22:51:08,393 | fase6_calibracao | INFO |   pct_apartamento: coef=-0.49443 p=0.512
+2026-08-10 22:51:08,394 | fase6_calibracao | INFO |   renda: coef=0.00012 p=0.029
+2026-08-10 22:51:08,394 | fase6_calibracao | INFO |   densidade: coef=0.00004 p=0.109
+2026-08-10 22:51:08,395 | fase6_calibracao | INFO |   n_concorrentes: coef=-0.03506 p=0.420
+2026-08-10 22:51:08,395 | fase6_calibracao | INFO |   n_clinicas_sem_loja: coef=0.18158 p=0.078
+2026-08-10 22:51:08,409 | fase6_calibracao | INFO | VIF: {'domicilios': inf, 'pct_apartamento': 1.725871375868844, 'renda': 1.4338319903692995, 'densidade': inf, 'n_concorrentes': 3.119237729560737, 'n_clinicas_sem_loja': 2.8851358752761627}
+2026-08-10 22:51:08,410 | fase6_calibracao | WARNING | regressão fraca demais para usar como peso (n=159 < 25 ou R²=0.086 < 0.25) — caindo pro método de quartis
+2026-08-10 22:51:08,414 | fase6_calibracao | INFO | método de quartis: 40 no quartil superior, 40 no inferior
+2026-08-10 22:51:08,419 | fase6_calibracao | INFO | gravado: C:\projetos\novo_ponto\data\processed\pesos.json — método=quartis confiança=baixa
+2026-08-10 22:51:08,419 | fase6_calibracao | INFO | pesos dos eixos finais: {'demanda_estimada': 0.356, 'saturacao': 0.294, 'oferta_imovel': 0.2, 'acesso': 0.15}
+2026-08-10 22:51:08,420 | fase6_calibracao | INFO | RESUMO — entrada=159 saida=159 descartados=0
+2026-08-10 22:51:47,823 | fase6_calibracao | INFO | === Fase 6: calibração por análogos ===
+2026-08-10 22:51:47,942 | fase6_calibracao | INFO | pet shops independentes com avaliações conhecidas: 159
+2026-08-10 22:51:48,848 | fase6_calibracao | INFO | regressão OLS: n=159, R²=0.086, R² ajustado=0.050
+2026-08-10 22:51:48,851 | fase6_calibracao | INFO |   domicilios: coef=0.00009 p=0.580
+2026-08-10 22:51:48,852 | fase6_calibracao | INFO |   pct_apartamento: coef=-0.51260 p=0.500
+2026-08-10 22:51:48,853 | fase6_calibracao | INFO |   renda: coef=0.00012 p=0.029
+2026-08-10 22:51:48,854 | fase6_calibracao | INFO |   densidade: coef=0.00011 p=0.821
+2026-08-10 22:51:48,854 | fase6_calibracao | INFO |   n_concorrentes: coef=-0.03461 p=0.428
+2026-08-10 22:51:48,855 | fase6_calibracao | INFO |   n_clinicas_sem_loja: coef=0.18226 p=0.078
+2026-08-10 22:51:48,864 | fase6_calibracao | INFO | VIF: {'domicilios': 9.109331866360831, 'pct_apartamento': 1.7454504834549427, 'renda': 1.4809855648137096, 'densidade': 8.324841166331534, 'n_concorrentes': 3.125845767703498, 'n_clinicas_sem_loja': 2.887617822435392}
+2026-08-10 22:51:48,865 | fase6_calibracao | WARNING | regressão fraca demais para usar como peso (n=159 < 25 ou R²=0.086 < 0.25) — caindo pro método de quartis
+2026-08-10 22:51:48,869 | fase6_calibracao | INFO | método de quartis: 40 no quartil superior, 40 no inferior
+2026-08-10 22:51:48,872 | fase6_calibracao | INFO | gravado: C:\projetos\novo_ponto\data\processed\pesos.json — método=quartis confiança=baixa
+2026-08-10 22:51:48,872 | fase6_calibracao | INFO | pesos dos eixos finais: {'demanda_estimada': 0.352, 'saturacao': 0.298, 'oferta_imovel': 0.2, 'acesso': 0.15}
+2026-08-10 22:51:48,872 | fase6_calibracao | INFO | RESUMO — entrada=159 saida=159 descartados=0
