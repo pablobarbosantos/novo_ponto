@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 .env
 .claude/settings.local.json
+.claude/scheduled_tasks.lock
 
 # downloads originais e conversões intermediárias — grandes, reprodutíveis a partir das fontes,
 # ficam só em disco local para servir a idempotência (spec §1.1)

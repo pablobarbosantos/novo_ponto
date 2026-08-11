@@ -25,6 +25,13 @@ import yaml
 from dotenv import load_dotenv
 from tqdm import tqdm
 
+# Overpass (overpass-api.de) rejeita com 406 o User-Agent padrão do
+# python-requests (WAF bloqueando UA de biblioteca genérica) — confirmado em
+# runtime. Usar um UA descritivo em toda chamada HTTP saindo do pipeline,
+# como a própria política de uso do Overpass/Nominatim pede.
+DEFAULT_USER_AGENT = "pipeline-ponto-pet-uberlandia/1.0 (uso interno, pesquisa de ponto comercial; contato: pablobarbosantos@gmail.com)"
+DEFAULT_HEADERS = {"User-Agent": DEFAULT_USER_AGENT}
+
 # ---------------------------------------------------------------------------
 # Caminhos (todos relativos à raiz do repositório, onde este arquivo mora em
 # pipeline/_common.py — a raiz é o pai de pipeline/)
@@ -156,7 +163,8 @@ def download_if_needed(
 
     logger.info("baixando %s -> %s", url, dest)
     tmp = dest.with_suffix(dest.suffix + ".part")
-    with requests.get(url, stream=True, timeout=timeout, headers=headers) as r:
+    headers_final = {**DEFAULT_HEADERS, **(headers or {})}
+    with requests.get(url, stream=True, timeout=timeout, headers=headers_final) as r:
         r.raise_for_status()
         total = int(r.headers.get("content-length", 0))
         with open(tmp, "wb") as f, tqdm(
@@ -184,11 +192,12 @@ def get_with_retry(
     GET/POST com retry e backoff exponencial — usado para Overpass (429
     frequente) e ORS (rate limit). Spec §6 Fase 2/5.
     """
+    kwargs["headers"] = {**DEFAULT_HEADERS, **kwargs.get("headers", {})}
     last_exc = None
     for attempt in range(max_retries):
         try:
             resp = requests.request(method, url, timeout=kwargs.pop("timeout", 90), **kwargs)
-            if resp.status_code == 429 or resp.status_code >= 500:
+            if resp.status_code in (406, 429) or resp.status_code >= 500:
                 wait = backoff_base ** attempt
                 logger.warning(
                     "status=%d tentativa=%d/%d, aguardando %.1fs",

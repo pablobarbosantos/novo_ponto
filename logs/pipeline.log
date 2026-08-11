@@ -82,3 +82,748 @@
 2026-08-10 21:28:33,076 | fase1_ibge | INFO | ACEITE — todos os critérios da Fase 1 passaram (n_setores=1988, soma_domicilios=267966)
 2026-08-10 21:28:33,305 | fase1_ibge | INFO | gravado: C:\projetos\novo_ponto\data\processed\setores.gpkg
 2026-08-10 21:28:33,307 | fase1_ibge | INFO | RESUMO — entrada=1988 saida=1988 descartados=0 motivo='setores fora de Uberlândia (filtro CD_MUN) já removidos na malha de origem'
+2026-08-10 21:34:24,233 | fase2_concorrentes | INFO | grade urbana: 49 células (espaçamento=3000m, raio=2200m)
+2026-08-10 21:34:35,303 | fase2_concorrentes | INFO | grade urbana: 35 células (espaçamento=4000m, raio=2800m)
+2026-08-10 21:34:35,518 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 21:34:35,748 | fase2_concorrentes | INFO | grade urbana: 21 células (espaçamento=5000m, raio=3600m)
+2026-08-10 21:34:48,525 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 21:34:48,526 | fase2_concorrentes | INFO | Overpass: tentando https://overpass-api.de/api/interpreter (tentativa 1)
+2026-08-10 21:34:49,843 | fase2_concorrentes | WARNING | Overpass https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 1.0s
+2026-08-10 21:34:50,845 | fase2_concorrentes | INFO | Overpass: tentando https://overpass-api.de/api/interpreter (tentativa 2)
+2026-08-10 21:34:51,690 | fase2_concorrentes | WARNING | Overpass https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 2.0s
+2026-08-10 21:34:53,691 | fase2_concorrentes | INFO | Overpass: tentando https://overpass-api.de/api/interpreter (tentativa 3)
+2026-08-10 21:34:54,556 | fase2_concorrentes | WARNING | Overpass https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 4.0s
+2026-08-10 21:34:58,558 | fase2_concorrentes | INFO | Overpass: tentando https://overpass-api.de/api/interpreter (tentativa 4)
+2026-08-10 21:34:59,470 | fase2_concorrentes | WARNING | Overpass https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 8.0s
+2026-08-10 21:35:07,472 | fase2_concorrentes | INFO | Overpass: tentando https://overpass.private.coffee/api/interpreter (tentativa 1)
+2026-08-10 21:35:08,588 | fase2_concorrentes | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 21:35:09,590 | fase2_concorrentes | INFO | Overpass: tentando https://overpass.private.coffee/api/interpreter (tentativa 2)
+2026-08-10 21:35:10,734 | fase2_concorrentes | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 21:35:12,736 | fase2_concorrentes | INFO | Overpass: tentando https://overpass.private.coffee/api/interpreter (tentativa 3)
+2026-08-10 21:35:13,910 | fase2_concorrentes | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 21:35:17,911 | fase2_concorrentes | INFO | Overpass: tentando https://overpass.private.coffee/api/interpreter (tentativa 4)
+2026-08-10 21:35:19,029 | fase2_concorrentes | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 8.0s
+2026-08-10 21:35:27,031 | fase2_concorrentes | INFO | Overpass: tentando https://overpass.kumi.systems/api/interpreter (tentativa 1)
+2026-08-10 21:35:29,504 | fase2_concorrentes | INFO | Overpass OK via https://overpass.kumi.systems/api/interpreter: 36 elementos
+2026-08-10 21:35:29,507 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 21:35:29,787 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 21:35:30,600 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-19.2597,-48.4315): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:31,421 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-19.2597,-48.4315): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:31,927 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-19.2597,-48.4315): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:32,751 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-19.2597,-48.4315): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:33,246 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-19.2597,-48.4315): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:34,082 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-19.0154,-48.3926): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:34,729 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-19.0154,-48.3926): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:35,517 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-19.0154,-48.3926): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:36,329 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-19.0154,-48.3926): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:36,817 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-19.0154,-48.3926): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:37,299 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9747,-48.3932): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:37,768 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9747,-48.3932): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:38,289 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9747,-48.3932): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:38,894 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9747,-48.3932): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:39,714 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9747,-48.3932): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:40,191 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-19.0147,-48.3499): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:40,840 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-19.0147,-48.3499): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:41,455 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-19.0147,-48.3499): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:41,981 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-19.0147,-48.3499): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:42,464 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-19.0147,-48.3499): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:43,057 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9741,-48.3505): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:43,646 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9741,-48.3505): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:44,203 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9741,-48.3505): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:45,040 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9741,-48.3505): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:45,528 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9741,-48.3505): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:46,250 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9335,-48.3512): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:46,768 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9335,-48.3512): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:47,215 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9335,-48.3512): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:47,957 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9335,-48.3512): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:48,725 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9335,-48.3512): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:49,546 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8929,-48.3518): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:50,016 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8929,-48.3518): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:50,553 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8929,-48.3518): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:51,022 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8929,-48.3518): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:51,593 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8929,-48.3518): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:52,095 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.7304,-48.3543): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:52,924 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.7304,-48.3543): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:53,404 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.7304,-48.3543): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:54,153 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.7304,-48.3543): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:54,744 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.7304,-48.3543): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:55,232 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9735,-48.3078): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:55,720 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9735,-48.3078): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:56,609 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9735,-48.3078): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:57,112 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9735,-48.3078): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:57,660 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9735,-48.3078): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:58,248 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9329,-48.3085): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:59,052 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9329,-48.3085): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:35:59,606 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9329,-48.3085): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:00,224 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9329,-48.3085): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:00,840 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9329,-48.3085): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:01,583 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8923,-48.3091): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:02,550 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8923,-48.3091): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:03,370 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8923,-48.3091): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:03,983 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8923,-48.3091): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:04,463 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8923,-48.3091): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:04,921 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8516,-48.3098): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:05,519 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8516,-48.3098): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:06,132 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8516,-48.3098): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:06,747 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8516,-48.3098): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:07,247 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8516,-48.3098): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:08,079 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8110,-48.3104): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:08,898 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8110,-48.3104): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:09,718 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8110,-48.3104): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:10,262 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8110,-48.3104): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:10,844 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8110,-48.3104): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:11,608 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-19.0135,-48.2644): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:12,158 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-19.0135,-48.2644): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:12,995 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-19.0135,-48.2644): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:13,494 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-19.0135,-48.2644): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:14,243 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-19.0135,-48.2644): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:14,732 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9729,-48.2651): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:15,556 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9729,-48.2651): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:16,373 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9729,-48.2651): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:16,951 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9729,-48.2651): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:17,437 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9729,-48.2651): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:17,945 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9323,-48.2658): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:18,728 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9323,-48.2658): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:19,653 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9323,-48.2658): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:20,471 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9323,-48.2658): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:20,988 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9323,-48.2658): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:21,801 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8916,-48.2664): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:22,620 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8916,-48.2664): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:23,440 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8916,-48.2664): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:24,258 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8916,-48.2664): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:25,012 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8916,-48.2664): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:25,794 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8510,-48.2671): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:26,283 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8510,-48.2671): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:27,131 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8510,-48.2671): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:27,741 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8510,-48.2671): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:28,664 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8510,-48.2671): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:29,481 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9722,-48.2224): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:29,993 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9722,-48.2224): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:30,523 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9722,-48.2224): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:31,119 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9722,-48.2224): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:32,042 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9722,-48.2224): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:32,802 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9316,-48.2231): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:33,264 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9316,-48.2231): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:33,737 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9316,-48.2231): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:34,499 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9316,-48.2231): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:34,974 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9316,-48.2231): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:35,830 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8910,-48.2238): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:36,361 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8910,-48.2238): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:37,162 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8910,-48.2238): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:37,776 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8910,-48.2238): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:38,240 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8910,-48.2238): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:38,734 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8504,-48.2244): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:39,234 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8504,-48.2244): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:40,001 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8504,-48.2244): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:40,574 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8504,-48.2244): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:41,050 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8504,-48.2244): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:41,610 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.9310,-48.1804): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:42,095 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.9310,-48.1804): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:42,692 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.9310,-48.1804): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:43,220 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.9310,-48.1804): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:43,678 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.9310,-48.1804): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:44,125 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-18.8904,-48.1811): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:44,608 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-18.8904,-48.1811): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:45,357 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-18.8904,-48.1811): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:45,836 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-18.8904,-48.1811): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:46,324 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-18.8904,-48.1811): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:46,853 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='pet shop' cell=(-19.1300,-47.9206): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:47,417 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='agropecuária' cell=(-19.1300,-47.9206): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:48,325 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='casa de ração' cell=(-19.1300,-47.9206): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:48,816 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='clínica veterinária' cell=(-19.1300,-47.9206): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:49,282 | fase2_concorrentes | WARNING | Google Places status=REQUEST_DENIED query='banho e tosa' cell=(-19.1300,-47.9206): You’re calling a legacy API, which is not enabled for your project. To get newer features and more functionality, switch to the Places API (New) or Routes API. Learn more: https://developers.google.com/maps/legacy#LegacyApiNotActivatedMapError
+2026-08-10 21:36:49,287 | fase2_concorrentes | INFO | Google Places: 125 células x termo consultadas (com cache), 0 resultados brutos
+2026-08-10 21:36:49,657 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 36 -> 36
+2026-08-10 21:36:57,850 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 21:36:57,877 | fase2_concorrentes | INFO | 3 rede(s) conhecida(s) adicionada(s) como registro novo (não achou par nas fontes automáticas)
+2026-08-10 21:36:57,883 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 15, 'veterinaria': 11, 'agropecuaria': 10, 'rede': 3}
+2026-08-10 21:36:57,884 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
+2026-08-10 21:36:57,978 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 21:36:57,978 | fase2_concorrentes | INFO | RESUMO — entrada=36 saida=39 descartados=-3 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 21:38:34,193 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 21:38:34,193 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 21:38:34,195 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 21:38:34,451 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 21:41:24,708 | fase2_concorrentes | WARNING | Google Places falhou por completo (429 Client Error: Too Many Requests for url: https://places.googleapis.com/v1/places:searchText) — seguindo só com OSM, conforme degradação graciosa
+2026-08-10 21:41:25,480 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 36 -> 36
+2026-08-10 21:41:25,485 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 21:41:25,502 | fase2_concorrentes | INFO | 3 rede(s) conhecida(s) adicionada(s) como registro novo (não achou par nas fontes automáticas)
+2026-08-10 21:41:25,508 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 15, 'veterinaria': 11, 'agropecuaria': 10, 'rede': 3}
+2026-08-10 21:41:25,509 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
+2026-08-10 21:41:25,593 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 21:41:25,593 | fase2_concorrentes | INFO | RESUMO — entrada=36 saida=39 descartados=-3 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 21:42:13,708 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 21:42:13,708 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 21:42:13,709 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 21:42:13,967 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 21:42:32,169 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8504,-48.2244 termo='banho e tosa')
+2026-08-10 21:42:40,383 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:42:43,047 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:42:46,606 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:42:52,162 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:43:01,660 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:43:17,661 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:43:19,511 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:43:22,063 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:43:25,647 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:43:30,663 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:43:40,255 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:43:56,256 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:43:58,106 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:44:00,053 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:44:03,582 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:44:08,553 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:44:17,462 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:44:33,463 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:44:36,099 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:44:38,639 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:44:42,243 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:44:47,829 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:44:56,784 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:45:12,785 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:45:15,421 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:45:18,086 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:45:21,593 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:45:26,687 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:45:36,211 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:45:52,213 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:45:54,744 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:45:57,306 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:46:00,893 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:46:05,807 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:46:15,431 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:46:31,433 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:46:33,962 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:46:36,525 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:46:40,110 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:46:45,707 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:46:55,259 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:47:11,261 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:47:13,899 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:47:15,754 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:47:18,715 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:47:24,348 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:47:33,864 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:47:49,866 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:47:51,788 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:47:53,736 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:47:57,320 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:48:02,165 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:48:11,020 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:48:27,021 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:48:29,587 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:48:31,454 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:48:34,981 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:48:40,078 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:48:48,930 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:49:04,931 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:49:07,464 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:49:09,974 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:49:13,609 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:49:18,526 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:49:28,139 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:49:44,140 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:49:46,738 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:49:49,348 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:49:52,319 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:49:57,950 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:50:07,576 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:50:23,577 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:50:24,590 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 21:50:24,618 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 21:50:25,624 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 21:50:25,630 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 21:50:25,639 | fase2_concorrentes | INFO | marcado tipo=rede por proximidade com 'Petz Center Shopping': 2 registro(s)
+2026-08-10 21:50:25,654 | fase2_concorrentes | INFO | 2 rede(s) conhecida(s) adicionada(s) como registro novo (não achou par nas fontes automáticas)
+2026-08-10 21:50:25,666 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 179, 'veterinaria': 74, 'agropecuaria': 50, 'rede': 4}
+2026-08-10 21:50:25,667 | fase2_concorrentes | INFO | ACEITE — as 4 redes conhecidas estão presentes
+2026-08-10 21:50:25,788 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 21:50:25,789 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=307 descartados=3 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 21:52:17,188 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 21:52:17,189 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 21:52:17,190 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 21:52:17,469 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 21:52:38,377 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:52:41,080 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:52:44,653 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:52:50,324 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:53:00,136 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 21:53:16,137 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:53:18,194 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:53:20,906 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:53:24,603 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:53:29,622 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:53:39,241 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 21:53:55,242 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:53:57,228 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:53:59,194 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:54:02,794 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:54:08,323 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:54:17,950 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 21:54:33,951 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:54:36,559 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:54:38,536 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:54:41,503 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:54:46,936 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:54:56,494 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 21:55:12,495 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:55:15,140 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:55:17,035 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:55:19,903 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:55:25,439 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:55:34,954 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 21:55:50,956 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:55:52,812 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:55:55,331 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:55:58,201 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:56:03,700 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:56:13,254 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 21:56:29,256 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:56:31,765 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:56:34,349 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:56:37,319 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:56:42,913 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:56:51,794 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 21:57:07,795 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:57:10,264 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:57:12,785 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:57:15,720 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:57:21,199 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:57:30,714 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 21:57:46,715 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:57:49,251 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:57:51,966 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:57:54,838 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:58:00,419 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:58:02,414 | fase3_vias_zoneamento | INFO | === Fase 3: vias e zoneamento ===
+2026-08-10 21:58:02,414 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (tentativa 1)
+2026-08-10 21:58:03,437 | fase3_vias_zoneamento | WARNING | Overpass (vias) https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 1.0s
+2026-08-10 21:58:04,439 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (tentativa 2)
+2026-08-10 21:58:05,588 | fase3_vias_zoneamento | WARNING | Overpass (vias) https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 2.0s
+2026-08-10 21:58:07,611 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (tentativa 3)
+2026-08-10 21:58:08,733 | fase3_vias_zoneamento | WARNING | Overpass (vias) https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 4.0s
+2026-08-10 21:58:09,941 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 21:58:12,734 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (tentativa 4)
+2026-08-10 21:58:13,884 | fase3_vias_zoneamento | WARNING | Overpass (vias) https://overpass-api.de/api/interpreter falhou (406 Client Error: Not Acceptable for url: https://overpass-api.de/api/interpreter), aguardando 8.0s
+2026-08-10 21:58:21,885 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (tentativa 1)
+2026-08-10 21:58:23,303 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 21:58:24,304 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (tentativa 2)
+2026-08-10 21:58:25,763 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 21:58:25,942 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:58:27,763 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (tentativa 3)
+2026-08-10 21:58:28,526 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:58:29,090 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 21:58:31,051 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:58:33,092 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (tentativa 4)
+2026-08-10 21:58:34,160 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:58:39,794 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:58:49,314 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 21:59:05,315 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:59:05,597 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 504, aguardando 8.0s
+2026-08-10 21:59:07,848 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:59:09,693 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:59:13,279 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:59:13,599 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (tentativa 1)
+2026-08-10 21:59:14,890 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 21:59:15,890 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (tentativa 2)
+2026-08-10 21:59:17,313 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 21:59:18,790 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:59:19,315 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (tentativa 3)
+2026-08-10 21:59:20,755 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 21:59:24,755 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (tentativa 4)
+2026-08-10 21:59:26,143 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 8.0s
+2026-08-10 21:59:27,720 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 21:59:43,722 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 21:59:46,340 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:59:48,299 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:59:51,163 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 21:59:56,750 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:00:06,426 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:00:22,427 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:00:23,439 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 22:00:23,471 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 22:00:24,363 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 22:00:24,367 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 22:00:24,376 | fase2_concorrentes | INFO | marcado tipo=rede por nome (petz/cobasi): 6 registro(s)
+2026-08-10 22:00:24,393 | fase2_concorrentes | INFO | 2 rede(s) conhecida(s) adicionada(s) como registro novo (não achou par nas fontes automáticas): ['Petz Rondon Pacheco', 'Cobasi Rondon Pacheco']
+2026-08-10 22:00:24,406 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 175, 'veterinaria': 74, 'agropecuaria': 50, 'rede': 8}
+2026-08-10 22:00:24,407 | fase2_concorrentes | INFO | ACEITE — as 8 redes conhecidas estão presentes
+2026-08-10 22:00:24,505 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 22:00:24,505 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=307 descartados=3 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 22:02:52,921 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 22:02:52,922 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 22:02:52,924 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 22:02:53,194 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 22:03:13,240 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:03:15,869 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:03:19,455 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:03:25,087 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:03:34,608 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:03:50,609 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:03:53,155 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:03:55,703 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:03:59,289 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:04:04,810 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:04:14,443 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:04:30,445 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:04:32,980 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:04:35,539 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:04:38,508 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:04:43,424 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:04:53,025 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:05:09,027 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:05:11,583 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:05:14,144 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:05:17,670 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:05:23,257 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:05:32,885 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:05:48,887 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:05:51,364 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:05:53,209 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:05:56,697 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:06:01,528 | fase3_vias_zoneamento | INFO | === Fase 3: vias e zoneamento ===
+2026-08-10 22:06:01,530 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 1, tentativa 1)
+2026-08-10 22:06:02,172 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:06:02,367 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 1.0s
+2026-08-10 22:06:03,368 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 1, tentativa 2)
+2026-08-10 22:06:04,526 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 2.0s
+2026-08-10 22:06:06,529 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 1, tentativa 3)
+2026-08-10 22:06:07,801 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 4.0s
+2026-08-10 22:06:11,789 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:06:11,803 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 1, tentativa 4)
+2026-08-10 22:06:13,127 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 8.0s
+2026-08-10 22:06:21,129 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 1, tentativa 1)
+2026-08-10 22:06:22,548 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 22:06:23,549 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 1, tentativa 2)
+2026-08-10 22:06:25,008 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 22:06:27,009 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 1, tentativa 3)
+2026-08-10 22:06:27,790 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:06:28,591 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 22:06:29,745 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:06:32,248 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:06:32,592 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 1, tentativa 4)
+2026-08-10 22:06:34,018 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 8.0s
+2026-08-10 22:06:35,758 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:06:41,287 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:06:42,019 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 1, tentativa 1)
+2026-08-10 22:06:43,438 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 22:06:44,440 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 1, tentativa 2)
+2026-08-10 22:06:45,846 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 22:06:47,847 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 1, tentativa 3)
+2026-08-10 22:06:49,194 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 22:06:50,813 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:06:53,195 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 1, tentativa 4)
+2026-08-10 22:06:54,600 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 8.0s
+2026-08-10 22:07:02,601 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 2, tentativa 1)
+2026-08-10 22:07:03,705 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 1.0s
+2026-08-10 22:07:04,705 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 2, tentativa 2)
+2026-08-10 22:07:05,872 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 2.0s
+2026-08-10 22:07:06,830 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:07:07,874 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 2, tentativa 3)
+2026-08-10 22:07:09,141 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 4.0s
+2026-08-10 22:07:09,446 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:07:12,010 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:07:13,143 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 2, tentativa 4)
+2026-08-10 22:07:14,323 | fase3_vias_zoneamento | WARNING | Overpass https://overpass-api.de/api/interpreter respondeu 406, aguardando 8.0s
+2026-08-10 22:07:15,522 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:07:21,123 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:07:22,325 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 2, tentativa 1)
+2026-08-10 22:07:23,616 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 22:07:24,617 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 2, tentativa 2)
+2026-08-10 22:07:25,936 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 22:07:27,937 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 2, tentativa 3)
+2026-08-10 22:07:29,419 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 22:07:30,647 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:07:33,419 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.private.coffee/api/interpreter (volta 2, tentativa 4)
+2026-08-10 22:07:34,845 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.private.coffee/api/interpreter respondeu 429, aguardando 8.0s
+2026-08-10 22:07:42,845 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 2, tentativa 1)
+2026-08-10 22:07:44,176 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 1.0s
+2026-08-10 22:07:45,177 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 2, tentativa 2)
+2026-08-10 22:07:46,620 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 2.0s
+2026-08-10 22:07:46,648 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:07:48,621 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 2, tentativa 3)
+2026-08-10 22:07:49,179 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:07:50,101 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 4.0s
+2026-08-10 22:07:51,024 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:07:54,102 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass.kumi.systems/api/interpreter (volta 2, tentativa 4)
+2026-08-10 22:07:54,500 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:07:55,421 | fase3_vias_zoneamento | WARNING | Overpass https://overpass.kumi.systems/api/interpreter respondeu 429, aguardando 8.0s
+2026-08-10 22:08:00,034 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:08:09,661 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:08:25,662 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:08:27,759 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:08:30,305 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:08:33,217 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:08:38,131 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:08:47,691 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:09:03,693 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:09:06,191 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:09:08,749 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:09:12,254 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:09:17,794 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:09:27,384 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:09:43,385 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:09:45,907 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:09:47,778 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:09:51,293 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:09:56,160 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:10:05,786 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:10:09,593 | fase3_vias_zoneamento | INFO | === Fase 3: vias e zoneamento ===
+2026-08-10 22:10:09,595 | fase3_vias_zoneamento | INFO | Overpass (vias): tentando https://overpass-api.de/api/interpreter (volta 1, tentativa 1)
+2026-08-10 22:10:21,787 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:10:23,535 | fase3_vias_zoneamento | INFO | Overpass (vias) OK via https://overpass-api.de/api/interpreter: 87339 elementos
+2026-08-10 22:10:24,283 | fase3_vias_zoneamento | INFO | malha viária: 12686 segmentos coletados
+2026-08-10 22:10:24,289 | fase3_vias_zoneamento | INFO | contagem por classe de via: {'residential': 9562, 'tertiary': 1848, 'secondary': 843, 'primary': 433}
+2026-08-10 22:10:24,318 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:10:24,673 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\vias.gpkg
+2026-08-10 22:10:25,387 | fase3_vias_zoneamento | WARNING | https://www.uberlandia.mg.gov.br/portal-da-transparencia/dados-abertos/catalogo-de-dados-abertos/ respondeu HTTP 403 — não deu pra checar vetorial nessa página
+2026-08-10 22:10:26,162 | fase3_vias_zoneamento | WARNING | https://www.uberlandia.mg.gov.br/prefeitura/secretarias/planejamento-urbano/mapas-e-bairros/ respondeu HTTP 403 — não deu pra checar vetorial nessa página
+2026-08-10 22:10:26,166 | fase3_vias_zoneamento | INFO | baixando https://docs.uberlandia.mg.gov.br/wp-content/uploads/2026/02/Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf -> C:\projetos\novo_ponto\data\raw\zoneamento\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf
+2026-08-10 22:10:26,906 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:10:30,453 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:10:31,002 | fase3_vias_zoneamento | INFO | download concluído: C:\projetos\novo_ponto\data\raw\zoneamento\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf (7595916 bytes)
+2026-08-10 22:10:31,005 | fase3_vias_zoneamento | INFO | mapa de zoneamento baixado: C:\projetos\novo_ponto\data\raw\zoneamento\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf (2026-02 (Lei 8122/026 e alterações — vigente))
+2026-08-10 22:10:31,006 | fase3_vias_zoneamento | INFO | convertendo C:\projetos\novo_ponto\data\raw\zoneamento\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf com markitdown -> C:\projetos\novo_ponto\data\interim\md\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf.md
+2026-08-10 22:10:35,379 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:10:44,257 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:11:00,259 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:11:01,270 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 22:11:01,276 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 22:11:02,213 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 22:11:02,217 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 22:11:02,240 | fase2_concorrentes | INFO | rede 'Petz Rondon Pacheco' resolvida para 'Petz Center Shopping' (fonte=google); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:11:02,246 | fase2_concorrentes | INFO | rede 'Petz Center Shopping' resolvida para 'Petz Center Shopping' (fonte=google); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:11:02,254 | fase2_concorrentes | INFO | rede 'Cobasi Rondon Pacheco' resolvida para 'Petz Center Shopping' (fonte=google); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:11:02,264 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 180, 'veterinaria': 74, 'agropecuaria': 50, 'rede': 1}
+2026-08-10 22:11:02,265 | fase2_concorrentes | WARNING | ACEITE — só 1/3 redes conhecidas presentes no resultado final
+2026-08-10 22:11:02,328 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 22:11:02,328 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=305 descartados=5 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 22:12:27,144 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 22:12:27,144 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 22:12:27,146 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 22:12:27,520 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 22:12:47,364 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:12:50,040 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:12:53,628 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:12:56,350 | fase3_vias_zoneamento | INFO | legenda de zonas extraída do PDF: 25 zonas identificadas
+2026-08-10 22:12:56,359 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\zonas_permitidas.csv (25 linhas)
+2026-08-10 22:12:59,257 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:13:02,196 | fase3_vias_zoneamento | INFO | perímetro urbano: área setores-Urbana=241.7 km², área c/ vias=1107.3 km², combinado=1106.2 km² (município=4120.0 km²)
+2026-08-10 22:13:02,262 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\perimetro_urbano.gpkg
+2026-08-10 22:13:02,263 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase3.txt (2 limitação(ões) registrada(s), vão para a seção Limitações do relatório)
+2026-08-10 22:13:02,263 | fase3_vias_zoneamento | WARNING | LIMITAÇÃO — As páginas de dados abertos / Mapas e Bairros da Prefeitura de Uberlândia retornaram erro (bloqueio de acesso automatizado) durante a coleta — não foi possível confirmar programaticamente se existe camada vetorial de zoneamento. Usado o mapa em PDF como Plano B, conforme previsto na spec.
+2026-08-10 22:13:02,263 | fase3_vias_zoneamento | WARNING | LIMITAÇÃO — Zoneamento: 25 zonas identificadas pelo nome/código a partir do mapa em PDF (Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf), mas a tabela de USOS PERMITIDOS por zona não pôde ser extraída automaticamente (está na Lei Complementar 812/2026, cujo texto integral não foi acessível pelas fontes públicas tentadas — leismunicipais.com.br e leis.org bloquearam o acesso automatizado). Compatibilidade de zoneamento por candidato fica como verificação manual obrigatória antes de assinar contrato.
+2026-08-10 22:13:02,264 | fase3_vias_zoneamento | INFO | RESUMO — entrada=12686 saida=12686 descartados=0
+2026-08-10 22:13:08,773 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:13:24,775 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:13:27,363 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:13:29,936 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:13:33,564 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:13:39,079 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:13:48,614 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:14:04,615 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:14:06,482 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:14:08,376 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:14:11,961 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:14:16,876 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:14:26,501 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:14:42,503 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:14:45,022 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:14:46,871 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:14:50,464 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:14:55,318 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:15:04,903 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:15:20,904 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:15:23,436 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:15:25,999 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:15:28,844 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:15:34,395 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:15:43,262 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:15:59,262 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:16:01,837 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:16:03,785 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:16:07,370 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:16:12,898 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:16:22,421 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:16:38,423 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:16:41,056 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:16:42,892 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:16:46,486 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:16:52,015 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:17:01,539 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:17:17,540 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:17:19,457 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:17:22,020 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:17:25,603 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:17:31,115 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:17:40,614 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:17:56,616 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:17:59,292 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:18:01,853 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:18:05,337 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:18:10,251 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:18:19,799 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:18:35,800 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:18:38,308 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:18:40,870 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:18:44,351 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:18:49,265 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:18:58,789 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:19:14,791 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:19:16,690 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:19:19,154 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:19:22,752 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:19:28,383 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:19:37,294 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:19:53,296 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:19:55,802 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:19:58,314 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:20:01,870 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:20:07,404 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:20:16,308 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:20:32,310 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:20:33,320 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 22:20:33,339 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 22:20:34,224 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 22:20:34,227 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 22:20:34,243 | fase2_concorrentes | WARNING | nenhum registro OSM/Google encontrado perto de 'Petz Rondon Pacheco' — vai entrar só com a coordenada geocodificada
+2026-08-10 22:20:34,257 | fase2_concorrentes | INFO | rede 'Petz Center Shopping' resolvida para 'Petz Center Shopping' (fonte=google); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:20:34,259 | fase2_concorrentes | WARNING | nenhum registro OSM/Google encontrado perto de 'Cobasi Rondon Pacheco' — vai entrar só com a coordenada geocodificada
+2026-08-10 22:20:34,267 | fase2_concorrentes | INFO | 2 rede(s) sem par nas fontes automáticas, adicionada(s) só com a coordenada geocodificada: ['Petz Rondon Pacheco', 'Cobasi Rondon Pacheco']
+2026-08-10 22:20:34,275 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 180, 'veterinaria': 74, 'agropecuaria': 50, 'rede': 3}
+2026-08-10 22:20:34,276 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
+2026-08-10 22:20:34,343 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 22:20:34,344 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=307 descartados=3 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 22:23:15,857 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 22:23:15,857 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 22:23:15,859 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 22:23:16,122 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 22:23:35,172 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:23:37,734 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:23:41,319 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:23:46,862 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:23:56,438 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:24:12,439 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:24:14,333 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:24:16,853 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:24:19,822 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:24:25,455 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:24:35,078 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:24:51,081 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:24:52,998 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:24:54,948 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:26:02,370 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 22:26:02,371 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 22:26:02,372 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 22:26:02,643 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 22:26:21,450 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:26:24,039 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:26:27,623 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:26:32,526 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:26:42,081 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='clínica veterinária')
+2026-08-10 22:26:58,084 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:27:00,692 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:27:03,244 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:27:06,841 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:27:12,382 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:27:21,279 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.9310,-48.1804 termo='banho e tosa')
+2026-08-10 22:27:37,282 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:27:39,105 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:27:41,655 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:27:44,514 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:27:50,053 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:27:59,534 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='pet shop')
+2026-08-10 22:28:15,537 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:28:18,109 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:28:20,615 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:28:24,152 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:28:29,682 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:28:39,290 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='agropecuária')
+2026-08-10 22:28:55,292 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:28:57,120 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:28:58,971 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:29:01,837 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:29:07,367 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:29:16,278 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='casa de ração')
+2026-08-10 22:29:32,280 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:29:34,194 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:29:36,142 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:29:38,974 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:29:43,925 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:29:52,834 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='clínica veterinária')
+2026-08-10 22:30:08,836 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:30:11,368 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:30:13,928 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:30:17,413 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:30:22,941 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:30:31,848 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -18.8904,-48.1811 termo='banho e tosa')
+2026-08-10 22:30:47,849 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:30:49,767 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:30:52,330 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:30:55,812 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:31:01,344 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:31:10,192 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='pet shop')
+2026-08-10 22:31:26,194 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:31:28,681 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:31:30,567 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:31:34,072 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:31:39,569 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:31:49,091 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='agropecuária')
+2026-08-10 22:32:05,095 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:32:07,593 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:32:09,437 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:32:12,920 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:32:18,401 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:32:27,897 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='casa de ração')
+2026-08-10 22:32:43,898 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:32:46,404 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:32:48,877 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:32:51,731 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:32:57,257 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:33:06,783 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='clínica veterinária')
+2026-08-10 22:33:22,785 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:33:25,316 | fase2_concorrentes | WARNING | Google Places 429, tentativa 1/5, aguardando 1.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:33:27,162 | fase2_concorrentes | WARNING | Google Places 429, tentativa 2/5, aguardando 2.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:33:30,670 | fase2_concorrentes | WARNING | Google Places 429, tentativa 3/5, aguardando 4.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:33:36,172 | fase2_concorrentes | WARNING | Google Places 429, tentativa 4/5, aguardando 8.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:33:45,802 | fase2_concorrentes | WARNING | Google Places 429, tentativa 5/5, aguardando 16.0s (célula -19.1300,-47.9206 termo='banho e tosa')
+2026-08-10 22:34:01,804 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (esgotou tentativas nesta célula/termo: HTTP 429) — pulando só esta
+2026-08-10 22:34:02,818 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 22:34:02,821 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 22:34:03,681 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 22:34:03,685 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 22:34:03,711 | fase2_concorrentes | INFO | rede 'Petz Rondon Pacheco' resolvida para 'Petz Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:34:03,724 | fase2_concorrentes | INFO | rede 'Petz Center Shopping' resolvida para 'Uai Pet Store - Center Shopping' (fonte=google, casado por texto do endereço); 2 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:34:03,735 | fase2_concorrentes | INFO | rede 'Cobasi Rondon Pacheco' resolvida para 'Cobasi Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:34:03,736 | fase2_concorrentes | INFO | removendo 2 registro(s) duplicado(s) da mesma loja física de rede
+2026-08-10 22:34:03,748 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 177, 'veterinaria': 73, 'agropecuaria': 50, 'rede': 3}
+2026-08-10 22:34:03,749 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
+2026-08-10 22:34:03,807 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 22:34:03,808 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=303 descartados=7 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 22:34:38,844 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 22:34:38,844 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 22:34:38,845 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 22:34:39,106 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 22:34:56,388 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:34:57,390 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:34:58,391 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:34:59,394 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:00,395 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:01,397 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:02,400 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:03,401 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:04,405 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:05,409 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:06,411 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:07,434 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 22:35:08,445 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 22:35:08,452 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 22:35:09,335 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 22:35:09,341 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 22:35:09,372 | fase2_concorrentes | INFO | rede 'Petz Rondon Pacheco' resolvida para 'Petz Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:35:09,382 | fase2_concorrentes | INFO | rede 'Petz Center Shopping' resolvida para 'Petz Center Shopping' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:35:09,395 | fase2_concorrentes | INFO | rede 'Cobasi Rondon Pacheco' resolvida para 'Cobasi Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 22:35:09,401 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 178, 'veterinaria': 74, 'agropecuaria': 50, 'rede': 3}
+2026-08-10 22:35:09,402 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
+2026-08-10 22:35:09,496 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 22:35:09,497 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=305 descartados=5 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
