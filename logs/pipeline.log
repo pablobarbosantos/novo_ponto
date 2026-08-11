@@ -1279,3 +1279,21 @@
 2026-08-11 08:21:12,127 | fase5_isocronas | WARNING | B1 — domicilios_efetivo mediano=80408 (30.0% do total municipal=267966) NÃO ficou abaixo de 15% (alvo do CORRECOES.md). Mesmo o anel de 5min isolado (peso 1.00) já cobre mediana de 39647 domicílios (14.8%) — as isócronas driving-car do ORS para Uberlândia são geometricamente grandes mesmo em 5min nos pontos bem conectados que a Fase 4 seleciona (ex.: ~17-20km² de área só no anel de 5min). Isso NÃO é um erro de implementação (fórmula/pesos conferem com o pseudocódigo do B1) — é uma característica real da malha viária local. Mantido como está; C4.1 (CORRECOES_2.md) aperta ainda mais a captação de balcão (só anéis 5/10min, sem 15min) mas não resolve sozinho — ver nota de C6 item 5 no relatório final.
 2026-08-11 08:21:12,342 | fase5_isocronas | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos_com_demanda.gpkg (camadas: candidatos_com_demanda, isocronas_10min)
 2026-08-11 08:21:12,342 | fase5_isocronas | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-11 08:25:07,289 | fase7_score | INFO | === Fase 7: score e filtros ===
+2026-08-11 08:25:09,364 | fase7_score | INFO | B2 — captura_min=0.05/captura_max=0.15 do config.yaml não são mais usados no teste absoluto desde a adoção do modelo de Huff (demanda_capturada); mantidos no config só por retrocompatibilidade, sem efeito ativo
+2026-08-11 08:25:38,286 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Chácaras Tubalina e Quartel' (R$ 5569920) ultrapassa o potencial do bairro (R$ 383856)
+2026-08-11 08:25:38,286 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Laranjeiras' (R$ 1828158) ultrapassa o potencial do bairro (R$ 555720)
+2026-08-11 08:25:38,286 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Luizote de Freitas' (R$ 571861) ultrapassa o potencial do bairro (R$ 393096)
+2026-08-11 08:25:38,286 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Martins' (R$ 365755) ultrapassa o potencial do bairro (R$ 203544)
+2026-08-11 08:25:38,287 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Pacaembú' (R$ 306919) ultrapassa o potencial do bairro (R$ 199518)
+2026-08-11 08:25:38,287 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Presidente Roosevelt' (R$ 7555598) ultrapassa o potencial do bairro (R$ 531234)
+2026-08-11 08:25:38,287 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Santa Mônica' (R$ 8804013) ultrapassa o potencial do bairro (R$ 1066758)
+2026-08-11 08:25:38,287 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'São Jorge' (R$ 936688) ultrapassa o potencial do bairro (R$ 673794)
+2026-08-11 08:25:38,287 | fase7_score | WARNING | B2 — 8 bairro(s) com demanda_capturada somada acima do potencial (candidatos do mesmo bairro competindo pela mesma demanda sem se descontar)
+2026-08-11 08:25:38,287 | fase7_score | WARNING | nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa só o custo fixo extra (piso), sem o aluguel; rode a Fase 8 depois de preencher o CSV e recalcule
+2026-08-11 08:25:38,349 | fase7_score | INFO | teste absoluto: 300 passaram, 0 reprovados; dedup geográfica: 287 duplicatas suprimidas
+2026-08-11 08:25:38,349 | fase7_score | INFO | ACEITE — Top 10 completo com 10 candidatos aprovados
+2026-08-11 08:25:38,349 | fase7_score | INFO | ACEITE — nenhum candidato do Top 10 a menos de 1500m de rede
+2026-08-11 08:25:38,353 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
+2026-08-11 08:25:38,410 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
+2026-08-11 08:25:38,410 | fase7_score | INFO | RESUMO — entrada=300 saida=10 descartados=290 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'

@@ -107,6 +107,129 @@ def _forca_concorrencia(cand: gpd.GeoDataFrame, concorrentes: gpd.GeoDataFrame, 
 
 
 # ---------------------------------------------------------------------------
+# B2 (CORRECOES.md) — Demanda capturada via modelo gravitacional de Huff.
+# Substitui potencial_mensal × captura_min no teste absoluto: a captura de uma loja
+# nova depende de quantos concorrentes disputam cada domicílio, não de uma fração fixa.
+# ---------------------------------------------------------------------------
+
+PESO_ANEL_CAPTACAO = {5: 1.00, 10: 0.35, 15: 0.10}  # espelha PESO_ANEL do B1 (f5) — trocado por C4.1 mais adiante
+DIST_MIN_KM = 0.15  # mesmo piso de distância usado em _forca_concorrencia, evita explosão em 1/dist²
+
+
+def _extrair_feature_isocrona(fc: dict, minutos_alvo: int) -> dict | None:
+    valor_alvo = minutos_alvo * 60
+    for f in fc["features"]:
+        if f["properties"]["value"] == valor_alvo:
+            return f
+    return None
+
+
+def _aneis_metricos_f7(fc: dict, minutos_lista: list[int], crs_metrico: str) -> dict[int, object | None]:
+    """Mesmo recorte de anéis concêntricos que a Fase 5 (f5_isocronas._aneis_metricos)
+    faz a partir do cache já baixado — reimplementado aqui porque o modelo de Huff
+    precisa da granularidade por setor, que a Fase 5 já agrega antes de gravar."""
+    from shapely.geometry import shape
+    polys_metricos: dict[int, object | None] = {}
+    for m in minutos_lista:
+        feat = _extrair_feature_isocrona(fc, m)
+        if feat is None:
+            polys_metricos[m] = None
+            continue
+        poly_wgs = shape(feat["geometry"])
+        polys_metricos[m] = gpd.GeoSeries([poly_wgs], crs="EPSG:4326").to_crs(crs_metrico).iloc[0]
+    minutos_ordenados = sorted(m for m in minutos_lista if polys_metricos[m] is not None)
+    aneis: dict[int, object | None] = {}
+    anterior = None
+    for m in minutos_ordenados:
+        atual = polys_metricos[m]
+        aneis[m] = atual.difference(anterior) if anterior is not None else atual
+        anterior = atual
+    for m in minutos_lista:
+        aneis.setdefault(m, None)
+    return aneis
+
+
+def _pesos_setores_captacao(cache_path: Path, minutos_lista: list[int], crs_metrico: str,
+                             setores: gpd.GeoDataFrame, sindex, setores_area_total,
+                             pesos_anel: dict[int, float]) -> pd.Series | None:
+    """Domicílios ocupados × fração de área do setor dentro de cada anel × peso do anel,
+    por setor — a mesma composição que domicilios_efetivo usa, só que sem agregar em um
+    escalar (o modelo de Huff precisa saber DE ONDE vêm os domicílios, setor a setor,
+    pra calcular a distância até cada concorrente)."""
+    if not cache_path.exists():
+        return None
+    fc = json.loads(cache_path.read_text(encoding="utf-8"))
+    aneis = _aneis_metricos_f7(fc, minutos_lista, crs_metrico)
+    peso_total = pd.Series(0.0, index=setores.index)
+    algum = False
+    for m, peso_m in pesos_anel.items():
+        poligono = aneis.get(m)
+        if poligono is None or poligono.is_empty:
+            continue
+        idx = list(sindex.query(poligono, predicate="intersects"))
+        if not idx:
+            continue
+        sub = setores.iloc[idx]
+        inter_area = sub.geometry.intersection(poligono).area
+        fracao = (inter_area / setores_area_total.iloc[idx].values).clip(0, 1)
+        contrib = sub["domicilios_ocupados"].fillna(0).values * fracao * peso_m
+        peso_total.iloc[idx] = peso_total.iloc[idx].values + contrib
+        algum = True
+    return peso_total if algum else None
+
+
+def _atratividade_concorrentes(concorrentes: gpd.GeoDataFrame, cfg: dict) -> pd.Series:
+    av = pd.to_numeric(concorrentes["avaliacoes"], errors="coerce")
+    max_av = av.max()
+    if max_av and max_av > 0:
+        a_conc = 0.5 + 1.5 * (av.fillna(0) / max_av)
+    else:
+        a_conc = pd.Series(0.5, index=concorrentes.index)  # sem nenhuma avaliação na base — todos iguais
+    peso_rede = cfg["concorrencia"]["peso_rede"]
+    peso_independente = cfg["concorrencia"]["peso_independente"]
+    peso_tipo = np.where(concorrentes["tipo"] == "rede", peso_rede, peso_independente)
+    return a_conc * peso_tipo
+
+
+def _denominador_huff_por_setor(setores: gpd.GeoDataFrame, concorrentes: gpd.GeoDataFrame, atratividade: pd.Series) -> pd.Series:
+    """Σ_k atratividade_k / dist(setor_j, k)_km² — não depende do candidato i, calculado
+    uma única vez pra todos os ~1988 setores (a fração de Huff usa isso como denominador)."""
+    centroides = setores.geometry.centroid
+    denom = np.zeros(len(setores))
+    atrat_vals = atratividade.to_numpy()
+    for k, geom_k in enumerate(concorrentes.geometry):
+        dist_km = centroides.distance(geom_k).to_numpy() / 1000.0
+        denom += atrat_vals[k] / np.clip(dist_km, DIST_MIN_KM, None) ** 2
+    return pd.Series(denom, index=setores.index)
+
+
+def _demanda_capturada(cand: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, denom_huff_setor: pd.Series,
+                        cfg: dict, minutos_lista: list[int], crs_metrico: str, pesos_anel: dict[int, float]) -> pd.Series:
+    taxa_posse = cfg["negocio"]["taxa_posse_pet_domicilio"]
+    gasto_medio = cfg["negocio"]["gasto_medio_mensal_por_pet"]
+    A_nova = 1.0
+    setores_area_total = setores.geometry.area
+    sindex = setores.sindex
+    centroides = setores.geometry.centroid
+
+    cand_wgs = cand.to_crs("EPSG:4326")
+    resultados = []
+    for geom_metrico, lon, lat in zip(cand.geometry, cand_wgs.geometry.x, cand_wgs.geometry.y):
+        cache_path = ISO_RAW_DIR / f"{coord_hash(lon, lat)}.json"
+        pesos_setor = _pesos_setores_captacao(cache_path, minutos_lista, crs_metrico, setores, sindex, setores_area_total, pesos_anel)
+        if pesos_setor is None or pesos_setor.sum() <= 0:
+            resultados.append(None)
+            continue
+        idx_rel = pesos_setor[pesos_setor > 0].index
+        dist_km = centroides.loc[idx_rel].distance(geom_metrico).to_numpy() / 1000.0
+        atrat_i = A_nova / np.clip(dist_km, DIST_MIN_KM, None) ** 2
+        p_j_i = atrat_i / (denom_huff_setor.loc[idx_rel].to_numpy() + atrat_i)
+        demanda = float((pesos_setor.loc[idx_rel].to_numpy() * taxa_posse * gasto_medio * p_j_i).sum())
+        resultados.append(demanda)
+    return pd.Series(resultados, index=cand.index)
+
+
+# ---------------------------------------------------------------------------
 # 7.4 — Ponto de equilíbrio (aluguel real vem da Fase 8; aqui ainda não existe)
 # ---------------------------------------------------------------------------
 
@@ -179,6 +302,7 @@ def _dedup_geografica(cand: gpd.GeoDataFrame, raio_m: float = RAIO_DEDUP_M) -> g
 def run() -> tuple[Path, Path]:
     cfg = load_config()
     crs_metrico = cfg["crs"]["metrico"]
+    minutos_lista = cfg["isocronas"]["minutos"]
     pesos = json.loads((DATA_PROCESSED / "pesos.json").read_text(encoding="utf-8"))["pesos_eixos_score_final"]
 
     LOGGER.info("=== Fase 7: score e filtros ===")
@@ -186,6 +310,7 @@ def run() -> tuple[Path, Path]:
     cand = gpd.read_file(DATA_PROCESSED / "candidatos_com_demanda.gpkg", layer="candidatos_com_demanda")
     concorrentes = gpd.read_file(DATA_PROCESSED / "concorrentes.gpkg")
     vias = gpd.read_file(DATA_PROCESSED / "vias.gpkg")
+    setores = gpd.read_file(DATA_PROCESSED / "setores.gpkg")
     n_entrada = len(cand)
 
     # 7.1
@@ -197,18 +322,51 @@ def run() -> tuple[Path, Path]:
     soma_forcas_efetiva = cand["forca_concorrencia"].clip(lower=0.01)
     cand["saturacao"] = cand["potencial_mensal"] / soma_forcas_efetiva
 
+    # B2 — demanda_capturada (modelo de Huff): substitui potencial_mensal×captura_min no
+    # teste absoluto. potencial_mensal (bruto, sem competição) continua alimentando o eixo
+    # demanda_estimada do score — só o teste absoluto muda de insumo.
+    LOGGER.info(
+        "B2 — captura_min=%.2f/captura_max=%.2f do config.yaml não são mais usados no teste "
+        "absoluto desde a adoção do modelo de Huff (demanda_capturada); mantidos no config só "
+        "por retrocompatibilidade, sem efeito ativo",
+        cfg["negocio"]["captura_min"], cfg["negocio"]["captura_max"],
+    )
+    atratividade = _atratividade_concorrentes(concorrentes, cfg)
+    denom_huff_setor = _denominador_huff_por_setor(setores, concorrentes, atratividade)
+    cand["demanda_capturada"] = _demanda_capturada(cand, setores, denom_huff_setor, cfg, minutos_lista, crs_metrico, PESO_ANEL_CAPTACAO)
+
+    # validação do B2 (CORRECOES.md): soma de demanda_capturada por bairro não pode
+    # ultrapassar o potencial daquele bairro (domicílios do bairro inteiro × posse × gasto)
+    potencial_por_bairro = (
+        setores.groupby("NM_BAIRRO")["domicilios_ocupados"].sum().fillna(0)
+        * cfg["negocio"]["taxa_posse_pet_domicilio"] * cfg["negocio"]["gasto_medio_mensal_por_pet"]
+    )
+    soma_capturada_por_bairro = cand.groupby("bairro")["demanda_capturada"].sum()
+    n_bairros_estourados = 0
+    for bairro, soma in soma_capturada_por_bairro.items():
+        potencial = potencial_por_bairro.get(bairro)
+        if potencial is not None and soma > potencial:
+            n_bairros_estourados += 1
+            LOGGER.warning(
+                "B2 — soma de demanda_capturada em '%s' (R$ %.0f) ultrapassa o potencial do bairro (R$ %.0f)",
+                bairro, soma, potencial,
+            )
+    if n_bairros_estourados == 0:
+        LOGGER.info("B2 — ACEITE: nenhum bairro com soma de demanda_capturada acima do potencial do bairro")
+    else:
+        LOGGER.warning("B2 — %d bairro(s) com demanda_capturada somada acima do potencial (candidatos do mesmo bairro competindo pela mesma demanda sem se descontar)", n_bairros_estourados)
+
     # 7.4
     cand = pd.concat([cand, _ponto_equilibrio(cand, cfg)], axis=1)
 
     # 7.5 — teste absoluto (filtro duro, independe do score)
-    captura_min = cfg["negocio"]["captura_min"]
     multiplo_min = cfg["negocio"]["multiplo_minimo_breakeven"]
-    tem_dados_suficientes = cand["potencial_mensal"].notna()
-    passou_teste = (cand["potencial_mensal"] * captura_min) >= (multiplo_min * cand["custo_fixo_mensal"])
+    tem_dados_suficientes = cand["demanda_capturada"].notna()
+    passou_teste = cand["demanda_capturada"] >= (multiplo_min * cand["custo_fixo_mensal"])
     cand["teste_absoluto_passou"] = np.where(tem_dados_suficientes, passou_teste, False)
     cand["teste_absoluto_motivo"] = np.select(
         [~tem_dados_suficientes, ~passou_teste & tem_dados_suficientes],
-        ["sem isócrona/demanda calculada", "potencial mensal × captura mínima abaixo de multiplo_minimo_breakeven × custo fixo (aluguel ainda não coletado eleva o risco de falso-positivo aqui)"],
+        ["sem isócrona/demanda calculada", "demanda_capturada (modelo de Huff) abaixo de multiplo_minimo_breakeven × custo fixo"],
         default="passou",
     )
 
@@ -256,7 +414,7 @@ def run() -> tuple[Path, Path]:
     colunas_saida = [
         "candidato_id", "bairro", "domicilios_efetivo", "pct_apartamento_efetivo", "renda_media_efetivo",
         "n_concorrentes_15min", "forca_concorrencia", "n_clinicas_sem_loja",
-        "saturacao", "potencial_mensal", "oferta_imovel_disponivel", "aluguel_estimado_regiao",
+        "saturacao", "potencial_mensal", "demanda_capturada", "oferta_imovel_disponivel", "aluguel_estimado_regiao",
         "acesso_score", "score_final", "teste_absoluto_passou", "teste_absoluto_motivo",
     ]
     colunas_saida = [c for c in colunas_saida if c in cand.columns]
