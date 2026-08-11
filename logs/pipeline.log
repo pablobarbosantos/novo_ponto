@@ -946,3 +946,85 @@
 2026-08-10 22:55:44,808 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
 2026-08-10 22:55:45,902 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
 2026-08-10 22:55:45,903 | fase7_score | INFO | RESUMO — entrada=300 saida=10 descartados=290 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'
+2026-08-10 22:57:25,936 | fase8_manuais | INFO | === Fase 8: entradas manuais ===
+2026-08-10 22:57:27,323 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,324 | fase8_manuais | INFO | ifood.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,325 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,325 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,327 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,328 | fase8_manuais | INFO | cliente_oculto.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,329 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,330 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,331 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,332 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,333 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,334 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,338 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,341 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:27,349 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\data\processed\ranking_completo.parquet
+2026-08-10 22:57:27,351 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\output\top10.csv
+2026-08-10 22:57:27,351 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (8 entrada(s) manual(is) pendente(s))
+2026-08-10 22:57:27,351 | fase8_manuais | INFO | resumo: 0 preenchido(s) [], 8 pendente(s) ['imoveis.csv', 'ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'geoteste.csv', 'marcas_carteira.csv']
+2026-08-10 22:57:27,351 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 22:57:41,376 | fase8_manuais | INFO | === Fase 8: entradas manuais ===
+2026-08-10 22:57:41,431 | fase8_manuais | INFO | imoveis.csv preenchido: 3 linha(s)
+2026-08-10 22:57:41,435 | fase8_manuais | INFO | ifood.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,437 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,440 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,441 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,443 | fase8_manuais | INFO | cliente_oculto.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,444 | fase8_manuais | INFO | geoteste.csv preenchido: 3 linha(s)
+2026-08-10 22:57:41,444 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,446 | fase8_manuais | INFO | imoveis.csv preenchido: 3 linha(s)
+2026-08-10 22:57:41,470 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,471 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,473 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,474 | fase8_manuais | INFO | geoteste.csv preenchido: 3 linha(s)
+2026-08-10 22:57:41,489 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:57:41,491 | fase8_manuais | INFO | geoteste.csv preenchido — Top 5 reordenado por custo por conversa (único dado medido, não estimado)
+2026-08-10 22:57:41,505 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\data\processed\ranking_completo.parquet
+2026-08-10 22:57:41,507 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\output\top10.csv
+2026-08-10 22:57:41,508 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (6 entrada(s) manual(is) pendente(s))
+2026-08-10 22:57:41,508 | fase8_manuais | INFO | resumo: 2 preenchido(s) ['imoveis.csv', 'geoteste.csv'], 6 pendente(s) ['ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'marcas_carteira.csv']
+2026-08-10 22:57:41,508 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 22:58:26,218 | fase8_manuais | INFO | === Fase 8: entradas manuais ===
+2026-08-10 22:58:26,262 | fase8_manuais | INFO | imoveis.csv preenchido: 3 linha(s)
+2026-08-10 22:58:26,263 | fase8_manuais | INFO | ifood.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,263 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,264 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,265 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,267 | fase8_manuais | INFO | cliente_oculto.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,269 | fase8_manuais | INFO | geoteste.csv preenchido: 3 linha(s)
+2026-08-10 22:58:26,272 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,274 | fase8_manuais | INFO | imoveis.csv preenchido: 3 linha(s)
+2026-08-10 22:58:26,287 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,288 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,289 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,291 | fase8_manuais | INFO | geoteste.csv preenchido: 3 linha(s)
+2026-08-10 22:58:26,297 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:26,324 | fase8_manuais | INFO | geoteste.csv preenchido — Top 5 reordenado por custo por conversa (único dado medido, não estimado)
+2026-08-10 22:58:26,329 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\data\processed\ranking_completo.parquet
+2026-08-10 22:58:26,331 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\output\top10.csv
+2026-08-10 22:58:26,332 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (6 entrada(s) manual(is) pendente(s))
+2026-08-10 22:58:26,332 | fase8_manuais | INFO | resumo: 2 preenchido(s) ['imoveis.csv', 'geoteste.csv'], 6 pendente(s) ['ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'marcas_carteira.csv']
+2026-08-10 22:58:26,332 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 22:58:39,153 | fase8_manuais | INFO | === Fase 8: entradas manuais ===
+2026-08-10 22:58:39,194 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,194 | fase8_manuais | INFO | ifood.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,196 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,197 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,199 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,201 | fase8_manuais | INFO | cliente_oculto.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,202 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,204 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,206 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,208 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,209 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,210 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,211 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,211 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 22:58:39,221 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\data\processed\ranking_completo.parquet
+2026-08-10 22:58:39,223 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\output\top10.csv
+2026-08-10 22:58:39,224 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (8 entrada(s) manual(is) pendente(s))
+2026-08-10 22:58:39,224 | fase8_manuais | INFO | resumo: 0 preenchido(s) [], 8 pendente(s) ['imoveis.csv', 'ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'geoteste.csv', 'marcas_carteira.csv']
+2026-08-10 22:58:39,224 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0

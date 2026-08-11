@@ -1,0 +1,8 @@
+- data/manual/imoveis.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/ifood.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/meta_publico.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/google_buscas.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/campo_fluxo.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/cliente_oculto.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/geoteste.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
+- data/manual/marcas_carteira.csv: pendente de preenchimento manual (indicadores derivados ficam "não coletado" no relatório)
