@@ -281,3 +281,6 @@ Downloading pyee-13.0.1-py3-none-any.whl (15 kB)
 Installing collected packages: pyee, greenlet, playwright
 
 Successfully installed greenlet-3.5.5 playwright-1.62.0 pyee-13.0.1
+Found existing installation: playwright 1.62.0
+Uninstalling playwright-1.62.0:
+  Successfully uninstalled playwright-1.62.0

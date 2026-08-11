@@ -22,6 +22,7 @@ fiona==1.10.1
 flatbuffers==25.12.19
 folium==0.20.0
 geopandas==1.1.4
+greenlet==3.5.5
 humanfriendly==10.0
 idna==3.18
 isodate==0.7.2
@@ -48,8 +49,10 @@ pdfminer.six==20260107
 pdfplumber==0.11.10
 pillow==12.3.0
 protobuf==7.35.1
+pyarrow==25.0.1
 pycparser==3.0
 pydub==0.25.1
+pyee==13.0.1
 PyJWT==2.13.0
 pyogrio==0.13.0
 pypdfium2==5.12.1
