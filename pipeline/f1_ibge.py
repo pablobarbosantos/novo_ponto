@@ -16,6 +16,7 @@ import zipfile
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -203,13 +204,44 @@ def run() -> Path:
     dom1["domicilios_ocupados"] = clean_numeric(df_dom1[VAR_DOMICILIOS_OCUPADOS], dec_dom1)
     dom1["domicilios_improvisados"] = clean_numeric(df_dom1[VAR_DOMICILIOS_IMPROV], dec_dom1)
     dom1["moradores_dppo"] = clean_numeric(df_dom1[VAR_MORADORES_DPPO], dec_dom1)
-    casa = clean_numeric(df_dom1[VAR_CASA], dec_dom1).fillna(0)
-    casa_vila = clean_numeric(df_dom1[VAR_CASA_VILA], dec_dom1).fillna(0)
-    dom1["domicilios_casa"] = casa + casa_vila
-    dom1["domicilios_apartamento"] = clean_numeric(df_dom1[VAR_APARTAMENTO], dec_dom1)
-    dom1["pct_apartamento"] = (
-        dom1["domicilios_apartamento"] / dom1["domicilios_ocupados"]
-    ).clip(lower=0, upper=1)
+
+    ocupados = dom1["domicilios_ocupados"]
+    casa_raw = clean_numeric(df_dom1[VAR_CASA], dec_dom1)
+    casa_vila_raw = clean_numeric(df_dom1[VAR_CASA_VILA], dec_dom1)
+    casa_ambos_nulos = casa_raw.isna() & casa_vila_raw.isna()
+    casa = (casa_raw.fillna(0) + casa_vila_raw.fillna(0)).mask(casa_ambos_nulos, np.nan)
+    apartamento = clean_numeric(df_dom1[VAR_APARTAMENTO], dec_dom1)
+
+    # G1 (CORRECOES.md) — quando casa+ocupados são conhecidos mas apartamento está nulo
+    # (ou o caso inverso), o branco quase sempre significa zero, não sigilo: IBGE só
+    # suprime a célula quando casa+apartamento não reconstitui o total ocupado. Reconstitui
+    # por diferença nesses casos; mantém nulo (sigilo real) só quando a diferença diverge
+    # de ocupados em mais de 5%.
+    ocupados_div = ocupados.replace(0, np.nan)
+
+    falta_apto = apartamento.isna() & casa.notna() & ocupados.notna()
+    diff_apto = (ocupados - casa).clip(lower=0)
+    diverge_apto = (((casa.fillna(0) + diff_apto) - ocupados).abs() / ocupados_div) > 0.05
+    aplicar_apto = falta_apto & ~diverge_apto.fillna(False)
+    apartamento = apartamento.mask(aplicar_apto, diff_apto)
+
+    falta_casa = casa.isna() & apartamento.notna() & ocupados.notna()
+    diff_casa = (ocupados - apartamento).clip(lower=0)
+    diverge_casa = (((apartamento.fillna(0) + diff_casa) - ocupados).abs() / ocupados_div) > 0.05
+    aplicar_casa = falta_casa & ~diverge_casa.fillna(False)
+    casa = casa.mask(aplicar_casa, diff_casa)
+
+    n_sigilo_real = int((falta_apto & diverge_apto.fillna(False)).sum() + (falta_casa & diverge_casa.fillna(False)).sum())
+    LOGGER.info(
+        "G1 — domicilios_apartamento preenchido por diferença (casa+ocupados conhecidos): %d setor(es); "
+        "domicilios_casa preenchido por diferença (apartamento+ocupados conhecidos): %d setor(es); "
+        "mantidos nulos por divergência >5%% entre soma e ocupados (sigilo real, não zero): %d setor(es)",
+        int(aplicar_apto.sum()), int(aplicar_casa.sum()), n_sigilo_real,
+    )
+
+    dom1["domicilios_casa"] = casa
+    dom1["domicilios_apartamento"] = apartamento
+    dom1["pct_apartamento"] = (apartamento / ocupados).clip(lower=0, upper=1)
 
     demog = pd.DataFrame({"CD_SETOR": df_demog["CD_SETOR"]})
     demog["populacao_demografia"] = clean_numeric(df_demog[VAR_POP_TOTAL_DEMOGRAFIA], dec_demog)
