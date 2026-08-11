@@ -1297,3 +1297,22 @@
 2026-08-11 08:25:38,353 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
 2026-08-11 08:25:38,410 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
 2026-08-11 08:25:38,410 | fase7_score | INFO | RESUMO — entrada=300 saida=10 descartados=290 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'
+2026-08-11 08:30:41,651 | fase7_score | INFO | === Fase 7: score e filtros ===
+2026-08-11 08:30:43,534 | fase7_score | INFO | B2 — captura_min=0.05/captura_max=0.15 do config.yaml não são mais usados no teste absoluto desde a adoção do modelo de Huff (demanda_capturada); mantidos no config só por retrocompatibilidade, sem efeito ativo
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Chácaras Tubalina e Quartel' (R$ 5569920) ultrapassa o potencial do bairro (R$ 383856)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Laranjeiras' (R$ 1828158) ultrapassa o potencial do bairro (R$ 555720)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Luizote de Freitas' (R$ 571861) ultrapassa o potencial do bairro (R$ 393096)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Martins' (R$ 365755) ultrapassa o potencial do bairro (R$ 203544)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Pacaembú' (R$ 306919) ultrapassa o potencial do bairro (R$ 199518)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Presidente Roosevelt' (R$ 7555598) ultrapassa o potencial do bairro (R$ 531234)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Santa Mônica' (R$ 8804013) ultrapassa o potencial do bairro (R$ 1066758)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'São Jorge' (R$ 936688) ultrapassa o potencial do bairro (R$ 673794)
+2026-08-11 08:31:11,707 | fase7_score | WARNING | B2 — 8 bairro(s) com demanda_capturada somada acima do potencial (candidatos do mesmo bairro competindo pela mesma demanda sem se descontar)
+2026-08-11 08:31:11,722 | fase7_score | WARNING | nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa o fallback negocio.teto_aluguel=4000 (não zero); rode a Fase 8 depois de preencher o CSV e recalcule
+2026-08-11 08:31:11,730 | fase7_score | WARNING | B3 — teste absoluto aprovou 100% dos candidatos mesmo depois de B1+B2+B3 (fallback de aluguel=4000). Isso pode ser real (mercado com bastante espaço), mas precisa ficar dito no relatório, não escondido — ver seção de Metodologia.
+2026-08-11 08:31:11,775 | fase7_score | INFO | teste absoluto: 300 passaram, 0 reprovados; dedup geográfica: 287 duplicatas suprimidas
+2026-08-11 08:31:11,775 | fase7_score | INFO | ACEITE — Top 10 completo com 10 candidatos aprovados
+2026-08-11 08:31:11,775 | fase7_score | INFO | ACEITE — nenhum candidato do Top 10 a menos de 1500m de rede
+2026-08-11 08:31:11,775 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
+2026-08-11 08:31:11,791 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
+2026-08-11 08:31:11,791 | fase7_score | INFO | RESUMO — entrada=300 saida=10 descartados=290 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'

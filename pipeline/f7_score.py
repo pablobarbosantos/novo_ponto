@@ -243,16 +243,29 @@ def _ponto_equilibrio(cand: pd.DataFrame, cfg: dict) -> pd.DataFrame:
 
     aluguel_estimado = cand["bairro"].map(aluguel_por_bairro)
     aluguel_disponivel = aluguel_estimado.notna()
+
+    # B3 (CORRECOES.md) — sem dado real de aluguel, o fallback tem que ser o teto de aluguel
+    # configurado (negocio.teto_aluguel), NUNCA 0: custo_fixo=0 neutraliza o teste absoluto
+    # (foi o defeito medido: 300/300 candidatos aprovados). aluguel_e_estimado fica marcado
+    # pra aparecer no relatório (tabela e ficha) sempre que o fallback for usado.
+    teto_aluguel = cfg["negocio"]["teto_aluguel"]
+    aluguel_e_estimado = ~aluguel_disponivel
+    aluguel_final = aluguel_estimado.fillna(teto_aluguel)
     if not aluguel_disponivel.any():
-        LOGGER.warning("nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa só o custo fixo extra (piso), sem o aluguel; rode a Fase 8 depois de preencher o CSV e recalcule")
+        LOGGER.warning(
+            "nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa o fallback "
+            "negocio.teto_aluguel=%d (não zero); rode a Fase 8 depois de preencher o CSV e recalcule",
+            teto_aluguel,
+        )
 
     custo_fixo_extra = cfg["negocio"]["custo_fixo_extra_mensal"]
-    custo_fixo = aluguel_estimado.fillna(0) + custo_fixo_extra
+    custo_fixo = aluguel_final + custo_fixo_extra
     margem_saco = cfg["negocio"]["margem_por_saco_premium"]
     sacos_breakeven = custo_fixo / margem_saco
 
     return pd.DataFrame({
-        "aluguel_estimado_regiao": aluguel_estimado,
+        "aluguel_estimado_regiao": aluguel_final,
+        "aluguel_e_estimado": aluguel_e_estimado,
         "aluguel_disponivel": aluguel_disponivel,
         "custo_fixo_mensal": custo_fixo,
         "sacos_breakeven": sacos_breakeven,
@@ -369,6 +382,17 @@ def run() -> tuple[Path, Path]:
         ["sem isócrona/demanda calculada", "demanda_capturada (modelo de Huff) abaixo de multiplo_minimo_breakeven × custo fixo"],
         default="passou",
     )
+    taxa_aprovacao = cand["teste_absoluto_passou"].mean()
+    if taxa_aprovacao >= 0.999:
+        # B3 (CORRECOES.md) — mesmo depois de B1+B2, se o teste continuar aprovando 100%,
+        # o documento manda registrar isso explicitamente no relatório, não esconder: "pode
+        # ser real, mas precisa ser dito". f9_relatorio.py lê essa nota da Metodologia.
+        LOGGER.warning(
+            "B3 — teste absoluto aprovou 100%% dos candidatos mesmo depois de B1+B2+B3 "
+            "(fallback de aluguel=%d). Isso pode ser real (mercado com bastante espaço), mas "
+            "precisa ficar dito no relatório, não escondido — ver seção de Metodologia.",
+            cfg["negocio"]["teto_aluguel"],
+        )
 
     # 7.6 — score final por percentil
     cand["acesso_score"] = _acesso_score(cand, vias)
@@ -415,6 +439,7 @@ def run() -> tuple[Path, Path]:
         "candidato_id", "bairro", "domicilios_efetivo", "pct_apartamento_efetivo", "renda_media_efetivo",
         "n_concorrentes_15min", "forca_concorrencia", "n_clinicas_sem_loja",
         "saturacao", "potencial_mensal", "demanda_capturada", "oferta_imovel_disponivel", "aluguel_estimado_regiao",
+        "aluguel_e_estimado", "custo_fixo_mensal", "sacos_breakeven",
         "acesso_score", "score_final", "teste_absoluto_passou", "teste_absoluto_motivo",
     ]
     colunas_saida = [c for c in colunas_saida if c in cand.columns]

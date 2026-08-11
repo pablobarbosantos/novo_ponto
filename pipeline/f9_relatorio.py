@@ -384,6 +384,8 @@ def _resumo_executivo(top10: pd.DataFrame) -> str:
 
 
 def _linha_tabela(row) -> str:
+    aluguel_v = row.get('aluguel_estimado_regiao', float('nan'))
+    aluguel_badge = ' <span class="badge" title="sem dado real em data/manual/imoveis.csv — usado o fallback negocio.teto_aluguel">estimado</span>' if row.get('aluguel_e_estimado') else ''
     return (
         "<tr>"
         f"<td>{html.escape(str(row['bairro']))}</td>"
@@ -395,6 +397,8 @@ def _linha_tabela(row) -> str:
         f"<td data-v='{row['n_clinicas_sem_loja']}'>{_fmt(row['n_clinicas_sem_loja'])}</td>"
         f"<td data-v='{row['saturacao']}'>{_fmt(row['saturacao'], 1)}</td>"
         f"<td data-v='{row['potencial_mensal']}'>{_fmt(row['potencial_mensal'], 0, 'R$ ')}</td>"
+        f"<td data-v='{row.get('demanda_capturada', float('nan'))}'>{_fmt(row.get('demanda_capturada'), 0, 'R$ ')}</td>"
+        f"<td data-v='{aluguel_v}'>{_fmt(aluguel_v, 0, 'R$ ')}{aluguel_badge}</td>"
         f"<td data-v='{row.get('n_imoveis_no_teto', float('nan'))}'>{_fmt(row.get('n_imoveis_no_teto'))}</td>"
         f"<td data-v='{row.get('reais_m2_medio', float('nan'))}'>{_fmt(row.get('reais_m2_medio'), 2, 'R$ ')}</td>"
         f"<td data-v='{row['score_final']}'><b>{_fmt(row['score_final'], 3)}</b></td>"
@@ -432,6 +436,10 @@ def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoData
             <tr><th>Força da concorrência</th><td>{_fmt(row['forca_concorrencia'], 1)}</td></tr>
             <tr><th>Clínicas veterinárias sem loja</th><td>{_fmt(row['n_clinicas_sem_loja'])}</td></tr>
             <tr><th>Saturação</th><td>{_fmt(row['saturacao'], 1)}</td></tr>
+            <tr><th>Demanda capturada (modelo de Huff)</th><td>{_fmt(row.get('demanda_capturada'), 0, 'R$ ')}/mês</td></tr>
+            <tr><th>Aluguel estimado da região{' <span class="badge" title="sem dado real em data/manual/imoveis.csv — usado o fallback negocio.teto_aluguel">estimado</span>' if row.get('aluguel_e_estimado') else ''}</th><td>{_fmt(row.get('aluguel_estimado_regiao'), 0, 'R$ ')}</td></tr>
+            <tr><th>Custo fixo mensal (aluguel + custo extra)</th><td>{_fmt(row.get('custo_fixo_mensal'), 0, 'R$ ')}</td></tr>
+            <tr><th>Sacos de ração p/ break-even</th><td>{_fmt(row.get('sacos_breakeven'), 1)}</td></tr>
             <tr><th>Imóveis no teto (data/manual/imoveis.csv)</th><td>{_fmt(row.get('n_imoveis_no_teto'))}</td></tr>
             <tr><th>R$/m² médio</th><td>{_fmt(row.get('reais_m2_medio'), 2, 'R$ ')}</td></tr>
             <tr><th>Teste absoluto</th><td>{'✅ passou' if row['teste_absoluto_passou'] else '❌ reprovado'} — {motivo_teste}</td></tr>
@@ -580,6 +588,8 @@ def _montar_html(**kw) -> str:
         <th data-tipo="num">Clínicas s/ loja</th>
         <th data-tipo="num">Saturação</th>
         <th data-tipo="num">Potencial mensal</th>
+        <th data-tipo="num">Demanda capturada</th>
+        <th data-tipo="num">Aluguel estimado</th>
         <th data-tipo="num">Imóveis no teto</th>
         <th data-tipo="num">R$/m² médio</th>
         <th data-tipo="num">Score</th>
