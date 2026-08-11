@@ -1888,3 +1888,42 @@
 2026-08-11 17:39:55,210 | fase9_relatorio | INFO | fichas individuais geradas: 9
 2026-08-11 17:39:55,277 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
 2026-08-11 17:39:55,277 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0
+2026-08-11 17:50:40,600 | fase2b_vitalidade | INFO | === Fase 2b: vitalidade comercial (C1.1 — mortalidade empresarial via RFB) ===
+2026-08-11 17:50:40,992 | fase2b_vitalidade | INFO | RFB (mirror) — mês mais recente disponível: 2026-07-12
+2026-08-11 17:50:40,993 | fase2b_vitalidade | INFO | baixando https://dados-abertos-rf-cnpj.casadosdados.com.br/arquivos/2026-07-12/Municipios.zip -> C:\projetos\novo_ponto\data\raw\rfb\2026-07-12\Municipios.zip
+2026-08-11 17:50:41,227 | fase2b_vitalidade | INFO | download concluído: C:\projetos\novo_ponto\data\raw\rfb\2026-07-12\Municipios.zip (43443 bytes)
+2026-08-11 17:50:41,235 | fase2b_vitalidade | INFO | RFB — código de município para Uberlândia (código interno da Receita, != IBGE): 5403
+2026-08-11 17:50:41,236 | fase2b_vitalidade | INFO | baixando https://dados-abertos-rf-cnpj.casadosdados.com.br/arquivos/2026-07-12/Estabelecimentos0.zip -> C:\projetos\novo_ponto\data\raw\rfb\2026-07-12\Estabelecimentos0.zip
+2026-08-11 17:53:26,685 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-11 17:53:26,686 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-11 17:53:26,701 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-11 17:53:27,217 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-11 17:53:44,443 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:45,444 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:46,445 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:47,447 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:48,448 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:49,449 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:50,451 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:51,453 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:52,455 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:53,457 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:54,458 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:55,459 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-11 17:53:56,466 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-11 17:53:56,487 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-11 17:53:56,960 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-11 17:53:56,963 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-11 17:53:56,993 | fase2_concorrentes | INFO | rede 'Petz Rondon Pacheco' resolvida para 'Petz Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-11 17:53:56,999 | fase2_concorrentes | INFO | rede 'Petz Center Shopping' resolvida para 'Petz Center Shopping' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-11 17:53:57,005 | fase2_concorrentes | INFO | rede 'Cobasi Rondon Pacheco' resolvida para 'Cobasi Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-11 17:54:59,175 | fase2_concorrentes | WARNING | place_id=ChIJYee9OLdFpJQRzeksljxEzUY falhou ao buscar reviews (C1.3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-08-11 17:55:20,242 | fase2_concorrentes | INFO | C1.3 — recência de avaliações: 50/273 concorrentes processados
+2026-08-11 17:56:56,391 | fase2_concorrentes | WARNING | place_id=ChIJY1qVh7xFpJQRBuHT_n8bNBU falhou ao buscar reviews (C1.3): HTTPSConnectionPool(host='places.googleapis.com', port=443): Read timed out. (read timeout=30)
+2026-08-11 17:57:13,324 | fase2_concorrentes | INFO | C1.3 — recência de avaliações: 100/273 concorrentes processados
+2026-08-11 17:59:28,210 | fase2c_universidades | INFO | === Fase 2c: campus universitários (C3) ===
+2026-08-11 17:59:28,210 | fase2c_universidades | INFO | Overpass (universidades): tentando https://overpass-api.de/api/interpreter (tentativa 1)
+2026-08-11 17:59:30,046 | fase2c_universidades | INFO | Overpass OK via https://overpass-api.de/api/interpreter: 18 elementos
+2026-08-11 17:59:30,083 | fase2c_universidades | INFO | universidades: 18 campus/unidades encontrados: ['1H', 'Colégio Objetivo', 'ESAMC', 'Faculdade Pitágoras', 'Fazenda Experimental da Universidade Federal de Uberlândia - Campus Glória', 'Gabarito Educação – (Terceirão)', 'Gabarito Sistema de Ensino', 'UFU - Campus Umuarama', 'UNA - Unidade Uberlândia Karaíba', 'UNIESSA', 'Uniasselvi', 'Unipac - Campus Gama', 'Unitri', 'Uniube', 'Universidade Federal de Uberlândia', 'Universidade Federal de Uberlândia (Campus Glória)', 'Universidade Federal de Uberlândia - Campus Educa', 'Universidade de Uberaba Campus Vila Gávea']
+2026-08-11 17:59:30,241 | fase2c_universidades | INFO | gravado: C:\projetos\novo_ponto\data\processed\universidades.gpkg (18 registros)
+2026-08-11 17:59:30,241 | fase2c_universidades | INFO | RESUMO — entrada=18 saida=18 descartados=0

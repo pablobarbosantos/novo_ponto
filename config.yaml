@@ -46,6 +46,23 @@ concorrencia:
   # precisar de conhecimento local (C2).
   percentil_maximo_forca: 0.70
 
+# C1 (CORRECOES_2.md) — eixo "vitalidade comercial": o modelo original mede quem mora
+# (IBGE) e quem concorre (Places/OSM) no bairro, não se o comércio ali está vivo.
+vitalidade_comercial:
+  peso_eixo: 0.15                    # C1.4 — retirado proporcionalmente de demanda_estimada e saturacao
+  cnae_divisao: "47"                 # C1.1 — "comércio varejista em geral", mais amplo que só pet
+  janela_mortalidade_meses: 36
+  percentil_filtro_mortalidade: 0.75 # C1.4 — quartil superior é ELIMINADO, não só penalizado
+  raio_entorno_concorrentes_m: 1500  # C1.2 — raio pra contar CLOSED_PERMANENTLY por bairro
+
+# C3 (CORRECOES_2.md) — desconta o fator de verticalização quando há suspeita de moradia
+# estudantil (perto de campus + alta proporção de 18-24 anos): apartamento de estudante
+# não é domicílio com pet nem comprador de ração premium.
+estudantil:
+  percentil_pct_18a24: 0.75    # sobre os 300 candidatos (universo que decide o score)
+  distancia_campus_km: 2.0
+  fator_desconto_verticalizacao: 0.6
+
 candidatos:
   espacamento_via_m: 400
   buffer_score_preliminar_m: 1500
