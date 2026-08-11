@@ -25,10 +25,12 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _common import (  # noqa: E402
     DATA_MANUAL, DATA_PROCESSED, OUTPUT_DIR,
-    get_logger, load_config, log_resumo_fase,
+    aplicar_cap_bairro, get_logger, load_config, log_resumo_fase,
 )
 
 LOGGER = get_logger("fase8_manuais")
+MAX_POR_BAIRRO_TOP10 = 2  # G2 (CORRECOES.md) — mesmo cap da Fase 7; tem que replicar aqui,
+# senão o repique do Top10 depois das entradas manuais reintroduz a concentração por bairro.
 
 ARQUIVOS_MANUAIS = [
     "imoveis.csv", "ifood.csv", "meta_publico.csv", "google_buscas.csv",
@@ -135,16 +137,24 @@ def run() -> tuple[Path, Path]:
     # a Fase 7 já decidiu quem é aprovado e sobrevive à dedup geográfica de 800m — reaplicar aqui
     # é obrigatório, senão candidatos vizinhos suprimidos como duplicata voltam a aparecer só
     # porque o ranking completo (300 linhas) inclui todo mundo, não só quem passou nos filtros.
-    aprovados = ranking[ranking["teste_absoluto_passou"] & ~ranking["duplicata_geografica"]]
+    # O mesmo vale pro cap de bairro (G2): sem reaplicar, o repique abaixo reintroduz a
+    # concentração que o cap da Fase 7 já tinha resolvido.
+    aprovados = ranking[ranking["teste_absoluto_passou"] & ~ranking["duplicata_geografica"]].sort_values(
+        "score_final", ascending=False
+    )
+    top10_capado, excedentes_bairro = aplicar_cap_bairro(aprovados, "bairro", MAX_POR_BAIRRO_TOP10, 10)
+    LOGGER.info(
+        "G2 — cap de %d/bairro reaplicado: %d candidatos no Top10, %d bairros distintos, %d excedentes",
+        MAX_POR_BAIRRO_TOP10, len(top10_capado), top10_capado["bairro"].nunique(), len(excedentes_bairro),
+    )
 
     if geoteste_preenchido:
-        top10_atual = aprovados.sort_values("score_final", ascending=False)
-        top5_reordenado = top10_atual.head(5).sort_values("custo_por_conversa", ascending=True, na_position="last")
-        resto = top10_atual.iloc[5:10]
+        top5_reordenado = top10_capado.head(5).sort_values("custo_por_conversa", ascending=True, na_position="last")
+        resto = top10_capado.iloc[5:10]
         top10_final = pd.concat([top5_reordenado, resto], ignore_index=True)
         LOGGER.info("geoteste.csv preenchido — Top 5 reordenado por custo por conversa (único dado medido, não estimado)")
     else:
-        top10_final = aprovados.sort_values("score_final", ascending=False).head(10)
+        top10_final = top10_capado
 
     ranking.to_parquet(ranking_path, index=False)
     LOGGER.info("gravado (enriquecido): %s", ranking_path)

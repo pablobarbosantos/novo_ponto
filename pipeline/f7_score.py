@@ -28,13 +28,14 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _common import (  # noqa: E402
     DATA_MANUAL, DATA_PROCESSED, DATA_RAW, OUTPUT_DIR,
-    coord_hash, get_logger, load_config, log_resumo_fase,
+    aplicar_cap_bairro, coord_hash, get_logger, load_config, log_resumo_fase,
 )
 
 LOGGER = get_logger("fase7_score")
 
 ISO_RAW_DIR = DATA_RAW / "isocronas"
 RAIO_DEDUP_M = 800
+MAX_POR_BAIRRO_TOP10 = 2  # G2 (CORRECOES.md) — dez esquinas de cinco bairros não serve pra visitar
 
 
 # ---------------------------------------------------------------------------
@@ -435,11 +436,24 @@ def run() -> tuple[Path, Path]:
         cand["teste_absoluto_passou"].sum(), len(reprovados), cand["duplicata_geografica"].sum(),
     )
 
-    top10 = aprovados.head(10).copy()
+    # G2 — cap de MAX_POR_BAIRRO_TOP10 candidatos por bairro: o entregável serve pra visitar
+    # 10 lugares diferentes, não 10 esquinas de 5 bairros. Excedentes bloqueados só pelo cap
+    # (não por score) viram a seção "outros pontos do mesmo bairro" na ficha (Fase 9).
+    top10, excedentes_bairro = aplicar_cap_bairro(aprovados, "bairro", MAX_POR_BAIRRO_TOP10, 10)
+    top10 = top10.copy()
+    cand["excedente_cap_bairro"] = cand.index.isin(excedentes_bairro.index)
     if len(top10) < 10:
-        LOGGER.warning("ACEITE — só %d candidatos aprovados sobraram pro Top 10 (esperado 10)", len(top10))
+        LOGGER.warning(
+            "ACEITE — só %d candidatos sobraram pro Top 10 depois do cap de %d/bairro (esperado 10; "
+            "%d excedentes bloqueados só pelo cap, não por score)",
+            len(top10), MAX_POR_BAIRRO_TOP10, len(excedentes_bairro),
+        )
     else:
-        LOGGER.info("ACEITE — Top 10 completo com 10 candidatos aprovados")
+        LOGGER.info(
+            "ACEITE — Top 10 completo com 10 candidatos aprovados, %d bairros distintos, "
+            "cap de %d/bairro respeitado (%d excedentes bloqueados só pelo cap)",
+            top10["bairro"].nunique(), MAX_POR_BAIRRO_TOP10, len(excedentes_bairro),
+        )
 
     # checagem de aceite: nenhum a menos de 1,5km de rede (já é garantido pela Fase 4, aqui é só auditoria)
     raio_bloqueio = cfg["concorrencia"]["raio_bloqueio_rede_m"]

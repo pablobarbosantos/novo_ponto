@@ -321,3 +321,32 @@ def clean_numeric(series: "pd.Series", decimal_sep: str = ".") -> "pd.Series":
         s = s.str.replace(".", "", regex=False)  # separador de milhar, se houver
         s = s.str.replace(",", ".", regex=False)
     return pd.to_numeric(s, errors="coerce")
+
+
+# ---------------------------------------------------------------------------
+# G2 (CORRECOES.md) — cap de N candidatos por bairro no Top 10. Usado por
+# f7_score.py (corte inicial) E f8_manuais.py (repique depois das entradas
+# manuais) — precisa ficar num só lugar pra não divergir entre as duas fases.
+# ---------------------------------------------------------------------------
+
+def aplicar_cap_bairro(df_ordenado: "pd.DataFrame", col_bairro: str = "bairro",
+                        max_por_bairro: int = 2, n_total: int = 10) -> tuple["pd.DataFrame", "pd.DataFrame"]:
+    """
+    `df_ordenado` já vem ordenado por score (melhor primeiro). Percorre em
+    ordem e aceita até `max_por_bairro` candidatos de cada bairro, até
+    completar `n_total`. Retorna (aceitos, excedentes) — os excedentes
+    (bloqueados só pelo cap, não por score) alimentam a seção "outros pontos
+    do mesmo bairro" de cada ficha (Fase 9).
+    """
+    contagem: dict = {}
+    idx_aceitos, idx_excedentes = [], []
+    for idx, bairro in df_ordenado[col_bairro].items():
+        if len(idx_aceitos) >= n_total:
+            idx_excedentes.append(idx)
+            continue
+        if contagem.get(bairro, 0) < max_por_bairro:
+            idx_aceitos.append(idx)
+            contagem[bairro] = contagem.get(bairro, 0) + 1
+        else:
+            idx_excedentes.append(idx)
+    return df_ordenado.loc[idx_aceitos], df_ordenado.loc[idx_excedentes]

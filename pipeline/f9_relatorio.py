@@ -406,13 +406,49 @@ def _linha_tabela(row) -> str:
     )
 
 
-def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoDataFrame, crs_metrico: str) -> str:
+MAX_POR_BAIRRO_TOP10 = 2  # espelha a constante de f7_score.py — só pra texto da ficha
+
+
+def _motivo_fora_do_top10(o) -> str:
+    if not o["teste_absoluto_passou"]:
+        return f"reprovado no teste absoluto: {html.escape(str(o['teste_absoluto_motivo']))}"
+    if o.get("duplicata_geografica", False):
+        return "duplicata geográfica (<800m de outro candidato com score maior)"
+    return "aprovado, mas fora do Top10 (score mais baixo ou cap de 2 por bairro)"
+
+
+def _outros_pontos_bairro(bairro: str, ranking_completo: pd.DataFrame, ids_top10: set) -> str:
+    """G2 (CORRECOES.md) — o cap de MAX_POR_BAIRRO_TOP10 bloqueia candidatos bons só por já
+    haver 2 do mesmo bairro no Top10. Em vez de escondê-los, listam-se aqui (até 5, por
+    score) pra quem for visitar o bairro poder considerar mais de uma esquina."""
+    outros = ranking_completo[
+        (ranking_completo["bairro"] == bairro) & (~ranking_completo["candidato_id"].isin(ids_top10))
+    ].sort_values("score_final", ascending=False).head(5)
+    if outros.empty:
+        return ""
+    linhas = "".join(
+        f"<tr><td>{html.escape(str(o['candidato_id']))}</td><td>{_fmt(o['score_final'], 3)}</td>"
+        f"<td>{_motivo_fora_do_top10(o)}</td></tr>"
+        for _, o in outros.iterrows()
+    )
+    return f"""
+      <h4>Outros pontos no mesmo bairro (fora do Top10 pelo cap de {MAX_POR_BAIRRO_TOP10}/bairro, dedup ou score)</h4>
+      <table class="tabela-ficha"><tr><th>Candidato</th><th>Score</th><th>Por que não está no Top10</th></tr>{linhas}</table>
+    """
+
+
+def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoDataFrame, crs_metrico: str,
+                      ranking_completo: pd.DataFrame | None = None, ids_top10: set | None = None) -> str:
     dist = concorrentes.geometry.distance(row.geometry) / 1000.0
     proximos = concorrentes.assign(_dist=dist).nsmallest(5, "_dist")
     linhas_prox = "".join(
         f"<tr><td>{html.escape(str(c['nome']) or '(sem nome)')}</td><td>{NOME_TIPO.get(c['tipo'], c['tipo'])}</td>"
         f"<td>{c['_dist']:.2f} km</td><td>{_fmt(c['avaliacoes'])}</td></tr>"
         for _, c in proximos.iterrows()
+    )
+    outros_bairro_html = (
+        _outros_pontos_bairro(row["bairro"], ranking_completo, ids_top10)
+        if ranking_completo is not None and ids_top10 is not None else ""
     )
     checklist_html = ""
     for secao, itens in CHECKLIST:
@@ -448,6 +484,7 @@ def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoData
       </div>
       <h4>5 concorrentes mais próximos</h4>
       <table class="tabela-ficha"><tr><th>Nome</th><th>Tipo</th><th>Distância</th><th>Avaliações</th></tr>{linhas_prox}</table>
+      {outros_bairro_html}
       <div class="checklist-container">
         <h4>Checklist de visita (imprimir)</h4>
         {checklist_html}
@@ -474,11 +511,15 @@ def run() -> Path:
 
     OUTPUT_FICHAS.mkdir(parents=True, exist_ok=True)
     isocronas_por_id = {row["candidato_id"]: row.geometry for _, row in dados["isocronas"].iterrows()} if not dados["isocronas"].empty else {}
+    ids_top10 = set(top10["candidato_id"])
     fichas_html = []
     for i, row in enumerate(top10.itertuples(name="Row"), start=1):
         row_dict = top10.iloc[i - 1]
         mini_mapa = _mini_mapa_finalista(row, dados["concorrentes"], isocronas_por_id.get(row.candidato_id), crs_metrico)
-        fichas_html.append(_ficha_finalista(i, row_dict, mini_mapa, dados["concorrentes"], crs_metrico))
+        fichas_html.append(_ficha_finalista(
+            i, row_dict, mini_mapa, dados["concorrentes"], crs_metrico,
+            ranking_completo=dados["ranking_completo"], ids_top10=ids_top10,
+        ))
     LOGGER.info("fichas individuais geradas: %d", len(fichas_html))
 
     linhas_top10 = "".join(_linha_tabela(top10.iloc[i]) for i in range(len(top10)))
