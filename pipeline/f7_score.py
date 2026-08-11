@@ -39,18 +39,38 @@ MAX_POR_BAIRRO_TOP10 = 2  # G2 (CORRECOES.md) — dez esquinas de cinco bairros 
 
 
 # ---------------------------------------------------------------------------
-# 7.1 — Demanda estimada
+# 7.1 — Demanda estimada (captação de balcão, C4.1 CORRECOES_2.md)
 # ---------------------------------------------------------------------------
 
+# C4.1 — sobrescreve a composição genérica do B1 (PESO_ANEL={5:1.00,10:0.35,15:0.10}) só
+# para a captação de balcão: "ninguém atravessa a cidade pra comprar ração", o anel de
+# 15min sai inteiramente da conta (fica só para forca_concorrencia e C4.2, que continuam
+# usando a isócrona/anéis completos). Onde B1 conflita com C4.1, C4.1 prevalece.
+PESO_CAPTACAO_BALCAO = {5: 1.00, 10: 0.25}
+
+
 def _demanda_estimada(cand: pd.DataFrame, cfg: dict) -> pd.Series:
-    # NOTA: usa domicilios_efetivo/pct_apartamento_efetivo — o combinado genérico de 3
-    # anéis do B1 (CORRECOES.md). Substituído pela captação de balcão específica do C4.1
-    # (CORRECOES_2.md, só anéis 5/10min) mais adiante no plano de correções.
     taxa_posse = cfg["negocio"]["taxa_posse_pet_domicilio"]
     gasto_medio = cfg["negocio"]["gasto_medio_mensal_por_pet"]
-    fator_verticalizacao = 1.0 + 0.4 * cand["pct_apartamento_efetivo"].fillna(0)
-    potencial = cand["domicilios_efetivo"] * taxa_posse * fator_verticalizacao * gasto_medio
-    return potencial.where(cand["domicilios_efetivo"].notna())  # sem isócrona => sem demanda calculável, não 0
+
+    peso_total = sum(PESO_CAPTACAO_BALCAO[m] * cand[f"domicilios_anel{m}"].fillna(0) for m in PESO_CAPTACAO_BALCAO)
+    domicilios_captacao = peso_total
+    pct_apto_captacao = sum(
+        PESO_CAPTACAO_BALCAO[m] * cand[f"domicilios_anel{m}"].fillna(0) * cand[f"pct_apartamento_anel{m}"].fillna(0)
+        for m in PESO_CAPTACAO_BALCAO
+    ) / peso_total.replace(0, np.nan)
+    renda_captacao = sum(
+        PESO_CAPTACAO_BALCAO[m] * cand[f"domicilios_anel{m}"].fillna(0) * cand[f"renda_media_anel{m}"].fillna(0)
+        for m in PESO_CAPTACAO_BALCAO
+    ) / peso_total.replace(0, np.nan)
+
+    fator_verticalizacao = 1.0 + 0.4 * pct_apto_captacao.fillna(0)  # C3 desconta este fator depois (moradia estudantil)
+    potencial = domicilios_captacao * taxa_posse * fator_verticalizacao * gasto_medio
+
+    cand["domicilios_captacao_efetivo"] = domicilios_captacao  # reusado por B2 (Huff) e C4.2 (raio de entrega)
+    cand["pct_apartamento_captacao_efetivo"] = pct_apto_captacao
+    cand["renda_media_captacao_efetivo"] = renda_captacao  # só descritivo — renda não entra na fórmula de demanda
+    return potencial.where(domicilios_captacao.notna())
 
 
 # ---------------------------------------------------------------------------
@@ -113,7 +133,11 @@ def _forca_concorrencia(cand: gpd.GeoDataFrame, concorrentes: gpd.GeoDataFrame, 
 # nova depende de quantos concorrentes disputam cada domicílio, não de uma fração fixa.
 # ---------------------------------------------------------------------------
 
-PESO_ANEL_CAPTACAO = {5: 1.00, 10: 0.35, 15: 0.10}  # espelha PESO_ANEL do B1 (f5) — trocado por C4.1 mais adiante
+# C4.1 (CORRECOES_2.md) já aplicado — o modelo de Huff usa a mesma composição de captação
+# de balcão que _demanda_estimada (PESO_CAPTACAO_BALCAO, definida acima), não mais o
+# PESO_ANEL genérico do B1. Mantém os dois insumos de demanda (potencial_mensal e
+# demanda_capturada) consistentes sobre a mesma área de captação.
+PESO_ANEL_CAPTACAO = PESO_CAPTACAO_BALCAO
 DIST_MIN_KM = 0.15  # mesmo piso de distância usado em _forca_concorrencia, evita explosão em 1/dist²
 
 
@@ -339,6 +363,14 @@ def run() -> tuple[Path, Path]:
 
     LOGGER.info("=== Fase 7: score e filtros ===")
 
+    # C4.1 — valida consistência entre captacao_balcao.* e isocronas.minutos (só documenta/
+    # audita; os pesos em si ficam em PESO_CAPTACAO_BALCAO, não neste bloco de config).
+    cap_cfg = cfg.get("captacao_balcao", {})
+    for chave in ("anel_primario_min", "anel_secundario_min"):
+        m = cap_cfg.get(chave)
+        if m is not None and m not in minutos_lista:
+            LOGGER.warning("C4.1 — captacao_balcao.%s=%s não está em isocronas.minutos=%s — sem isócrona cacheada para esse anel", chave, m, minutos_lista)
+
     cand = gpd.read_file(DATA_PROCESSED / "candidatos_com_demanda.gpkg", layer="candidatos_com_demanda")
     concorrentes = gpd.read_file(DATA_PROCESSED / "concorrentes.gpkg")
     vias = gpd.read_file(DATA_PROCESSED / "vias.gpkg")
@@ -498,7 +530,9 @@ def run() -> tuple[Path, Path]:
 
     # --- saídas -------------------------------------------------------
     colunas_saida = [
-        "candidato_id", "bairro", "domicilios_efetivo", "pct_apartamento_efetivo", "renda_media_efetivo",
+        "candidato_id", "bairro",
+        "domicilios_captacao_efetivo", "pct_apartamento_captacao_efetivo", "renda_media_captacao_efetivo",
+        "domicilios_efetivo", "pct_apartamento_efetivo", "renda_media_efetivo",
         "n_concorrentes_15min", "forca_concorrencia", "n_clinicas_sem_loja",
         "saturacao", "potencial_mensal", "demanda_capturada", "oferta_imovel_disponivel", "aluguel_estimado_regiao",
         "aluguel_e_estimado", "custo_fixo_mensal", "sacos_breakeven",

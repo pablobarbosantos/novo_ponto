@@ -24,6 +24,16 @@ isocronas:
   minutos: [5, 10, 15]
   modo: "driving-car"
 
+# C4.1 (CORRECOES_2.md) — captação de balcão usa só os anéis 5/10min (15min sai
+# inteiramente do cálculo de demanda; continua valendo pra forca_concorrencia e C4.2).
+# Os pesos (1,00 / 0,25) ficam como constante PESO_CAPTACAO_BALCAO em f7_score.py,
+# espelhando o precedente de PESO_ANEL do B1 — aqui só documenta/valida a consistência
+# com isocronas.minutos.
+captacao_balcao:
+  anel_primario_min: 5
+  anel_secundario_min: 10
+  descartar_acima_de_min: 10
+
 concorrencia:
   raio_bloqueio_rede_m: 1500
   peso_rede: 3.0
