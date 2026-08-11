@@ -1,0 +1,35 @@
+# Configuração central do pipeline — ver ESPEC_CLAUDE_CODE.md §4
+
+municipio:
+  nome: "Uberlândia"
+  uf: "MG"
+  codigo_ibge: "3170206"
+
+crs:
+  geografico: "EPSG:4674"     # SIRGAS 2000 — CRS de origem dos dados IBGE
+  metrico: "EPSG:31982"       # SIRGAS 2000 / UTM 22S — validar contra a extensão do município
+
+negocio:
+  teto_aluguel: 4000
+  limite_aluguel_com_carencia: 5000
+  custo_fixo_extra_mensal: 1500
+  margem_por_saco_premium: 35        # PROVISÓRIO — substituir pelos dados dos representantes
+  taxa_posse_pet_domicilio: 0.55     # PROVISÓRIO — ajustar com fonte Abinpet/IBGE
+  gasto_medio_mensal_por_pet: 120    # PROVISÓRIO — ajustar
+  captura_min: 0.05
+  captura_max: 0.15
+  multiplo_minimo_breakeven: 2.5
+
+isocronas:
+  minutos: [5, 10, 15]
+  modo: "driving-car"
+
+concorrencia:
+  raio_bloqueio_rede_m: 1500
+  peso_rede: 3.0
+  peso_independente: 1.0
+
+redes_conhecidas:
+  - {nome: "Petz Rondon Pacheco", endereco: "Av. Rondon Pacheco, 505"}
+  - {nome: "Petz Center Shopping", endereco: "Av. João Naves de Ávila, 1331"}
+  - {nome: "Cobasi Rondon Pacheco", endereco: "Av. Rondon Pacheco, 1001"}

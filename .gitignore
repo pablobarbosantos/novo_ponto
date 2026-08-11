@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.claude/settings.local.json
+
+# downloads originais e conversões intermediárias — grandes, reprodutíveis a partir das fontes,
+# ficam só em disco local para servir a idempotência (spec §1.1)
+data/raw/
+data/interim/
+
+# manter a pasta mesmo sem conteúdo versionado
+!data/raw/.gitkeep
+!data/interim/.gitkeep
