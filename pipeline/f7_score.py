@@ -445,6 +445,25 @@ def run() -> tuple[Path, Path]:
             cfg["negocio"]["teto_aluguel"],
         )
 
+    # C5 (CORRECOES_2.md) — filtro duro de percentil máximo de força de concorrência:
+    # elimina candidatos no quartil superior (é o que barra Santa Mônica automaticamente,
+    # sem precisar de conhecimento local declarado em C2).
+    percentil_max_forca = cfg["concorrencia"]["percentil_maximo_forca"]
+    pct_forca = cand["forca_concorrencia"].rank(pct=True, na_option="bottom")
+    cand["filtro_forca_passou"] = pct_forca <= percentil_max_forca
+    n_reprovados_forca = int((~cand["filtro_forca_passou"]).sum())
+    LOGGER.info(
+        "C5 — filtro de percentil máximo de força de concorrência (<=%.0f%%): %d/%d candidatos reprovados",
+        percentil_max_forca * 100, n_reprovados_forca, len(cand),
+    )
+    # motivo combinado pra tabela de reprovados da Fase 9 — sem isso, quem passa no teste
+    # absoluto mas cai no filtro de força apareceria erroneamente como "passou"
+    cand["teste_absoluto_motivo"] = np.where(
+        cand["teste_absoluto_passou"] & ~cand["filtro_forca_passou"],
+        f"reprovado no filtro de força de concorrência (C5, percentil > {percentil_max_forca*100:.0f}%)",
+        cand["teste_absoluto_motivo"],
+    )
+
     # 7.6 — score final por percentil
     cand["acesso_score"] = _acesso_score(cand, vias)
     cand["oferta_imovel_score"] = 0.0  # sem imoveis.csv preenchido ainda — penalidade explícita (spec §7.6), não zero "medido"
@@ -495,8 +514,10 @@ def run() -> tuple[Path, Path]:
     # 7.7
     cand = _dedup_geografica(cand)
 
-    aprovados = cand[cand["teste_absoluto_passou"] & ~cand["duplicata_geografica"]].sort_values("score_final", ascending=False)
-    reprovados = cand[~cand["teste_absoluto_passou"]]
+    aprovados = cand[
+        cand["teste_absoluto_passou"] & ~cand["duplicata_geografica"] & cand["filtro_forca_passou"]
+    ].sort_values("score_final", ascending=False)
+    reprovados = cand[~cand["teste_absoluto_passou"] | ~cand["filtro_forca_passou"]]
     LOGGER.info(
         "teste absoluto: %d passaram, %d reprovados; dedup geográfica: %d duplicatas suprimidas",
         cand["teste_absoluto_passou"].sum(), len(reprovados), cand["duplicata_geografica"].sum(),

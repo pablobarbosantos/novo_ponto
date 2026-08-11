@@ -1772,3 +1772,119 @@
 2026-08-11 17:34:53,212 | fase9_relatorio | INFO | fichas individuais geradas: 9
 2026-08-11 17:34:53,275 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
 2026-08-11 17:34:53,275 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0
+2026-08-11 17:36:35,624 | fase4_candidatos | INFO | === Fase 4: geração de candidatos ===
+2026-08-11 17:36:35,785 | fase4_candidatos | INFO | vias de classe candidata (secondary/tertiary/residential): 12253 de 12686
+2026-08-11 17:36:36,934 | fase4_candidatos | INFO | vias dentro do perímetro urbano: 12248
+2026-08-11 17:36:37,458 | fase4_candidatos | INFO | vias de maior conectividade (grau >= mediana=2): 7728 de 12248
+2026-08-11 17:36:37,751 | fase4_candidatos | INFO | pontos gerados a cada 400m ao longo das vias selecionadas: 12234 (após remover coincidentes)
+2026-08-11 17:36:37,759 | fase4_candidatos | INFO | filtro rede (>=3000m): 12234 -> 8945
+2026-08-11 17:36:38,134 | fase4_candidatos | INFO | filtro setor (domicílios>0 e renda>=2000 ou desconhecida): 8945 -> 6548
+2026-08-11 17:36:44,325 | fase4_candidatos | INFO | ACEITE — 300 candidatos em 13 bairros distintos (mínimo 150/>8)
+2026-08-11 17:36:44,397 | fase4_candidatos | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos.gpkg
+2026-08-11 17:36:44,397 | fase4_candidatos | INFO | RESUMO — entrada=12234 saida=300 descartados=11934 motivo='fora do perímetro/baixa conectividade, perto de rede, setor sem domicílio/renda baixa, ou fora do top-N preliminar'
+2026-08-11 17:36:50,480 | fase5_isocronas | INFO | === Fase 5: isócronas ===
+2026-08-11 17:36:50,638 | fase5_isocronas | INFO | isócronas: 162 já em cache, 138 pendentes
+2026-08-11 17:36:53,021 | fase5_isocronas | INFO | lote 0-5: 5 isócronas obtidas
+2026-08-11 17:36:56,653 | fase5_isocronas | INFO | lote 5-10: 5 isócronas obtidas
+2026-08-11 17:37:00,364 | fase5_isocronas | INFO | lote 10-15: 5 isócronas obtidas
+2026-08-11 17:37:04,107 | fase5_isocronas | INFO | lote 15-20: 5 isócronas obtidas
+2026-08-11 17:37:08,005 | fase5_isocronas | INFO | lote 20-25: 5 isócronas obtidas
+2026-08-11 17:37:11,839 | fase5_isocronas | INFO | lote 25-30: 5 isócronas obtidas
+2026-08-11 17:37:15,489 | fase5_isocronas | INFO | lote 30-35: 5 isócronas obtidas
+2026-08-11 17:37:19,119 | fase5_isocronas | INFO | lote 35-40: 5 isócronas obtidas
+2026-08-11 17:37:22,810 | fase5_isocronas | INFO | lote 40-45: 5 isócronas obtidas
+2026-08-11 17:37:26,347 | fase5_isocronas | INFO | lote 45-50: 5 isócronas obtidas
+2026-08-11 17:37:30,137 | fase5_isocronas | INFO | lote 50-55: 5 isócronas obtidas
+2026-08-11 17:37:33,873 | fase5_isocronas | INFO | lote 55-60: 5 isócronas obtidas
+2026-08-11 17:37:37,564 | fase5_isocronas | INFO | lote 60-65: 5 isócronas obtidas
+2026-08-11 17:37:41,218 | fase5_isocronas | INFO | lote 65-70: 5 isócronas obtidas
+2026-08-11 17:37:44,812 | fase5_isocronas | INFO | lote 70-75: 5 isócronas obtidas
+2026-08-11 17:37:48,403 | fase5_isocronas | INFO | lote 75-80: 5 isócronas obtidas
+2026-08-11 17:37:52,029 | fase5_isocronas | INFO | lote 80-85: 5 isócronas obtidas
+2026-08-11 17:37:55,855 | fase5_isocronas | INFO | lote 85-90: 5 isócronas obtidas
+2026-08-11 17:37:59,413 | fase5_isocronas | INFO | lote 90-95: 5 isócronas obtidas
+2026-08-11 17:38:03,051 | fase5_isocronas | INFO | lote 95-100: 5 isócronas obtidas
+2026-08-11 17:38:06,677 | fase5_isocronas | INFO | lote 100-105: 5 isócronas obtidas
+2026-08-11 17:38:10,310 | fase5_isocronas | INFO | lote 105-110: 5 isócronas obtidas
+2026-08-11 17:38:14,066 | fase5_isocronas | INFO | lote 110-115: 5 isócronas obtidas
+2026-08-11 17:38:18,344 | fase5_isocronas | INFO | lote 115-120: 5 isócronas obtidas
+2026-08-11 17:38:21,877 | fase5_isocronas | INFO | lote 120-125: 5 isócronas obtidas
+2026-08-11 17:38:25,504 | fase5_isocronas | INFO | lote 125-130: 5 isócronas obtidas
+2026-08-11 17:38:29,235 | fase5_isocronas | INFO | lote 130-135: 5 isócronas obtidas
+2026-08-11 17:38:32,682 | fase5_isocronas | INFO | lote 135-138: 3 isócronas obtidas
+2026-08-11 17:39:08,564 | fase5_isocronas | INFO | demanda calculada: 300/300 candidatos com isócrona completa (0 ainda sem)
+2026-08-11 17:39:08,565 | fase5_isocronas | WARNING | B1 — domicilios_efetivo mediano=75824 (28.3% do total municipal=267966) NÃO ficou abaixo de 15% (alvo do CORRECOES.md). Mesmo o anel de 5min isolado (peso 1.00) já cobre mediana de 36751 domicílios (13.7%) — as isócronas driving-car do ORS para Uberlândia são geometricamente grandes mesmo em 5min nos pontos bem conectados que a Fase 4 seleciona (ex.: ~17-20km² de área só no anel de 5min). Isso NÃO é um erro de implementação (fórmula/pesos conferem com o pseudocódigo do B1) — é uma característica real da malha viária local. Mantido como está; C4.1 (CORRECOES_2.md) aperta ainda mais a captação de balcão (só anéis 5/10min, sem 15min) mas não resolve sozinho — ver nota de C6 item 5 no relatório final.
+2026-08-11 17:39:08,712 | fase5_isocronas | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos_com_demanda.gpkg (camadas: candidatos_com_demanda, isocronas_10min)
+2026-08-11 17:39:08,713 | fase5_isocronas | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-11 17:39:17,353 | fase6_calibracao | INFO | === Fase 6: calibração por análogos ===
+2026-08-11 17:39:17,455 | fase6_calibracao | INFO | pet shops independentes com avaliações conhecidas: 159
+2026-08-11 17:39:18,431 | fase6_calibracao | INFO | regressão OLS: n=159, R²=0.086, R² ajustado=0.050
+2026-08-11 17:39:18,433 | fase6_calibracao | INFO |   domicilios: coef=0.00009 p=0.580
+2026-08-11 17:39:18,434 | fase6_calibracao | INFO |   pct_apartamento: coef=-0.51790 p=0.497
+2026-08-11 17:39:18,434 | fase6_calibracao | INFO |   renda: coef=0.00012 p=0.029
+2026-08-11 17:39:18,434 | fase6_calibracao | INFO |   densidade: coef=0.00011 p=0.821
+2026-08-11 17:39:18,435 | fase6_calibracao | INFO |   n_concorrentes: coef=-0.03460 p=0.428
+2026-08-11 17:39:18,435 | fase6_calibracao | INFO |   n_clinicas_sem_loja: coef=0.18238 p=0.078
+2026-08-11 17:39:18,439 | fase6_calibracao | INFO | VIF: {'domicilios': 9.10951320050957, 'pct_apartamento': 1.745272609914853, 'renda': 1.4801141816159455, 'densidade': 8.325303193650699, 'n_concorrentes': 3.1255816226225384, 'n_clinicas_sem_loja': 2.885779058009948}
+2026-08-11 17:39:18,439 | fase6_calibracao | WARNING | regressão fraca demais para usar como peso (n=159 < 25 ou R²=0.086 < 0.25) — caindo pro método de quartis
+2026-08-11 17:39:18,441 | fase6_calibracao | INFO | método de quartis: 40 no quartil superior, 40 no inferior
+2026-08-11 17:39:18,445 | fase6_calibracao | INFO | gravado: C:\projetos\novo_ponto\data\processed\pesos.json — método=quartis confiança=baixa
+2026-08-11 17:39:18,445 | fase6_calibracao | INFO | pesos dos eixos finais: {'demanda_estimada': 0.352, 'saturacao': 0.298, 'oferta_imovel': 0.2, 'acesso': 0.15}
+2026-08-11 17:39:18,445 | fase6_calibracao | INFO | RESUMO — entrada=159 saida=159 descartados=0
+2026-08-11 17:39:25,998 | fase7_score | INFO | === Fase 7: score e filtros ===
+2026-08-11 17:39:28,858 | fase7_score | INFO | B2 — captura_min=0.05/captura_max=0.15 do config.yaml não são mais usados no teste absoluto desde a adoção do modelo de Huff (demanda_capturada); mantidos no config só por retrocompatibilidade, sem efeito ativo
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Chácaras Tubalina e Quartel' (R$ 7004048) ultrapassa o potencial do bairro (R$ 383856)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Jardim Brasília' (R$ 1551359) ultrapassa o potencial do bairro (R$ 405174)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Jardim Patrícia' (R$ 618820) ultrapassa o potencial do bairro (R$ 273966)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Laranjeiras' (R$ 4326289) ultrapassa o potencial do bairro (R$ 555720)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Luizote de Freitas' (R$ 1527826) ultrapassa o potencial do bairro (R$ 393096)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Pacaembú' (R$ 936611) ultrapassa o potencial do bairro (R$ 199518)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Pampulha' (R$ 151630) ultrapassa o potencial do bairro (R$ 99858)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Presidente Roosevelt' (R$ 9272189) ultrapassa o potencial do bairro (R$ 531234)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'Santa Mônica' (R$ 1069368) ultrapassa o potencial do bairro (R$ 1066758)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — soma de demanda_capturada em 'São Jorge' (R$ 1177694) ultrapassa o potencial do bairro (R$ 673794)
+2026-08-11 17:39:44,444 | fase7_score | WARNING | B2 — 10 bairro(s) com demanda_capturada somada acima do potencial (candidatos do mesmo bairro competindo pela mesma demanda sem se descontar)
+2026-08-11 17:39:44,448 | fase7_score | WARNING | nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa o fallback negocio.teto_aluguel=4000 (não zero); rode a Fase 8 depois de preencher o CSV e recalcule
+2026-08-11 17:39:44,451 | fase7_score | WARNING | B3 — teste absoluto aprovou 100% dos candidatos mesmo depois de B1+B2+B3 (fallback de aluguel=4000). Isso pode ser real (mercado com bastante espaço), mas precisa ficar dito no relatório, não escondido — ver seção de Metodologia.
+2026-08-11 17:39:44,452 | fase7_score | INFO | C5 — filtro de percentil máximo de força de concorrência (<=70%): 90/300 candidatos reprovados
+2026-08-11 17:39:44,478 | fase7_score | INFO | M1 — eixos disponíveis nesta rodada: ['demanda_estimada', 'saturacao', 'acesso'] (pesos originais {'demanda_estimada': 0.352, 'saturacao': 0.298, 'oferta_imovel': 0.2, 'acesso': 0.15} -> renormalizados {'demanda_estimada': 0.44, 'saturacao': 0.372, 'acesso': 0.187})
+2026-08-11 17:39:44,479 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\pesos_efetivos_aplicados.json
+2026-08-11 17:39:44,508 | fase7_score | INFO | teste absoluto: 300 passaram, 90 reprovados; dedup geográfica: 289 duplicatas suprimidas
+2026-08-11 17:39:44,510 | fase7_score | WARNING | ACEITE — só 9 candidatos sobraram pro Top 10 depois do cap de 2/bairro (esperado 10; 0 excedentes bloqueados só pelo cap, não por score)
+2026-08-11 17:39:44,510 | fase7_score | INFO | ACEITE — nenhum candidato do Top 10 a menos de 3000m de rede
+2026-08-11 17:39:44,513 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (9 linhas)
+2026-08-11 17:39:44,577 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
+2026-08-11 17:39:44,577 | fase7_score | INFO | RESUMO — entrada=300 saida=9 descartados=291 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'
+2026-08-11 17:39:52,127 | fase8_manuais | INFO | === Fase 8: entradas manuais ===
+2026-08-11 17:39:52,232 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,235 | fase8_manuais | INFO | ifood.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,236 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,238 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,239 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,240 | fase8_manuais | INFO | cliente_oculto.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,241 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,241 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,242 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,244 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,245 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,246 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,248 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,251 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-11 17:39:52,255 | fase8_manuais | INFO | G2 — cap de 2/bairro reaplicado: 9 candidatos no Top10, 7 bairros distintos, 0 excedentes
+2026-08-11 17:39:52,262 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\data\processed\ranking_completo.parquet
+2026-08-11 17:39:52,265 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\output\top10.csv
+2026-08-11 17:39:52,265 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (8 entrada(s) manual(is) pendente(s))
+2026-08-11 17:39:52,265 | fase8_manuais | INFO | resumo: 0 preenchido(s) [], 8 pendente(s) ['imoveis.csv', 'ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'geoteste.csv', 'marcas_carteira.csv']
+2026-08-11 17:39:52,265 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-11 17:39:53,315 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-11 17:39:53,519 | fase9_relatorio | INFO | C6.1 — OK: Top10 tem 7 bairros distintos (mínimo 6)
+2026-08-11 17:39:53,519 | fase9_relatorio | INFO | C6.2 — pulado (conhecimento_local.bairros_excluidos ainda não configurado nesta etapa do plano)
+2026-08-11 17:39:53,519 | fase9_relatorio | INFO | C6.3 — pulado (data/processed/vitalidade_bairro.csv ainda não existe nesta etapa do plano)
+2026-08-11 17:39:53,520 | fase9_relatorio | INFO | C6.4 — OK: nenhum candidato do Top10 a menos de 3000m de rede
+2026-08-11 17:39:53,521 | fase9_relatorio | INFO | C6.5 — OK: mediana de domicilios_captacao_efetivo = 21.9% do total municipal (teto ajustado: 28%)
+2026-08-11 17:39:53,521 | fase9_relatorio | WARNING | C6.6 — taxa de aprovação do teste absoluto = 100.0% (acima do teto de 80% do documento, mas não bloqueado — ver TAXA_APROVACAO_MIN em _sanidade.py para a justificativa do desvio)
+2026-08-11 17:39:53,521 | fase9_relatorio | INFO | SANIDADE (C6) — todos os testes aplicáveis nesta etapa passaram
+2026-08-11 17:39:54,847 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-11 17:39:55,210 | fase9_relatorio | INFO | fichas individuais geradas: 9
+2026-08-11 17:39:55,277 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.1 MB)
+2026-08-11 17:39:55,277 | fase9_relatorio | INFO | RESUMO — entrada=9 saida=9 descartados=0

@@ -137,11 +137,12 @@ def run() -> tuple[Path, Path]:
     # a Fase 7 já decidiu quem é aprovado e sobrevive à dedup geográfica de 800m — reaplicar aqui
     # é obrigatório, senão candidatos vizinhos suprimidos como duplicata voltam a aparecer só
     # porque o ranking completo (300 linhas) inclui todo mundo, não só quem passou nos filtros.
-    # O mesmo vale pro cap de bairro (G2): sem reaplicar, o repique abaixo reintroduz a
-    # concentração que o cap da Fase 7 já tinha resolvido.
-    aprovados = ranking[ranking["teste_absoluto_passou"] & ~ranking["duplicata_geografica"]].sort_values(
-        "score_final", ascending=False
-    )
+    # O mesmo vale pro cap de bairro (G2) e pro filtro de força de concorrência (C5): sem
+    # reaplicar, o repique abaixo reintroduz o que os filtros da Fase 7 já tinham resolvido.
+    filtro_forca = ranking["filtro_forca_passou"] if "filtro_forca_passou" in ranking.columns else True
+    aprovados = ranking[
+        ranking["teste_absoluto_passou"] & ~ranking["duplicata_geografica"] & filtro_forca
+    ].sort_values("score_final", ascending=False)
     top10_capado, excedentes_bairro = aplicar_cap_bairro(aprovados, "bairro", MAX_POR_BAIRRO_TOP10, 10)
     LOGGER.info(
         "G2 — cap de %d/bairro reaplicado: %d candidatos no Top10, %d bairros distintos, %d excedentes",

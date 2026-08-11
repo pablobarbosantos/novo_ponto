@@ -35,9 +35,16 @@ captacao_balcao:
   descartar_acima_de_min: 10
 
 concorrencia:
-  raio_bloqueio_rede_m: 1500
+  # C5 (CORRECOES_2.md) — era 1500m; permissivo demais para concorrente que trabalha a
+  # mesma faixa de produto com escala de compra muito maior (candidato de Centro passou
+  # com 1709m de distância de rede antes desta correção).
+  raio_bloqueio_rede_m: 3000
   peso_rede: 3.0
   peso_independente: 1.0
+  # C5 — elimina candidatos no quartil superior de força de concorrência (filtro duro,
+  # não só penalidade). É o parâmetro que barra Santa Mônica automaticamente, sem
+  # precisar de conhecimento local (C2).
+  percentil_maximo_forca: 0.70
 
 candidatos:
   espacamento_via_m: 400
