@@ -932,3 +932,17 @@
 2026-08-10 22:51:48,872 | fase6_calibracao | INFO | gravado: C:\projetos\novo_ponto\data\processed\pesos.json — método=quartis confiança=baixa
 2026-08-10 22:51:48,872 | fase6_calibracao | INFO | pesos dos eixos finais: {'demanda_estimada': 0.352, 'saturacao': 0.298, 'oferta_imovel': 0.2, 'acesso': 0.15}
 2026-08-10 22:51:48,872 | fase6_calibracao | INFO | RESUMO — entrada=159 saida=159 descartados=0
+2026-08-10 22:54:49,727 | fase7_score | INFO | === Fase 7: score e filtros ===
+2026-08-10 22:54:51,551 | fase7_score | WARNING | nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa só o custo fixo extra (piso), sem o aluguel; rode a Fase 8 depois de preencher o CSV e recalcule
+2026-08-10 22:54:51,599 | fase7_score | INFO | teste absoluto: 300 passaram, 0 reprovados; dedup geográfica: 288 duplicatas suprimidas
+2026-08-10 22:54:51,599 | fase7_score | INFO | ACEITE — Top 10 completo com 10 candidatos aprovados
+2026-08-10 22:54:51,600 | fase7_score | INFO | ACEITE — nenhum candidato do Top 10 a menos de 1500m de rede
+2026-08-10 22:54:51,605 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
+2026-08-10 22:55:41,628 | fase7_score | INFO | === Fase 7: score e filtros ===
+2026-08-10 22:55:44,630 | fase7_score | WARNING | nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa só o custo fixo extra (piso), sem o aluguel; rode a Fase 8 depois de preencher o CSV e recalcule
+2026-08-10 22:55:44,795 | fase7_score | INFO | teste absoluto: 300 passaram, 0 reprovados; dedup geográfica: 288 duplicatas suprimidas
+2026-08-10 22:55:44,797 | fase7_score | INFO | ACEITE — Top 10 completo com 10 candidatos aprovados
+2026-08-10 22:55:44,798 | fase7_score | INFO | ACEITE — nenhum candidato do Top 10 a menos de 1500m de rede
+2026-08-10 22:55:44,808 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
+2026-08-10 22:55:45,902 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
+2026-08-10 22:55:45,903 | fase7_score | INFO | RESUMO — entrada=300 saida=10 descartados=290 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'
