@@ -42,11 +42,14 @@ RAIO_DEDUP_M = 800
 # ---------------------------------------------------------------------------
 
 def _demanda_estimada(cand: pd.DataFrame, cfg: dict) -> pd.Series:
+    # NOTA: usa domicilios_efetivo/pct_apartamento_efetivo — o combinado genérico de 3
+    # anéis do B1 (CORRECOES.md). Substituído pela captação de balcão específica do C4.1
+    # (CORRECOES_2.md, só anéis 5/10min) mais adiante no plano de correções.
     taxa_posse = cfg["negocio"]["taxa_posse_pet_domicilio"]
     gasto_medio = cfg["negocio"]["gasto_medio_mensal_por_pet"]
-    fator_verticalizacao = 1.0 + 0.4 * cand["pct_apartamento_10min"].fillna(0)
-    potencial = cand["domicilios_10min"] * taxa_posse * fator_verticalizacao * gasto_medio
-    return potencial.where(cand["domicilios_10min"].notna())  # sem isócrona => sem demanda calculável, não 0
+    fator_verticalizacao = 1.0 + 0.4 * cand["pct_apartamento_efetivo"].fillna(0)
+    potencial = cand["domicilios_efetivo"] * taxa_posse * fator_verticalizacao * gasto_medio
+    return potencial.where(cand["domicilios_efetivo"].notna())  # sem isócrona => sem demanda calculável, não 0
 
 
 # ---------------------------------------------------------------------------
@@ -251,7 +254,7 @@ def run() -> tuple[Path, Path]:
 
     # --- saídas -------------------------------------------------------
     colunas_saida = [
-        "candidato_id", "bairro", "domicilios_10min", "pct_apartamento_10min", "renda_media_10min",
+        "candidato_id", "bairro", "domicilios_efetivo", "pct_apartamento_efetivo", "renda_media_efetivo",
         "n_concorrentes_15min", "forca_concorrencia", "n_clinicas_sem_loja",
         "saturacao", "potencial_mensal", "oferta_imovel_disponivel", "aluguel_estimado_regiao",
         "acesso_score", "score_final", "teste_absoluto_passou", "teste_absoluto_motivo",

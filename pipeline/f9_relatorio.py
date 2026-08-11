@@ -266,7 +266,7 @@ def _construir_mapa(dados: dict, crs_metrico: str) -> folium.Map:
     grupo_conc.add_to(mapa)
 
     if not isocronas.empty:
-        grupo_iso = folium.FeatureGroup(name="Isócronas de 10min dos finalistas", show=True)
+        grupo_iso = folium.FeatureGroup(name="Isócrona de 10min dos finalistas (referência visual)", show=True)
         iso_top10 = isocronas[isocronas["candidato_id"].isin(top10["candidato_id"])]
         for _, row in iso_top10.iterrows():
             folium.GeoJson(
@@ -280,7 +280,7 @@ def _construir_mapa(dados: dict, crs_metrico: str) -> folium.Map:
         popup_html = (
             f"<b>#{i} — {html.escape(str(row.bairro))}</b><br>"
             f"Score: {row.score_final:.3f}<br>"
-            f"Domicílios 10min: {row.domicilios_10min:,.0f}<br>"
+            f"Domicílios (captação efetiva): {row.domicilios_efetivo:,.0f}<br>"
             f"Potencial mensal: R$ {row.potencial_mensal:,.0f}"
         )
         folium.Marker(
@@ -371,7 +371,7 @@ def _resumo_executivo(top10: pd.DataFrame) -> str:
         itens.append(
             f"<li><b>#{i} {html.escape(str(row.bairro))}</b> (candidato {row.candidato_id}) — "
             f"score {row.score_final:.3f}, potencial mensal de R$ {row.potencial_mensal:,.0f} "
-            f"na isócrona de 10min, saturação {row.saturacao:,.0f}.</li>"
+            f"na área de captação efetiva (decaída por anel 5/10/15min), saturação {row.saturacao:,.0f}.</li>"
         )
     melhor = top10.iloc[0]
     return (
@@ -387,9 +387,9 @@ def _linha_tabela(row) -> str:
     return (
         "<tr>"
         f"<td>{html.escape(str(row['bairro']))}</td>"
-        f"<td data-v='{row['domicilios_10min']}'>{_fmt(row['domicilios_10min'])}</td>"
-        f"<td data-v='{row['pct_apartamento_10min']}'>{_fmt(row['pct_apartamento_10min']*100 if pd.notna(row['pct_apartamento_10min']) else None, 1, sufixo='%')}</td>"
-        f"<td data-v='{row['renda_media_10min']}'>{_fmt(row['renda_media_10min'], 0, 'R$ ')}</td>"
+        f"<td data-v='{row['domicilios_efetivo']}'>{_fmt(row['domicilios_efetivo'])}</td>"
+        f"<td data-v='{row['pct_apartamento_efetivo']}'>{_fmt(row['pct_apartamento_efetivo']*100 if pd.notna(row['pct_apartamento_efetivo']) else None, 1, sufixo='%')}</td>"
+        f"<td data-v='{row['renda_media_efetivo']}'>{_fmt(row['renda_media_efetivo'], 0, 'R$ ')}</td>"
         f"<td data-v='{row['n_concorrentes_15min']}'>{_fmt(row['n_concorrentes_15min'])}</td>"
         f"<td data-v='{row['forca_concorrencia']}'>{_fmt(row['forca_concorrencia'], 1)}</td>"
         f"<td data-v='{row['n_clinicas_sem_loja']}'>{_fmt(row['n_clinicas_sem_loja'])}</td>"
@@ -424,9 +424,9 @@ def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoData
         <div class="ficha-indicadores">
           <table class="tabela-ficha">
             <tr><th>Score final</th><td>{_fmt(row['score_final'], 3)}</td></tr>
-            <tr><th>Domicílios (10min)</th><td>{_fmt(row['domicilios_10min'])}</td></tr>
-            <tr><th>% apartamento (10min)</th><td>{_fmt(row['pct_apartamento_10min']*100 if pd.notna(row['pct_apartamento_10min']) else None, 1, sufixo='%')}</td></tr>
-            <tr><th>Renda média do responsável (10min)</th><td>{_fmt(row['renda_media_10min'], 0, 'R$ ')}</td></tr>
+            <tr><th>Domicílios (captação efetiva)</th><td>{_fmt(row['domicilios_efetivo'])}</td></tr>
+            <tr><th>% apartamento (captação efetiva)</th><td>{_fmt(row['pct_apartamento_efetivo']*100 if pd.notna(row['pct_apartamento_efetivo']) else None, 1, sufixo='%')}</td></tr>
+            <tr><th>Renda média do responsável (captação efetiva)</th><td>{_fmt(row['renda_media_efetivo'], 0, 'R$ ')}</td></tr>
             <tr><th>Potencial mensal da área</th><td>{_fmt(row['potencial_mensal'], 0, 'R$ ')}</td></tr>
             <tr><th>Concorrentes (15min)</th><td>{_fmt(row['n_concorrentes_15min'])}</td></tr>
             <tr><th>Força da concorrência</th><td>{_fmt(row['forca_concorrencia'], 1)}</td></tr>
@@ -572,7 +572,7 @@ def _montar_html(**kw) -> str:
     <table id="tabela-top10" class="ordenavel">
       <thead><tr>
         <th data-tipo="texto">Bairro / eixo</th>
-        <th data-tipo="num">Domicílios 10min</th>
+        <th data-tipo="num">Domicílios (captação efetiva)</th>
         <th data-tipo="num">% apto</th>
         <th data-tipo="num">Renda resp.</th>
         <th data-tipo="num">Concorrentes</th>

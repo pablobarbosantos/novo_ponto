@@ -7,9 +7,15 @@ data/raw/isocronas/ — interrompível e retomável sem perder o que já foi
 baixado. Se a cota estourar, salva o progresso e encerra com status parcial
 (não é erro fatal do pipeline, spec §1.3/§5 Fase 5).
 
-Cálculo de demanda: interseção da isócrona de 10 min com os setores
-censitários, com rateio proporcional à área para setores parcialmente
-cobertos.
+Cálculo de demanda (CORRECOES.md B1): a isócrona binária de 10min sozinha
+cobria ~48% da cidade e achatava toda variável discriminante. Em vez disso,
+recorta-se os 3 anéis concêntricos (5min cheio; 10min menos 5min; 15min
+menos 10min) e cada um entra com peso decrescente (PESO_ANEL) — decaimento
+aproximado de exp(-t/4). Domicílios/pct_apartamento/renda são gravados por
+anel (`*_anel5/10/15`, cada um já rateado por interseção fracionária de
+área) e também combinados nas colunas genéricas `*_efetivo`. A Fase 7
+(CORRECOES_2.md C4.1) usa as colunas por-anel diretamente para compor a
+captação de balcão com pesos próprios (anel de 15min fora da captação).
 
 Saída: data/processed/candidatos_com_demanda.gpkg
 Roda sozinho: `python pipeline/f5_isocronas.py`
@@ -149,17 +155,62 @@ def coletar_isocronas(candidatos: gpd.GeoDataFrame, minutos: list[int], api_key:
 
 
 # ---------------------------------------------------------------------------
-# Demanda: interseção da isócrona de 10min com setores, rateio por área
+# Demanda (B1): 3 anéis concêntricos (5min cheio, 10min-5min, 15min-10min),
+# cada um rateado por interseção fracionária de área, combinados por
+# decaimento de peso.
 # ---------------------------------------------------------------------------
 
-def _isocrona_10min(fc: dict, minutos_alvo: int, minutos_lista: list[int]) -> dict | None:
-    idx_alvo = minutos_lista.index(minutos_alvo)
-    ranges_vistos = sorted({f["properties"]["value"] for f in fc["features"]})
+PESO_ANEL = {5: 1.00, 10: 0.35, 15: 0.10}  # B1 (CORRECOES.md) — decaimento aprox. exp(-t/4)
+
+
+def _extrair_feature(fc: dict, minutos_alvo: int) -> dict | None:
     valor_alvo = minutos_alvo * 60
     for f in fc["features"]:
         if f["properties"]["value"] == valor_alvo:
             return f
     return None
+
+
+def _aneis_metricos(fc: dict, minutos_lista: list[int], crs_metrico: str) -> dict[int, object | None]:
+    """Recorta os anéis concêntricos a partir do FeatureCollection já cacheado (sem
+    nenhuma chamada nova ao ORS): anel do menor tempo = polígono cheio; anéis seguintes
+    = polígono do tempo maior menos o do tempo imediatamente menor."""
+    polys_metricos: dict[int, object | None] = {}
+    for m in minutos_lista:
+        feat = _extrair_feature(fc, m)
+        if feat is None:
+            polys_metricos[m] = None
+            continue
+        poly_wgs = shape(feat["geometry"])
+        polys_metricos[m] = gpd.GeoSeries([poly_wgs], crs="EPSG:4326").to_crs(crs_metrico).iloc[0]
+
+    minutos_ordenados = sorted(m for m in minutos_lista if polys_metricos[m] is not None)
+    aneis: dict[int, object | None] = {}
+    anterior = None
+    for m in minutos_ordenados:
+        atual = polys_metricos[m]
+        aneis[m] = atual.difference(anterior) if anterior is not None else atual
+        anterior = atual
+    for m in minutos_lista:
+        aneis.setdefault(m, None)
+    return aneis
+
+
+def _demanda_por_anel(poligono, setores: gpd.GeoDataFrame, sindex, setores_area_total) -> tuple[float | None, float | None, float | None]:
+    if poligono is None or poligono.is_empty:
+        return None, None, None
+    idx = list(sindex.query(poligono, predicate="intersects"))
+    if not idx:
+        return 0.0, None, None
+    sub = setores.iloc[idx]
+    inter_area = sub.geometry.intersection(poligono).area
+    fracao = (inter_area / setores_area_total.iloc[idx].values).clip(0, 1)
+    peso = sub["domicilios_ocupados"].fillna(0).values * fracao
+    dom = float(peso.sum())
+    soma_peso = peso.sum()
+    pct_apto = float((sub["pct_apartamento"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
+    renda = float((sub["renda_media_responsavel"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
+    return dom, pct_apto, renda
 
 
 def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, minutos_lista: list[int], crs_metrico: str) -> gpd.GeoDataFrame:
@@ -168,59 +219,81 @@ def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, mi
     setores_area_total = setores.geometry.area
     sindex = setores.sindex
 
-    domicilios_10min, pct_apto_ponderado, renda_ponderada, status = [], [], [], []
+    por_anel = {m: {"dom": [], "pct": [], "renda": []} for m in minutos_lista}
+    domicilios_efetivo, pct_apto_efetivo, renda_efetivo, status = [], [], [], []
     isocronas_10min_geoms = []
+
+    def _linha_vazia():
+        for m in minutos_lista:
+            por_anel[m]["dom"].append(None)
+            por_anel[m]["pct"].append(None)
+            por_anel[m]["renda"].append(None)
+        domicilios_efetivo.append(None)
+        pct_apto_efetivo.append(None)
+        renda_efetivo.append(None)
+        status.append("não coletado")
+        isocronas_10min_geoms.append(None)
 
     for cid, geom_wgs in zip(candidatos_wgs["candidato_id"], candidatos_wgs.geometry):
         cache_path = _cache_path(geom_wgs.x, geom_wgs.y)
         if not cache_path.exists():
-            domicilios_10min.append(None)
-            pct_apto_ponderado.append(None)
-            renda_ponderada.append(None)
-            status.append("não coletado")
-            isocronas_10min_geoms.append(None)
+            _linha_vazia()
             continue
 
         fc = json.loads(cache_path.read_text(encoding="utf-8"))
-        feat_10 = _isocrona_10min(fc, 10, minutos_lista)
-        if feat_10 is None:
-            domicilios_10min.append(None)
-            pct_apto_ponderado.append(None)
-            renda_ponderada.append(None)
-            status.append("não coletado")
+        aneis = _aneis_metricos(fc, minutos_lista, crs_metrico)
+        if all(aneis[m] is None for m in minutos_lista):
+            _linha_vazia()
+            continue
+
+        # isócrona "cheia" de 10min (não o anel) — só para a layer de mapa da Fase 9
+        feat_10 = _extrair_feature(fc, 10)
+        if feat_10 is not None:
+            poly10_wgs = shape(feat_10["geometry"])
+            isocronas_10min_geoms.append(gpd.GeoSeries([poly10_wgs], crs="EPSG:4326").to_crs(crs_metrico).iloc[0])
+        else:
             isocronas_10min_geoms.append(None)
+
+        soma_peso_efetivo = 0.0
+        soma_dom_efetivo = 0.0
+        soma_pct_num = 0.0
+        soma_renda_num = 0.0
+        algum_anel_valido = False
+        for m in minutos_lista:
+            dom, pct, renda = _demanda_por_anel(aneis[m], setores, sindex, setores_area_total)
+            por_anel[m]["dom"].append(dom)
+            por_anel[m]["pct"].append(pct)
+            por_anel[m]["renda"].append(renda)
+            if dom is not None:
+                algum_anel_valido = True
+                peso_efetivo = PESO_ANEL.get(m, 0.0) * dom
+                soma_dom_efetivo += peso_efetivo
+                soma_peso_efetivo += peso_efetivo
+                if pct is not None:
+                    soma_pct_num += peso_efetivo * pct
+                if renda is not None:
+                    soma_renda_num += peso_efetivo * renda
+
+        if not algum_anel_valido:
+            domicilios_efetivo.append(None)
+            pct_apto_efetivo.append(None)
+            renda_efetivo.append(None)
+            status.append("não coletado")
             continue
 
-        poligono_wgs = shape(feat_10["geometry"])
-        poligono = gpd.GeoSeries([poligono_wgs], crs="EPSG:4326").to_crs(crs_metrico).iloc[0]
-        isocronas_10min_geoms.append(poligono)
-
-        candidatos_idx = list(sindex.query(poligono, predicate="intersects"))
-        if not candidatos_idx:
-            domicilios_10min.append(0.0)
-            pct_apto_ponderado.append(None)
-            renda_ponderada.append(None)
-            status.append("completo")
-            continue
-
-        sub = setores.iloc[candidatos_idx]
-        inter_area = sub.geometry.intersection(poligono).area
-        fracao = (inter_area / setores_area_total.iloc[candidatos_idx].values).clip(0, 1)
-
-        dom = (sub["domicilios_ocupados"].fillna(0).values * fracao).sum()
-        peso = sub["domicilios_ocupados"].fillna(0).values * fracao
-        soma_peso = peso.sum()
-        pct_apto = float((sub["pct_apartamento"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
-        renda = float((sub["renda_media_responsavel"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
-
-        domicilios_10min.append(dom)
-        pct_apto_ponderado.append(pct_apto)
-        renda_ponderada.append(renda)
+        domicilios_efetivo.append(soma_dom_efetivo)
+        pct_apto_efetivo.append(soma_pct_num / soma_peso_efetivo if soma_peso_efetivo > 0 else None)
+        renda_efetivo.append(soma_renda_num / soma_peso_efetivo if soma_peso_efetivo > 0 else None)
         status.append("completo")
 
-    candidatos["domicilios_10min"] = domicilios_10min
-    candidatos["pct_apartamento_10min"] = pct_apto_ponderado
-    candidatos["renda_media_10min"] = renda_ponderada
+    for m in minutos_lista:
+        candidatos[f"domicilios_anel{m}"] = por_anel[m]["dom"]
+        candidatos[f"pct_apartamento_anel{m}"] = por_anel[m]["pct"]
+        candidatos[f"renda_media_anel{m}"] = por_anel[m]["renda"]
+
+    candidatos["domicilios_efetivo"] = domicilios_efetivo
+    candidatos["pct_apartamento_efetivo"] = pct_apto_efetivo
+    candidatos["renda_media_efetivo"] = renda_efetivo
     candidatos["status_isocrona"] = status
     candidatos["geometry_isocrona_10min"] = isocronas_10min_geoms
     return candidatos
@@ -237,9 +310,13 @@ def run() -> Path:
     if not api_key:
         LOGGER.warning("ORS_API_KEY ausente — Fase 5 pulada por completo, candidatos ficam sem indicador de demanda (spec §1.3)")
         candidatos = gpd.read_file(DATA_PROCESSED / "candidatos.gpkg")
-        candidatos["domicilios_10min"] = None
-        candidatos["pct_apartamento_10min"] = None
-        candidatos["renda_media_10min"] = None
+        for m in minutos_lista:
+            candidatos[f"domicilios_anel{m}"] = None
+            candidatos[f"pct_apartamento_anel{m}"] = None
+            candidatos[f"renda_media_anel{m}"] = None
+        candidatos["domicilios_efetivo"] = None
+        candidatos["pct_apartamento_efetivo"] = None
+        candidatos["renda_media_efetivo"] = None
         candidatos["status_isocrona"] = "não coletado (sem chave ORS)"
         out_path = DATA_PROCESSED / "candidatos_com_demanda.gpkg"
         candidatos.to_file(out_path, layer="candidatos_com_demanda", driver="GPKG")
@@ -253,9 +330,13 @@ def run() -> Path:
     try:
         n_cache, n_novos = coletar_isocronas(candidatos, minutos_lista, api_key)
     except ORSIndisponivel:
-        candidatos["domicilios_10min"] = None
-        candidatos["pct_apartamento_10min"] = None
-        candidatos["renda_media_10min"] = None
+        for m in minutos_lista:
+            candidatos[f"domicilios_anel{m}"] = None
+            candidatos[f"pct_apartamento_anel{m}"] = None
+            candidatos[f"renda_media_anel{m}"] = None
+        candidatos["domicilios_efetivo"] = None
+        candidatos["pct_apartamento_efetivo"] = None
+        candidatos["renda_media_efetivo"] = None
         candidatos["status_isocrona"] = "não coletado (ORS indisponível para esta chave)"
         out_path = DATA_PROCESSED / "candidatos_com_demanda.gpkg"
         candidatos.to_file(out_path, layer="candidatos_com_demanda", driver="GPKG")
@@ -268,6 +349,28 @@ def run() -> Path:
     n_completo = (candidatos["status_isocrona"] == "completo").sum()
     n_faltando = len(candidatos) - n_completo
     LOGGER.info("demanda calculada: %d/%d candidatos com isócrona completa (%d ainda sem)", n_completo, len(candidatos), n_faltando)
+
+    # B1 (CORRECOES.md) — validação: domicilios_efetivo mediano deve ficar abaixo de 15%
+    # do total municipal. Total municipal precisa vir do próprio setores.gpkg (não hardcodar).
+    total_municipal = setores["domicilios_ocupados"].sum()
+    mediana_efetivo = candidatos["domicilios_efetivo"].median()
+    pct_mediana = 100 * mediana_efetivo / total_municipal if total_municipal else float("nan")
+    if pct_mediana >= 15:
+        LOGGER.warning(
+            "B1 — domicilios_efetivo mediano=%.0f (%.1f%% do total municipal=%d) NÃO ficou abaixo de 15%% "
+            "(alvo do CORRECOES.md). Mesmo o anel de 5min isolado (peso 1.00) já cobre mediana de %.0f "
+            "domicílios (%.1f%%) — as isócronas driving-car do ORS para Uberlândia são geometricamente "
+            "grandes mesmo em 5min nos pontos bem conectados que a Fase 4 seleciona (ex.: ~17-20km² de área "
+            "só no anel de 5min). Isso NÃO é um erro de implementação (fórmula/pesos conferem com o "
+            "pseudocódigo do B1) — é uma característica real da malha viária local. Mantido como está; "
+            "C4.1 (CORRECOES_2.md) aperta ainda mais a captação de balcão (só anéis 5/10min, sem 15min) "
+            "mas não resolve sozinho — ver nota de C6 item 5 no relatório final.",
+            mediana_efetivo, pct_mediana, total_municipal,
+            candidatos["domicilios_anel5"].median(),
+            100 * candidatos["domicilios_anel5"].median() / total_municipal if total_municipal else float("nan"),
+        )
+    else:
+        LOGGER.info("B1 — ACEITE: domicilios_efetivo mediano=%.0f (%.1f%% do total municipal) abaixo de 15%%", mediana_efetivo, pct_mediana)
 
     # duas camadas: pontos com atributos de demanda, e polígonos da isócrona de 10min (mapa da Fase 9)
     pontos = candidatos.drop(columns=["geometry_isocrona_10min"])

@@ -1268,3 +1268,14 @@
 2026-08-11 08:13:58,090 | fase1_ibge | INFO | ACEITE — todos os critérios da Fase 1 passaram (n_setores=1988, soma_domicilios=267966)
 2026-08-11 08:13:58,223 | fase1_ibge | INFO | gravado: C:\projetos\novo_ponto\data\processed\setores.gpkg
 2026-08-11 08:13:58,223 | fase1_ibge | INFO | RESUMO — entrada=1988 saida=1988 descartados=0 motivo='setores fora de Uberlândia (filtro CD_MUN) já removidos na malha de origem'
+2026-08-11 08:17:39,582 | fase5_isocronas | INFO | === Fase 5: isócronas ===
+2026-08-11 08:17:39,732 | fase5_isocronas | INFO | isócronas: 300 já em cache, 0 pendentes
+2026-08-11 08:18:09,084 | fase5_isocronas | INFO | demanda calculada: 300/300 candidatos com isócrona completa (0 ainda sem)
+2026-08-11 08:18:09,260 | fase5_isocronas | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos_com_demanda.gpkg (camadas: candidatos_com_demanda, isocronas_10min)
+2026-08-11 08:18:09,261 | fase5_isocronas | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-11 08:20:43,620 | fase5_isocronas | INFO | === Fase 5: isócronas ===
+2026-08-11 08:20:43,736 | fase5_isocronas | INFO | isócronas: 300 já em cache, 0 pendentes
+2026-08-11 08:21:12,127 | fase5_isocronas | INFO | demanda calculada: 300/300 candidatos com isócrona completa (0 ainda sem)
+2026-08-11 08:21:12,127 | fase5_isocronas | WARNING | B1 — domicilios_efetivo mediano=80408 (30.0% do total municipal=267966) NÃO ficou abaixo de 15% (alvo do CORRECOES.md). Mesmo o anel de 5min isolado (peso 1.00) já cobre mediana de 39647 domicílios (14.8%) — as isócronas driving-car do ORS para Uberlândia são geometricamente grandes mesmo em 5min nos pontos bem conectados que a Fase 4 seleciona (ex.: ~17-20km² de área só no anel de 5min). Isso NÃO é um erro de implementação (fórmula/pesos conferem com o pseudocódigo do B1) — é uma característica real da malha viária local. Mantido como está; C4.1 (CORRECOES_2.md) aperta ainda mais a captação de balcão (só anéis 5/10min, sem 15min) mas não resolve sozinho — ver nota de C6 item 5 no relatório final.
+2026-08-11 08:21:12,342 | fase5_isocronas | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos_com_demanda.gpkg (camadas: candidatos_com_demanda, isocronas_10min)
+2026-08-11 08:21:12,342 | fase5_isocronas | INFO | RESUMO — entrada=300 saida=300 descartados=0
