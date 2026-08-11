@@ -1028,3 +1028,54 @@
 2026-08-10 22:58:39,224 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (8 entrada(s) manual(is) pendente(s))
 2026-08-10 22:58:39,224 | fase8_manuais | INFO | resumo: 0 preenchido(s) [], 8 pendente(s) ['imoveis.csv', 'ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'geoteste.csv', 'marcas_carteira.csv']
 2026-08-10 22:58:39,224 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 23:02:20,240 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:02:50,167 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:02:52,239 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html
+2026-08-10 23:02:54,865 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:02:54,904 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (3.5 MB)
+2026-08-10 23:02:54,906 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:03:57,595 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:04:00,042 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html
+2026-08-10 23:04:02,507 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:04:02,618 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (4.1 MB)
+2026-08-10 23:04:02,618 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:06:08,697 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:06:20,378 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:06:21,500 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:06:21,722 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (12.5 MB)
+2026-08-10 23:06:21,724 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:11:25,161 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:11:27,535 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:11:28,640 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:11:28,819 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (12.5 MB)
+2026-08-10 23:11:28,819 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:12:29,211 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:12:31,539 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:12:32,709 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:12:32,904 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (12.5 MB)
+2026-08-10 23:12:32,904 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:14:07,955 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:14:10,386 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:14:11,523 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:14:11,711 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (12.5 MB)
+2026-08-10 23:14:11,711 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:16:37,428 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:16:39,801 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:16:40,708 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:16:40,821 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (6.0 MB)
+2026-08-10 23:16:40,822 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:17:14,872 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:17:17,179 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:17:18,037 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:17:18,174 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.4 MB)
+2026-08-10 23:17:18,174 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:18:41,151 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:18:43,599 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:18:44,615 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:18:44,748 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.4 MB)
+2026-08-10 23:18:44,748 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:19:46,431 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:19:49,726 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:19:50,636 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:19:50,778 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.4 MB)
+2026-08-10 23:19:50,778 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
