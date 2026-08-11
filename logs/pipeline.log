@@ -1079,3 +1079,151 @@
 2026-08-10 23:19:50,636 | fase9_relatorio | INFO | fichas individuais geradas: 10
 2026-08-10 23:19:50,778 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.4 MB)
 2026-08-10 23:19:50,778 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
+2026-08-10 23:21:12,122 | fase1_ibge | INFO | === Fase 1: base demográfica IBGE — município 3170206 ===
+2026-08-10 23:21:14,574 | fase1_ibge | INFO | URL mais recente para basico: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/Agregados_por_setores_basico_BR_20260520.zip
+2026-08-10 23:21:14,575 | fase1_ibge | INFO | URL mais recente para domicilio1: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/Agregados_por_setores_caracteristicas_domicilio1_BR.zip
+2026-08-10 23:21:14,575 | fase1_ibge | INFO | URL mais recente para demografia: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/Agregados_por_Setor_csv/Agregados_por_setores_demografia_BR.zip
+2026-08-10 23:21:14,594 | fase1_ibge | INFO | URL mais recente para dicionario: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx
+2026-08-10 23:21:14,595 | fase1_ibge | INFO | URL mais recente para malha: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/gpkg/UF/MG/MG_setores_CD2022.gpkg
+2026-08-10 23:21:14,595 | fase1_ibge | INFO | URL mais recente para renda_zip: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/Agregados_por_setores_renda_responsavel_BR_20260508_xlsx.zip
+2026-08-10 23:21:14,595 | fase1_ibge | INFO | URL mais recente para renda_dicionario: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios_Rendimento_do_Responsavel/dicionario_de_dados_renda_responsavel_20260508.xlsx
+2026-08-10 23:21:14,599 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_basico_BR_20260520.zip
+2026-08-10 23:21:14,600 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_caracteristicas_domicilio1_BR.zip
+2026-08-10 23:21:14,601 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_demografia_BR.zip
+2026-08-10 23:21:14,602 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx
+2026-08-10 23:21:14,604 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\MG_setores_CD2022.gpkg
+2026-08-10 23:21:14,607 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\Agregados_por_setores_renda_responsavel_BR_20260508_xlsx.zip
+2026-08-10 23:21:14,608 | fase1_ibge | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\ibge\dicionario_de_dados_renda_responsavel_20260508.xlsx
+2026-08-10 23:21:14,608 | fase1_ibge | INFO | markitdown já convertido, pulando: C:\projetos\novo_ponto\data\interim\md\dicionario_de_dados_agregados_por_setores_censitarios_20260520.xlsx.md
+2026-08-10 23:21:14,608 | fase1_ibge | INFO | markitdown já convertido, pulando: C:\projetos\novo_ponto\data\interim\md\dicionario_de_dados_renda_responsavel_20260508.xlsx.md
+2026-08-10 23:21:14,610 | fase1_ibge | INFO | lendo malha geográfica de MG (pode demorar, é um gpkg grande)
+2026-08-10 23:21:20,753 | fase1_ibge | INFO | malha: 51392 setores em MG, 1988 em Uberlândia (CD_MUN=3170206)
+2026-08-10 23:21:20,754 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_basico_BR_20260520.zip
+2026-08-10 23:21:20,757 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_caracteristicas_domicilio1_BR.zip
+2026-08-10 23:21:20,757 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_demografia_BR.zip
+2026-08-10 23:21:20,758 | fase1_ibge | INFO | já extraído, pulando: Agregados_por_setores_renda_responsavel_BR_20260508_xlsx.zip
+2026-08-10 23:21:21,211 | fase1_ibge | INFO | Agregados_por_setores_basico_BR.csv: chardet sugeriu ISO-8859-1 (confiança=0.006); usando cp1252
+2026-08-10 23:21:21,232 | fase1_ibge | INFO | Agregados_por_setores_basico_BR.csv: separador decimal detectado=',' (amostra: vírgula=5194 ponto=0)
+2026-08-10 23:21:31,888 | fase1_ibge | INFO | Agregados_por_setores_caracteristicas_domicilio1_BR.csv: chardet sugeriu ascii (confiança=1.000); usando cp1252
+2026-08-10 23:21:31,917 | fase1_ibge | INFO | Agregados_por_setores_caracteristicas_domicilio1_BR.csv: separador decimal detectado='.' (amostra: vírgula=0 ponto=0)
+2026-08-10 23:21:50,680 | fase1_ibge | INFO | Agregados_por_setores_demografia_BR.csv: chardet sugeriu ascii (confiança=1.000); usando cp1252
+2026-08-10 23:21:50,707 | fase1_ibge | INFO | Agregados_por_setores_demografia_BR.csv: separador decimal detectado='.' (amostra: vírgula=0 ponto=0)
+2026-08-10 23:21:59,321 | fase1_ibge | INFO | Agregados_por_setores_renda_responsavel_BR.csv: chardet sugeriu ascii (confiança=1.000); usando cp1252
+2026-08-10 23:21:59,355 | fase1_ibge | INFO | Agregados_por_setores_renda_responsavel_BR.csv: separador decimal detectado='.' (amostra: vírgula=0 ponto=20283)
+2026-08-10 23:22:02,335 | fase1_ibge | INFO | linhas filtradas para Uberlândia: básico=1988 domicilio1=1924 demografia=1924 renda=1924
+2026-08-10 23:22:02,572 | fase1_ibge | INFO | merge com básico: 1988->1988 linhas, 0 setores sem correspondência nessa tabela
+2026-08-10 23:22:02,585 | fase1_ibge | INFO | merge com domicilio1: 1988->1988 linhas, 90 setores sem correspondência nessa tabela
+2026-08-10 23:22:02,600 | fase1_ibge | INFO | merge com demografia: 1988->1988 linhas, 90 setores sem correspondência nessa tabela
+2026-08-10 23:22:02,614 | fase1_ibge | INFO | merge com renda: 1988->1988 linhas, 90 setores sem correspondência nessa tabela
+2026-08-10 23:22:02,659 | fase1_ibge | INFO | reprojetado de EPSG:4674 para EPSG:31982 (spec: sempre métrico antes de cálculo de distância/área)
+2026-08-10 23:22:02,660 | fase1_ibge | INFO | ACEITE — todos os critérios da Fase 1 passaram (n_setores=1988, soma_domicilios=267966)
+2026-08-10 23:22:02,881 | fase1_ibge | INFO | gravado: C:\projetos\novo_ponto\data\processed\setores.gpkg
+2026-08-10 23:22:02,881 | fase1_ibge | INFO | RESUMO — entrada=1988 saida=1988 descartados=0 motivo='setores fora de Uberlândia (filtro CD_MUN) já removidos na malha de origem'
+2026-08-10 23:22:04,434 | fase2_concorrentes | INFO | === Fase 2: concorrência ===
+2026-08-10 23:22:04,434 | fase2_concorrentes | INFO | cache hit Overpass: C:\projetos\novo_ponto\data\raw\osm\overpass_concorrentes.json
+2026-08-10 23:22:04,462 | fase2_concorrentes | INFO | OSM: 36 concorrentes brutos coletados
+2026-08-10 23:22:04,830 | fase2_concorrentes | INFO | grade urbana: 25 células (espaçamento=4500m, raio=3200m)
+2026-08-10 23:22:23,654 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:24,676 | fase2_concorrentes | WARNING | célula (-18.9310,-48.1804) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:25,679 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='pet shop' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:26,683 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='agropecuária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:27,684 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='casa de ração' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:28,686 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:29,688 | fase2_concorrentes | WARNING | célula (-18.8904,-48.1811) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:30,690 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='pet shop' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:31,692 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='agropecuária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:32,694 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='casa de ração' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:33,697 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='clínica veterinária' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:34,698 | fase2_concorrentes | WARNING | célula (-19.1300,-47.9206) termo='banho e tosa' esgotou tentativas (falha persistente cacheada de execução anterior) — pulando só esta
+2026-08-10 23:22:35,718 | fase2_concorrentes | INFO | Google Places: 113 células x termo consultadas (com cache), 12 puladas por falha persistente, 2260 resultados brutos
+2026-08-10 23:22:35,729 | fase2_concorrentes | INFO | Google Places: dedup por place_id 2260 -> 274
+2026-08-10 23:22:36,890 | fase2_concorrentes | INFO | dedup espacial (<30m + nome similar): 310 -> 305
+2026-08-10 23:22:36,898 | fase2_concorrentes | INFO | redes conhecidas geocodificadas: 3/3
+2026-08-10 23:22:36,966 | fase2_concorrentes | INFO | rede 'Petz Rondon Pacheco' resolvida para 'Petz Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 23:22:36,985 | fase2_concorrentes | INFO | rede 'Petz Center Shopping' resolvida para 'Petz Center Shopping' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 23:22:37,001 | fase2_concorrentes | INFO | rede 'Cobasi Rondon Pacheco' resolvida para 'Cobasi Uberlândia' (fonte=google, casado por texto do endereço); 0 duplicata(s) da mesma loja removida(s)
+2026-08-10 23:22:37,024 | fase2_concorrentes | INFO | contagem por tipo: {'pet_shop': 178, 'veterinaria': 74, 'agropecuaria': 50, 'rede': 3}
+2026-08-10 23:22:37,025 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
+2026-08-10 23:22:37,124 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
+2026-08-10 23:22:37,124 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=305 descartados=5 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 23:22:38,586 | fase3_vias_zoneamento | INFO | === Fase 3: vias e zoneamento ===
+2026-08-10 23:22:38,587 | fase3_vias_zoneamento | INFO | cache hit Overpass (vias): C:\projetos\novo_ponto\data\raw\osm\overpass_vias.json
+2026-08-10 23:22:39,221 | fase3_vias_zoneamento | INFO | malha viária: 12686 segmentos coletados
+2026-08-10 23:22:39,224 | fase3_vias_zoneamento | INFO | contagem por classe de via: {'residential': 9562, 'tertiary': 1848, 'secondary': 843, 'primary': 433}
+2026-08-10 23:22:39,563 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\vias.gpkg
+2026-08-10 23:22:40,101 | fase3_vias_zoneamento | WARNING | https://www.uberlandia.mg.gov.br/portal-da-transparencia/dados-abertos/catalogo-de-dados-abertos/ respondeu HTTP 403 — não deu pra checar vetorial nessa página
+2026-08-10 23:22:40,536 | fase3_vias_zoneamento | WARNING | https://www.uberlandia.mg.gov.br/prefeitura/secretarias/planejamento-urbano/mapas-e-bairros/ respondeu HTTP 403 — não deu pra checar vetorial nessa página
+2026-08-10 23:22:40,539 | fase3_vias_zoneamento | INFO | cache hit, não baixa de novo: C:\projetos\novo_ponto\data\raw\zoneamento\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf
+2026-08-10 23:22:40,540 | fase3_vias_zoneamento | INFO | mapa de zoneamento baixado: C:\projetos\novo_ponto\data\raw\zoneamento\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf (2026-02 (Lei 8122/026 e alterações — vigente))
+2026-08-10 23:22:40,540 | fase3_vias_zoneamento | INFO | markitdown já convertido, pulando: C:\projetos\novo_ponto\data\interim\md\Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf.md
+2026-08-10 23:22:40,598 | fase3_vias_zoneamento | INFO | legenda de zonas extraída do PDF: 25 zonas identificadas
+2026-08-10 23:22:40,607 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\zonas_permitidas.csv (25 linhas)
+2026-08-10 23:22:47,814 | fase3_vias_zoneamento | INFO | perímetro urbano: área setores-Urbana=241.7 km², área c/ vias=1107.3 km², combinado=1106.2 km² (município=4120.0 km²)
+2026-08-10 23:22:47,971 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\perimetro_urbano.gpkg
+2026-08-10 23:22:47,974 | fase3_vias_zoneamento | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase3.txt (2 limitação(ões) registrada(s), vão para a seção Limitações do relatório)
+2026-08-10 23:22:47,974 | fase3_vias_zoneamento | WARNING | LIMITAÇÃO — As páginas de dados abertos / Mapas e Bairros da Prefeitura de Uberlândia retornaram erro (bloqueio de acesso automatizado) durante a coleta — não foi possível confirmar programaticamente se existe camada vetorial de zoneamento. Usado o mapa em PDF como Plano B, conforme previsto na spec.
+2026-08-10 23:22:47,974 | fase3_vias_zoneamento | WARNING | LIMITAÇÃO — Zoneamento: 25 zonas identificadas pelo nome/código a partir do mapa em PDF (Mapa-Zoneamento-e-Ocupacao-do-Solo-%E2%80%93-Lei-8122_026-e-suas-alteracoes.pdf), mas a tabela de USOS PERMITIDOS por zona não pôde ser extraída automaticamente (está na Lei Complementar 812/2026, cujo texto integral não foi acessível pelas fontes públicas tentadas — leismunicipais.com.br e leis.org bloquearam o acesso automatizado). Compatibilidade de zoneamento por candidato fica como verificação manual obrigatória antes de assinar contrato.
+2026-08-10 23:22:47,974 | fase3_vias_zoneamento | INFO | RESUMO — entrada=12686 saida=12686 descartados=0
+2026-08-10 23:22:49,316 | fase4_candidatos | INFO | === Fase 4: geração de candidatos ===
+2026-08-10 23:22:49,538 | fase4_candidatos | INFO | vias de classe candidata (secondary/tertiary/residential): 12253 de 12686
+2026-08-10 23:22:51,180 | fase4_candidatos | INFO | vias dentro do perímetro urbano: 12248
+2026-08-10 23:22:52,872 | fase4_candidatos | INFO | vias de maior conectividade (grau >= mediana=2): 7728 de 12248
+2026-08-10 23:22:53,799 | fase4_candidatos | INFO | pontos gerados a cada 400m ao longo das vias selecionadas: 12234 (após remover coincidentes)
+2026-08-10 23:22:53,824 | fase4_candidatos | INFO | filtro rede (>=1500m): 12234 -> 11065
+2026-08-10 23:22:55,129 | fase4_candidatos | INFO | filtro setor (domicílios>0 e renda>=2000 ou desconhecida): 11065 -> 8443
+2026-08-10 23:23:27,552 | fase4_candidatos | INFO | ACEITE — 300 candidatos em 14 bairros distintos (mínimo 150/>8)
+2026-08-10 23:23:27,688 | fase4_candidatos | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos.gpkg
+2026-08-10 23:23:27,689 | fase4_candidatos | INFO | RESUMO — entrada=12234 saida=300 descartados=11934 motivo='fora do perímetro/baixa conectividade, perto de rede, setor sem domicílio/renda baixa, ou fora do top-N preliminar'
+2026-08-10 23:23:29,051 | fase5_isocronas | INFO | === Fase 5: isócronas ===
+2026-08-10 23:23:29,239 | fase5_isocronas | INFO | isócronas: 300 já em cache, 0 pendentes
+2026-08-10 23:24:09,394 | fase5_isocronas | INFO | demanda calculada: 300/300 candidatos com isócrona completa (0 ainda sem)
+2026-08-10 23:24:09,626 | fase5_isocronas | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos_com_demanda.gpkg (camadas: candidatos_com_demanda, isocronas_10min)
+2026-08-10 23:24:09,627 | fase5_isocronas | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 23:24:13,312 | fase6_calibracao | INFO | === Fase 6: calibração por análogos ===
+2026-08-10 23:24:13,601 | fase6_calibracao | INFO | pet shops independentes com avaliações conhecidas: 159
+2026-08-10 23:24:16,612 | fase6_calibracao | INFO | regressão OLS: n=159, R²=0.086, R² ajustado=0.050
+2026-08-10 23:24:16,616 | fase6_calibracao | INFO |   domicilios: coef=0.00009 p=0.580
+2026-08-10 23:24:16,617 | fase6_calibracao | INFO |   pct_apartamento: coef=-0.51260 p=0.500
+2026-08-10 23:24:16,618 | fase6_calibracao | INFO |   renda: coef=0.00012 p=0.029
+2026-08-10 23:24:16,618 | fase6_calibracao | INFO |   densidade: coef=0.00011 p=0.821
+2026-08-10 23:24:16,621 | fase6_calibracao | INFO |   n_concorrentes: coef=-0.03461 p=0.428
+2026-08-10 23:24:16,622 | fase6_calibracao | INFO |   n_clinicas_sem_loja: coef=0.18226 p=0.078
+2026-08-10 23:24:16,637 | fase6_calibracao | INFO | VIF: {'domicilios': 9.109331866360831, 'pct_apartamento': 1.7454504834549427, 'renda': 1.4809855648137098, 'densidade': 8.324841166331542, 'n_concorrentes': 3.125845767703498, 'n_clinicas_sem_loja': 2.887617822435392}
+2026-08-10 23:24:16,637 | fase6_calibracao | WARNING | regressão fraca demais para usar como peso (n=159 < 25 ou R²=0.086 < 0.25) — caindo pro método de quartis
+2026-08-10 23:24:16,646 | fase6_calibracao | INFO | método de quartis: 40 no quartil superior, 40 no inferior
+2026-08-10 23:24:16,651 | fase6_calibracao | INFO | gravado: C:\projetos\novo_ponto\data\processed\pesos.json — método=quartis confiança=baixa
+2026-08-10 23:24:16,651 | fase6_calibracao | INFO | pesos dos eixos finais: {'demanda_estimada': 0.352, 'saturacao': 0.298, 'oferta_imovel': 0.2, 'acesso': 0.15}
+2026-08-10 23:24:16,651 | fase6_calibracao | INFO | RESUMO — entrada=159 saida=159 descartados=0
+2026-08-10 23:24:18,214 | fase7_score | INFO | === Fase 7: score e filtros ===
+2026-08-10 23:24:22,033 | fase7_score | WARNING | nenhum dado de aluguel em data/manual/imoveis.csv ainda — custo_fixo usa só o custo fixo extra (piso), sem o aluguel; rode a Fase 8 depois de preencher o CSV e recalcule
+2026-08-10 23:24:22,210 | fase7_score | INFO | teste absoluto: 300 passaram, 0 reprovados; dedup geográfica: 288 duplicatas suprimidas
+2026-08-10 23:24:22,212 | fase7_score | INFO | ACEITE — Top 10 completo com 10 candidatos aprovados
+2026-08-10 23:24:22,213 | fase7_score | INFO | ACEITE — nenhum candidato do Top 10 a menos de 1500m de rede
+2026-08-10 23:24:22,246 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\output\top10.csv (10 linhas)
+2026-08-10 23:24:22,305 | fase7_score | INFO | gravado: C:\projetos\novo_ponto\data\processed\ranking_completo.parquet (300 linhas, todos os candidatos)
+2026-08-10 23:24:22,306 | fase7_score | INFO | RESUMO — entrada=300 saida=10 descartados=290 motivo='reprovados no teste absoluto, duplicata geográfica <800m, ou fora do top 10 por score'
+2026-08-10 23:24:23,580 | fase8_manuais | INFO | === Fase 8: entradas manuais ===
+2026-08-10 23:24:23,633 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,634 | fase8_manuais | INFO | ifood.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,636 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,638 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,662 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,664 | fase8_manuais | INFO | cliente_oculto.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,665 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,666 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,667 | fase8_manuais | INFO | imoveis.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,670 | fase8_manuais | INFO | meta_publico.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,670 | fase8_manuais | INFO | google_buscas.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,672 | fase8_manuais | INFO | campo_fluxo.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,675 | fase8_manuais | INFO | geoteste.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,678 | fase8_manuais | INFO | marcas_carteira.csv existe mas está vazio (só cabeçalho) — pendente de preenchimento manual
+2026-08-10 23:24:23,694 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\data\processed\ranking_completo.parquet
+2026-08-10 23:24:23,697 | fase8_manuais | INFO | gravado (enriquecido): C:\projetos\novo_ponto\output\top10.csv
+2026-08-10 23:24:23,698 | fase8_manuais | INFO | gravado: C:\projetos\novo_ponto\data\processed\limitacoes_fase8.txt (8 entrada(s) manual(is) pendente(s))
+2026-08-10 23:24:23,698 | fase8_manuais | INFO | resumo: 0 preenchido(s) [], 8 pendente(s) ['imoveis.csv', 'ifood.csv', 'meta_publico.csv', 'google_buscas.csv', 'campo_fluxo.csv', 'cliente_oculto.csv', 'geoteste.csv', 'marcas_carteira.csv']
+2026-08-10 23:24:23,698 | fase8_manuais | INFO | RESUMO — entrada=300 saida=300 descartados=0
+2026-08-10 23:24:25,169 | fase9_relatorio | INFO | === Fase 9: relatório HTML ===
+2026-08-10 23:24:27,621 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\mapa.html (recursos externos inlinados — funciona sem internet)
+2026-08-10 23:24:28,521 | fase9_relatorio | INFO | fichas individuais geradas: 10
+2026-08-10 23:24:28,663 | fase9_relatorio | INFO | gravado: C:\projetos\novo_ponto\output\relatorio.html (7.4 MB)
+2026-08-10 23:24:28,663 | fase9_relatorio | INFO | RESUMO — entrada=10 saida=10 descartados=0
