@@ -7,16 +7,16 @@
     "n_quartil_inferior": 40
   },
   "pesos_variaveis_entorno": {
-    "domicilios": 0.09846949756975742,
-    "pct_apartamento": 0.12631849368465844,
-    "renda": 0.23277415754256456,
-    "densidade": 0.08441297260906937,
-    "n_concorrentes": 0.1785099576480557,
-    "n_clinicas_sem_loja": 0.27951492094589453
+    "domicilios": 0.09852416670500087,
+    "pct_apartamento": 0.12583343573669215,
+    "renda": 0.23290339108405655,
+    "densidade": 0.08445983772293468,
+    "n_concorrentes": 0.17860906432837617,
+    "n_clinicas_sem_loja": 0.2796701044229396
   },
   "pesos_eixos_score_final": {
-    "demanda_estimada": 0.35228382891393234,
-    "saturacao": 0.2977161710860677,
+    "demanda_estimada": 0.3521185403116448,
+    "saturacao": 0.2978814596883553,
     "oferta_imovel": 0.2,
     "acesso": 0.15
   },

@@ -34,6 +34,7 @@ from _common import (  # noqa: E402
     DATA_MANUAL, DATA_PROCESSED, DATA_RAW, LOGS_DIR, OUTPUT_DIR, OUTPUT_FICHAS,
     DEFAULT_HEADERS, get_logger, load_config, log_resumo_fase,
 )
+from _sanidade import rodar_testes_sanidade  # noqa: E402 — C6 (CORRECOES_2.md)
 
 CDN_CACHE_DIR = DATA_RAW / "cdn_offline"
 
@@ -509,6 +510,20 @@ def run() -> Path:
 
     dados = _carregar_tudo(cfg)
     top10 = dados["top10"]
+
+    # C6 (CORRECOES_2.md) — gate obrigatório antes de gerar qualquer coisa: "relatório
+    # bonito com resultado errado é pior que ausência de relatório". Roda aqui (não num
+    # script separado) pra ficar estruturalmente impossível esquecer de rodar.
+    sanidade_ok, motivos_sanidade = rodar_testes_sanidade(dados, cfg, LOGGER)
+    if not sanidade_ok:
+        LOGGER.error(
+            "Fase 9 ABORTADA — %d teste(s) de sanidade (C6) falharam: %s",
+            len(motivos_sanidade), "; ".join(motivos_sanidade),
+        )
+        raise SystemExit(
+            f"geração de relatório abortada — {len(motivos_sanidade)} teste(s) de sanidade (C6) "
+            f"falhou(aram), ver logs/pipeline.log para o motivo de cada um"
+        )
 
     mapa = _construir_mapa(dados, crs_metrico)
     mapa_html_embutido = _tornar_offline(mapa.get_root().render())
