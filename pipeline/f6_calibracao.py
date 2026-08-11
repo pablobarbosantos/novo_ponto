@@ -173,7 +173,8 @@ def _derivar_pesos_eixos(pesos_entorno: dict) -> dict:
 
 
 def run() -> Path:
-    load_config()
+    cfg = load_config()  # G3 (CORRECOES.md) — bug: retorno não era atribuído antes; necessário
+    # a partir de C1.4 pra ler cfg["vitalidade_comercial"]["peso_eixo"]; sem efeito nesta fase ainda.
     LOGGER.info("=== Fase 6: calibração por análogos ===")
 
     concorrentes = gpd.read_file(DATA_PROCESSED / "concorrentes.gpkg")

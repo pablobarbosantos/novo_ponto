@@ -290,6 +290,24 @@ def _acesso_score(cand: gpd.GeoDataFrame, vias: gpd.GeoDataFrame) -> pd.Series:
 
 
 # ---------------------------------------------------------------------------
+# 7.6 (G3, CORRECOES.md) — composição pura do score final, extraída pra ser testável sem
+# I/O (tests/test_g3_monotonicidade.py): score final tem que cair monotonicamente quando
+# a força da concorrência sobe (saturacao=potencial/força cai, pct_saturacao cai, e o peso
+# de saturação nunca é negativo — ver _normalizar_pesos em f6_calibracao.py).
+# ---------------------------------------------------------------------------
+
+def _compor_score_final(percentis: dict, pesos: dict):
+    """Soma ponderada pura — funciona tanto com escalares (teste unitário) quanto com
+    pandas Series (uso real em run()). Só combina os eixos presentes em ambos os dicts,
+    pra permitir M1 (renormalização quando um eixo está ausente) chamar isso já filtrado."""
+    total = 0.0
+    for eixo, peso in pesos.items():
+        if eixo in percentis:
+            total = total + peso * percentis[eixo]
+    return total
+
+
+# ---------------------------------------------------------------------------
 # 7.7 — Dedup geográfica (<800m, mantém o melhor score do cluster)
 # ---------------------------------------------------------------------------
 
@@ -399,17 +417,13 @@ def run() -> tuple[Path, Path]:
     cand["oferta_imovel_score"] = 0.0  # sem imoveis.csv preenchido ainda — penalidade explícita (spec §7.6), não zero "medido"
     cand["oferta_imovel_disponivel"] = False
 
-    pct_demanda = cand["potencial_mensal"].rank(pct=True, na_option="bottom")
-    pct_saturacao = cand["saturacao"].rank(pct=True, na_option="bottom")
-    pct_acesso = cand["acesso_score"].rank(pct=True, na_option="bottom")
-    pct_oferta = cand["oferta_imovel_score"].rank(pct=True, na_option="bottom")
-
-    cand["score_final"] = (
-        pesos["demanda_estimada"] * pct_demanda
-        + pesos["saturacao"] * pct_saturacao
-        + pesos["oferta_imovel"] * pct_oferta
-        + pesos["acesso"] * pct_acesso
-    )
+    percentis = {
+        "demanda_estimada": cand["potencial_mensal"].rank(pct=True, na_option="bottom"),
+        "saturacao": cand["saturacao"].rank(pct=True, na_option="bottom"),
+        "acesso": cand["acesso_score"].rank(pct=True, na_option="bottom"),
+        "oferta_imovel": cand["oferta_imovel_score"].rank(pct=True, na_option="bottom"),
+    }
+    cand["score_final"] = _compor_score_final(percentis, pesos)
 
     # 7.7
     cand = _dedup_geografica(cand)
