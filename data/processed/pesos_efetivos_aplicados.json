@@ -1,0 +1,21 @@
+{
+  "pesos_originais": {
+    "demanda_estimada": 0.35228382891393234,
+    "saturacao": 0.2977161710860677,
+    "oferta_imovel": 0.2,
+    "acesso": 0.15
+  },
+  "eixos_disponiveis": [
+    "demanda_estimada",
+    "saturacao",
+    "acesso"
+  ],
+  "eixos_ausentes": [
+    "oferta_imovel"
+  ],
+  "pesos_renormalizados": {
+    "demanda_estimada": 0.4403547861424154,
+    "saturacao": 0.3721452138575846,
+    "acesso": 0.18749999999999997
+  }
+}

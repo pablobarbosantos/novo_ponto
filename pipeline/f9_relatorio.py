@@ -166,6 +166,8 @@ def _carregar_tudo(cfg: dict) -> dict:
     reprovados = ranking_completo[~ranking_completo["teste_absoluto_passou"]].copy()
 
     pesos = json.loads((DATA_PROCESSED / "pesos.json").read_text(encoding="utf-8"))
+    pesos_efetivos_path = DATA_PROCESSED / "pesos_efetivos_aplicados.json"
+    pesos_efetivos = json.loads(pesos_efetivos_path.read_text(encoding="utf-8")) if pesos_efetivos_path.exists() else None
 
     limitacoes = []
     for nome in ("limitacoes_fase3.txt", "limitacoes_fase8.txt"):
@@ -180,7 +182,7 @@ def _carregar_tudo(cfg: dict) -> dict:
         "setores": setores, "concorrentes": concorrentes, "candidatos_geom": candidatos_geom,
         "isocronas": isocronas, "perimetro": perimetro, "top10": top10,
         "ranking_completo": ranking_completo, "reprovados": reprovados, "pesos": pesos,
-        "limitacoes": limitacoes, "zonas": zonas,
+        "pesos_efetivos": pesos_efetivos, "limitacoes": limitacoes, "zonas": zonas,
     }
 
 
@@ -541,12 +543,44 @@ def run() -> Path:
         reprovados_html = f"<table class='tabela-ficha'><tr><th>Candidato</th><th>Bairro</th><th>Score</th><th>Motivo</th></tr>{linhas_rep}</table>"
 
     pesos = dados["pesos"]
+    pesos_efetivos = dados["pesos_efetivos"]
+    if pesos_efetivos:
+        # M1 (CORRECOES.md) — declarar quais eixos entraram de fato no score final desta
+        # rodada e com que peso renormalizado, não só os pesos "de catálogo" calibrados.
+        eixos_ausentes = pesos_efetivos.get("eixos_ausentes") or []
+        pesos_html = "".join(
+            f"<li>{html.escape(k)}: {v*100:.1f}% (renormalizado; peso de catálogo era {pesos_efetivos['pesos_originais'][k]*100:.1f}%)</li>"
+            for k, v in pesos_efetivos["pesos_renormalizados"].items()
+        )
+        aviso_ausentes = (
+            f"<p class='aviso'><b>Eixo(s) ausente(s) nesta rodada, fora do score:</b> "
+            f"{', '.join(html.escape(e) for e in eixos_ausentes)} — o peso deles foi redistribuído "
+            f"proporcionalmente entre os eixos disponíveis acima, não descartado silenciosamente.</p>"
+            if eixos_ausentes else ""
+        )
+    else:
+        pesos_html = "".join(f"<li>{html.escape(k)}: {v*100:.1f}%</li>" for k, v in pesos['pesos_eixos_score_final'].items())
+        aviso_ausentes = ""
+
+    taxa_aprovacao = dados["ranking_completo"]["teste_absoluto_passou"].mean()
+    aviso_100pct = (
+        "<p class='aviso'><b>Teste absoluto aprovou 100% dos candidatos</b> mesmo depois das correções "
+        "de captação (B1), modelo de Huff (B2) e fallback de aluguel (B3). Isso pode ser real — o mercado "
+        "pode ter bastante espaço —, mas precisa ficar dito, não escondido (CORRECOES.md, B3): sem dado "
+        "real de aluguel em data/manual/imoveis.csv, o custo fixo usado no teste ainda é uma estimativa "
+        "conservadora (fallback negocio.teto_aluguel), e a captação segue calculada sobre isócronas "
+        "driving-car do ORS que podem ser mais generosas que o comportamento real de clientes.</p>"
+        if taxa_aprovacao >= 0.999 else ""
+    )
+
     metodologia_html = f"""
     <p><b>Método de calibração:</b> {html.escape(pesos['metodo'])} — confiança <b>{html.escape(pesos['confianca'])}</b>
     (n={pesos['n_amostra']}{f", R²={pesos['detalhes_estatisticos'].get('r2'):.3f}" if 'r2' in pesos.get('detalhes_estatisticos', {}) else ''}).</p>
     <p>{html.escape(pesos['nota_metodologica'])}</p>
-    <p><b>Pesos finais dos eixos do score:</b></p>
-    <ul>{''.join(f"<li>{html.escape(k)}: {v*100:.1f}%</li>" for k, v in pesos['pesos_eixos_score_final'].items())}</ul>
+    <p><b>Pesos efetivamente aplicados no score desta rodada:</b></p>
+    <ul>{pesos_html}</ul>
+    {aviso_ausentes}
+    {aviso_100pct}
     <p><b>Fontes de dados</b> (baixadas em {date.today().isoformat()}):</p>
     <ul>{''.join(f"<li>{html.escape(nome)} — <code>{html.escape(url)}</code></li>" for nome, url in FONTES_METODOLOGIA)}</ul>
     """
@@ -709,6 +743,7 @@ th:hover { color: var(--acento-2); }
 tbody tr:hover { background: var(--fundo-secao); }
 .nc { color: var(--fg-muted); font-style: italic; }
 .nota-tabela { color: var(--fg-muted); font-size: .82rem; }
+.aviso { background: var(--fundo-secao); border-left: 3px solid var(--alerta); padding: 10px 14px; border-radius: 4px; font-size: .88rem; }
 .mapa-container { border: 1px solid var(--linha); border-radius: 6px; overflow: hidden; }
 .mapa-container iframe { width: 100%; height: 640px; border: 0; display: block; }
 .ficha { padding: 18px 0; border-top: 1px dashed var(--linha); }

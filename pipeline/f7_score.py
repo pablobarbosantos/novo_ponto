@@ -418,13 +418,47 @@ def run() -> tuple[Path, Path]:
     cand["oferta_imovel_score"] = 0.0  # sem imoveis.csv preenchido ainda — penalidade explícita (spec §7.6), não zero "medido"
     cand["oferta_imovel_disponivel"] = False
 
+    # M1 (CORRECOES.md) — renormaliza os pesos só sobre os eixos efetivamente disponíveis
+    # nesta rodada. Sem isso, um eixo 100% ausente (ex.: oferta_imovel sem imoveis.csv)
+    # consome sua fatia do peso (20%) de forma uniforme sem nenhum sinal discriminante,
+    # distorcendo a escala do score final sem aviso.
+    disponibilidade = {
+        "demanda_estimada": bool(cand["potencial_mensal"].notna().any()),
+        "saturacao": bool(cand["saturacao"].notna().any()),
+        "acesso": bool(cand["acesso_score"].notna().any()),
+        "oferta_imovel": bool(cand["oferta_imovel_disponivel"].any()),
+    }
+    eixos_disponiveis = [e for e, ok in disponibilidade.items() if ok]
+    soma_disponivel = sum(pesos[e] for e in eixos_disponiveis)
+    if soma_disponivel > 0:
+        pesos_renormalizados = {e: pesos[e] / soma_disponivel for e in eixos_disponiveis}
+    else:
+        pesos_renormalizados = {}
+        LOGGER.error("M1 — nenhum eixo do score disponível nesta rodada, score_final ficará todo zero")
+
     percentis = {
         "demanda_estimada": cand["potencial_mensal"].rank(pct=True, na_option="bottom"),
         "saturacao": cand["saturacao"].rank(pct=True, na_option="bottom"),
         "acesso": cand["acesso_score"].rank(pct=True, na_option="bottom"),
         "oferta_imovel": cand["oferta_imovel_score"].rank(pct=True, na_option="bottom"),
     }
-    cand["score_final"] = _compor_score_final(percentis, pesos)
+    percentis_disponiveis = {e: percentis[e] for e in eixos_disponiveis}
+    cand["score_final"] = _compor_score_final(percentis_disponiveis, pesos_renormalizados)
+
+    LOGGER.info(
+        "M1 — eixos disponíveis nesta rodada: %s (pesos originais %s -> renormalizados %s)",
+        eixos_disponiveis,
+        {k: round(v, 3) for k, v in pesos.items()},
+        {k: round(v, 3) for k, v in pesos_renormalizados.items()},
+    )
+    pesos_efetivos_path = DATA_PROCESSED / "pesos_efetivos_aplicados.json"
+    pesos_efetivos_path.write_text(json.dumps({
+        "pesos_originais": pesos,
+        "eixos_disponiveis": eixos_disponiveis,
+        "eixos_ausentes": [e for e in pesos if e not in eixos_disponiveis],
+        "pesos_renormalizados": pesos_renormalizados,
+    }, indent=2, ensure_ascii=False), encoding="utf-8")
+    LOGGER.info("gravado: %s", pesos_efetivos_path)
 
     # 7.7
     cand = _dedup_geografica(cand)
