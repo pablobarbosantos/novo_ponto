@@ -29,6 +29,15 @@ concorrencia:
   peso_rede: 3.0
   peso_independente: 1.0
 
+candidatos:
+  espacamento_via_m: 400
+  buffer_score_preliminar_m: 1500
+  top_n_preliminar: 300
+  # PROVISÓRIO — o plano de negócio (PLANO_ESCOLHA_DO_PONTO.md, Camada 4) recomenda "~2 salários
+  # mínimos" como piso de renda do responsável, mas não há SM oficial vigente nas fontes que o
+  # pipeline consome; aproximado em R$, ajustar com o valor oficial do salário mínimo do ano corrente.
+  renda_minima_responsavel: 2000
+
 redes_conhecidas:
   - {nome: "Petz Rondon Pacheco", endereco: "Av. Rondon Pacheco, 505"}
   - {nome: "Petz Center Shopping", endereco: "Av. João Naves de Ávila, 1331"}

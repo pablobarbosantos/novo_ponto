@@ -827,3 +827,13 @@
 2026-08-10 22:35:09,402 | fase2_concorrentes | INFO | ACEITE — as 3 redes conhecidas estão presentes
 2026-08-10 22:35:09,496 | fase2_concorrentes | INFO | gravado: C:\projetos\novo_ponto\data\processed\concorrentes.gpkg
 2026-08-10 22:35:09,497 | fase2_concorrentes | INFO | RESUMO — entrada=310 saida=305 descartados=5 motivo='fora do polígono municipal e/ou duplicata (proximidade+nome)'
+2026-08-10 22:37:48,817 | fase4_candidatos | INFO | === Fase 4: geração de candidatos ===
+2026-08-10 22:37:49,010 | fase4_candidatos | INFO | vias de classe candidata (secondary/tertiary/residential): 12253 de 12686
+2026-08-10 22:37:50,258 | fase4_candidatos | INFO | vias dentro do perímetro urbano: 12248
+2026-08-10 22:37:50,872 | fase4_candidatos | INFO | vias de maior conectividade (grau >= mediana=2): 7728 de 12248
+2026-08-10 22:37:51,577 | fase4_candidatos | INFO | pontos gerados a cada 400m ao longo das vias selecionadas: 12234 (após remover coincidentes)
+2026-08-10 22:37:51,595 | fase4_candidatos | INFO | filtro rede (>=1500m): 12234 -> 11065
+2026-08-10 22:37:52,715 | fase4_candidatos | INFO | filtro setor (domicílios>0 e renda>=2000 ou desconhecida): 11065 -> 8443
+2026-08-10 22:38:12,490 | fase4_candidatos | INFO | ACEITE — 300 candidatos em 14 bairros distintos (mínimo 150/>8)
+2026-08-10 22:38:12,560 | fase4_candidatos | INFO | gravado: C:\projetos\novo_ponto\data\processed\candidatos.gpkg
+2026-08-10 22:38:12,560 | fase4_candidatos | INFO | RESUMO — entrada=12234 saida=300 descartados=11934 motivo='fora do perímetro/baixa conectividade, perto de rede, setor sem domicílio/renda baixa, ou fora do top-N preliminar'
