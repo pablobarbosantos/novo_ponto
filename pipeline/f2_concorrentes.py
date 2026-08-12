@@ -48,8 +48,28 @@ GOOGLE_TEXTSEARCH_URL = "https://places.googleapis.com/v1/places:searchText"
 GOOGLE_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.types,places.businessStatus"
 GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 
+# C1.3 (CORRECOES_2.md) — recência das avaliações. places.reviews é um SKU mais caro
+# (Enterprise + Atmosphere) que o textSearch usado no field mask padrão acima — por isso
+# é um fetch SEPARADO (Place Details, um GET por place_id JÁ conhecido, não um novo grid
+# de busca) e cacheado num diretório próprio (v2), pra nunca confundir uma resposta antiga
+# sem `reviews` com uma nova.
+#
+# LIMITAÇÃO CONFIRMADA EM RUNTIME (não hipotética): testado contra as ~305 lojas de
+# concorrentes.gpkg — as 113 chamadas que tiveram sucesso (200 OK) devolveram só
+# {"id": "..."}, nunca a chave "reviews", mesmo com o field mask "id,reviews" correto pro
+# formato de GET de recurso único (sem prefixo "places." — esse prefixo é só pra resposta
+# de lista do searchText). Mesmo padrão do problema já documentado com a API legada
+# (maps.googleapis.com/maps/api/place) não habilitada neste projeto/chave — o tier
+# Enterprise + Atmosphere que dá acesso a `reviews` aparentemente também não está
+# habilitado aqui. Function/chamada mantida (idempotente, cache evita gastar chamada
+# de novo), mas o resultado é sistematicamente vazio — C1.3 fica "não coletado" no
+# relatório, documentado como limitação de acesso à API, não um bug de implementação.
+GOOGLE_PLACE_DETAILS_URL = "https://places.googleapis.com/v1/places/{place_id}"
+GOOGLE_FIELD_MASK_REVIEWS = "id,reviews"
+
 OSM_RAW_DIR = DATA_RAW / "osm"
 GOOGLE_RAW_DIR = DATA_RAW / "google_places"
+GOOGLE_RAW_DIR_V2 = DATA_RAW / "google_places_v2"
 GEOCODE_RAW_DIR = DATA_RAW / "geocode"
 
 GOOGLE_TERMOS = ["pet shop", "agropecuária", "casa de ração", "clínica veterinária", "banho e tosa"]
@@ -277,6 +297,113 @@ def coletar_google(setores_path: Path, api_key: str) -> pd.DataFrame:
     antes = len(df)
     df = df.dropna(subset=["place_id"]).drop_duplicates(subset=["place_id"])
     LOGGER.info("Google Places: dedup por place_id %d -> %d", antes, len(df))
+    return df
+
+
+# ---------------------------------------------------------------------------
+# C1.3 (CORRECOES_2.md) — recência das avaliações (Place Details, places.reviews)
+# ---------------------------------------------------------------------------
+
+class _TaxaLimitadaError(Exception):
+    """Sinal interno: 429/5xx esgotou as 5 tentativas — falha TRANSIENTE (rate-limit/cota),
+    diferente de 404 (definitivo, place_id não tem Place Details). NÃO deve virar .failed
+    permanente: um rerun depois que a cota renovar precisa poder tentar de novo. Ver o bug
+    corrigido nesta mesma sessão em coletar_recencia_avaliacoes — o comportamento antigo
+    gravava .failed também para 429, prendendo o place_id em falha pra sempre."""
+
+
+def _google_place_details_reviews(place_id: str, api_key: str) -> dict | None:
+    GOOGLE_RAW_DIR_V2.mkdir(parents=True, exist_ok=True)
+    cache_path = GOOGLE_RAW_DIR_V2 / f"{place_id}.json"
+    falha_path = GOOGLE_RAW_DIR_V2 / f"{place_id}.failed"
+    if cache_path.exists():
+        return json.loads(cache_path.read_text(encoding="utf-8"))
+    if falha_path.exists():
+        return None
+
+    url = GOOGLE_PLACE_DETAILS_URL.format(place_id=place_id)
+    headers = {"X-Goog-Api-Key": api_key, "X-Goog-FieldMask": GOOGLE_FIELD_MASK_REVIEWS}
+    last_status = None
+    for attempt in range(5):
+        resp = requests.get(url, headers=headers, timeout=30)
+        if resp.status_code in (401, 403):
+            raise GooglePlacesIndisponivel(f"HTTP {resp.status_code}: {resp.text[:300]}")
+        if resp.status_code == 404:
+            falha_path.write_text("404 — place_id não encontrado no Place Details", encoding="utf-8")
+            return None
+        if resp.status_code == 429 or resp.status_code >= 500:
+            last_status = resp.status_code
+            time.sleep(2.0 ** attempt)
+            continue
+        resp.raise_for_status()
+        data = resp.json()
+        cache_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        return data
+    raise _TaxaLimitadaError(f"HTTP {last_status} esgotou as 5 tentativas para place_id={place_id}")
+
+
+def coletar_recencia_avaliacoes(place_ids: "pd.Series", api_key: str) -> pd.DataFrame:
+    """Para cada place_id já descoberto (fonte=google), busca a data da avaliação mais
+    recente DENTRE as ~5 mais relevantes que a API devolve (limitação documentada — não é
+    garantido ser a mais recente possível). Não descobre lugares novos, só enriquece quem
+    já está em concorrentes.gpkg.
+
+    Circuit-breaker: LIMITE_FALHAS_CONSECUTIVAS falhas 429/5xx seguidas (sem nenhum sucesso
+    entre elas) são tratadas como cota esgotada nesta janela — aborta o resto do loop em vez
+    de gastar ~30s de backoff por item até o fim da lista (chegou a levar >1h numa execução
+    real). Os place_ids não tentados ficam sem cache (nem .json nem .failed), livres para
+    uma execução futura quando a cota tiver renovado — degradação graciosa (CLAUDE.md regra
+    3), não abort do pipeline."""
+    LIMITE_FALHAS_CONSECUTIVAS = 5
+    linhas = []
+    ids_unicos = place_ids.dropna().unique()
+    falhas_consecutivas = 0
+    for i, place_id in enumerate(ids_unicos):
+        data = None
+        try:
+            data = _google_place_details_reviews(place_id, api_key)
+        except GooglePlacesIndisponivel as exc:
+            LOGGER.warning("Google Places (Place Details) indisponível para esta chave — abortando C1.3 (%s)", exc)
+            break
+        except _TaxaLimitadaError as exc:
+            falhas_consecutivas += 1
+            LOGGER.warning("C1.3 — %s (falhas consecutivas=%d/%d)", exc, falhas_consecutivas, LIMITE_FALHAS_CONSECUTIVAS)
+            if falhas_consecutivas >= LIMITE_FALHAS_CONSECUTIVAS:
+                LOGGER.warning(
+                    "C1.3 — %d falhas consecutivas por rate-limit/cota — abortando o restante do loop "
+                    "(%d/%d tentados); os demais place_ids ficam sem cache, prontos para uma execução "
+                    "futura quando a cota renovar",
+                    falhas_consecutivas, i + 1, len(ids_unicos),
+                )
+                break
+            continue
+        except requests.RequestException as exc:
+            LOGGER.warning("place_id=%s falhou ao buscar reviews (C1.3): %s", place_id, exc)
+            continue
+        else:
+            falhas_consecutivas = 0
+        if data:
+            reviews = data.get("reviews", []) or []
+            datas = [r.get("publishTime") for r in reviews if r.get("publishTime")]
+            linhas.append({
+                "place_id": place_id,
+                "data_ultima_avaliacao": max(datas) if datas else None,
+                "n_reviews_amostrados": len(reviews),
+            })
+        if i % 50 == 0 and i > 0:
+            LOGGER.info("C1.3 — recência de avaliações: %d/%d concorrentes processados", i, len(ids_unicos))
+        time.sleep(0.1)
+    df = pd.DataFrame(linhas)
+    LOGGER.info("C1.3 — recência de avaliações obtida para %d/%d concorrentes (fonte=google)", len(df), len(ids_unicos))
+    if len(df) and df["data_ultima_avaliacao"].isna().all():
+        LOGGER.warning(
+            "C1.3 — LIMITAÇÃO CONFIRMADA: %d resposta(s) 200 OK do Place Details, nenhuma trouxe "
+            "a chave 'reviews' (field mask 'id,reviews' correto, mas a chave/projeto aparentemente "
+            "não tem o tier Enterprise+Atmosphere habilitado — mesmo padrão do problema já documentado "
+            "com a API legada). C1.3 fica 'não coletado', não é bug de implementação — ver comentário "
+            "em GOOGLE_FIELD_MASK_REVIEWS.",
+            len(df),
+        )
     return df
 
 
@@ -570,6 +697,25 @@ def run() -> Path:
 
     gdf["vende_racao"] = gdf.apply(_vende_racao, axis=1)
 
+    # C1.3 (CORRECOES_2.md) — recência das avaliações, só pra concorrentes com place_id
+    # do Google (fonte=google); OSM não tem esse dado. Fetch separado (Place Details),
+    # não descobre lugares novos.
+    if api_key and "place_id" in gdf.columns and (gdf["fonte"] == "google").any():
+        ids_google = gdf.loc[gdf["fonte"] == "google", "place_id"]
+        try:
+            recencia = coletar_recencia_avaliacoes(ids_google, api_key)
+            if not recencia.empty:
+                gdf = gdf.merge(recencia, on="place_id", how="left")
+            else:
+                gdf["data_ultima_avaliacao"] = None
+        except (requests.RequestException, GooglePlacesIndisponivel) as exc:
+            LOGGER.warning("C1.3 falhou por completo (%s) — seguindo sem recência de avaliações", exc)
+            gdf["data_ultima_avaliacao"] = None
+    else:
+        gdf["data_ultima_avaliacao"] = None
+        if not api_key:
+            LOGGER.info("C1.3 pulado — sem GOOGLE_PLACES_API_KEY")
+
     n_saida = len(gdf)
     contagem_tipo = gdf["tipo"].value_counts().to_dict()
     LOGGER.info("contagem por tipo: %s", contagem_tipo)
@@ -581,7 +727,11 @@ def run() -> Path:
         LOGGER.info("ACEITE — as %d redes conhecidas estão presentes", n_redes)
 
     out_path = DATA_PROCESSED / "concorrentes.gpkg"
-    gdf_out = gdf.drop(columns=[c for c in ("business_status", "termo_busca") if c in gdf.columns])
+    # C1.2 (CORRECOES_2.md) — business_status (inclui CLOSED_PERMANENTLY, indicador de
+    # vitalidade comercial) passa a ser mantido; já era buscado e cacheado em
+    # data/raw/google_places*/*.json, só era descartado aqui antes. termo_busca continua
+    # sem uso downstream, esse sim descartado.
+    gdf_out = gdf.drop(columns=[c for c in ("termo_busca",) if c in gdf.columns])
     gdf_out.to_file(out_path, layer="concorrentes", driver="GPKG")
     LOGGER.info("gravado: %s", out_path)
 
