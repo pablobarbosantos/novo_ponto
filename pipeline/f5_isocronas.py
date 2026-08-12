@@ -196,12 +196,12 @@ def _aneis_metricos(fc: dict, minutos_lista: list[int], crs_metrico: str) -> dic
     return aneis
 
 
-def _demanda_por_anel(poligono, setores: gpd.GeoDataFrame, sindex, setores_area_total) -> tuple[float | None, float | None, float | None]:
+def _demanda_por_anel(poligono, setores: gpd.GeoDataFrame, sindex, setores_area_total) -> tuple[float | None, float | None, float | None, float | None]:
     if poligono is None or poligono.is_empty:
-        return None, None, None
+        return None, None, None, None
     idx = list(sindex.query(poligono, predicate="intersects"))
     if not idx:
-        return 0.0, None, None
+        return 0.0, None, None, None
     sub = setores.iloc[idx]
     inter_area = sub.geometry.intersection(poligono).area
     fracao = (inter_area / setores_area_total.iloc[idx].values).clip(0, 1)
@@ -210,7 +210,10 @@ def _demanda_por_anel(poligono, setores: gpd.GeoDataFrame, sindex, setores_area_
     soma_peso = peso.sum()
     pct_apto = float((sub["pct_apartamento"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
     renda = float((sub["renda_media_responsavel"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
-    return dom, pct_apto, renda
+    # C3 (CORRECOES_2.md) — pct_18a24 ponderado pelos mesmos pesos parciais de domicílio,
+    # mesma composição usada para pct_apartamento/renda.
+    pct_18a24 = float((sub["pct_18a24"].fillna(0).values * peso).sum() / soma_peso) if soma_peso > 0 else None
+    return dom, pct_apto, renda, pct_18a24
 
 
 def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, minutos_lista: list[int], crs_metrico: str) -> gpd.GeoDataFrame:
@@ -219,7 +222,7 @@ def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, mi
     setores_area_total = setores.geometry.area
     sindex = setores.sindex
 
-    por_anel = {m: {"dom": [], "pct": [], "renda": []} for m in minutos_lista}
+    por_anel = {m: {"dom": [], "pct": [], "renda": [], "pct_18a24": [], "area_km2": []} for m in minutos_lista}
     domicilios_efetivo, pct_apto_efetivo, renda_efetivo, status = [], [], [], []
     isocronas_10min_geoms = []
 
@@ -228,6 +231,8 @@ def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, mi
             por_anel[m]["dom"].append(None)
             por_anel[m]["pct"].append(None)
             por_anel[m]["renda"].append(None)
+            por_anel[m]["pct_18a24"].append(None)
+            por_anel[m]["area_km2"].append(None)
         domicilios_efetivo.append(None)
         pct_apto_efetivo.append(None)
         renda_efetivo.append(None)
@@ -260,10 +265,15 @@ def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, mi
         soma_renda_num = 0.0
         algum_anel_valido = False
         for m in minutos_lista:
-            dom, pct, renda = _demanda_por_anel(aneis[m], setores, sindex, setores_area_total)
+            dom, pct, renda, pct_18a24 = _demanda_por_anel(aneis[m], setores, sindex, setores_area_total)
             por_anel[m]["dom"].append(dom)
             por_anel[m]["pct"].append(pct)
             por_anel[m]["renda"].append(renda)
+            por_anel[m]["pct_18a24"].append(pct_18a24)
+            # C4.2 (CORRECOES_2.md) — área do próprio anel (crs_metrico é métrico, m² -> km²),
+            # usada só para o raio equivalente de validação do raio de entrega em f7_score.py.
+            area_km2 = (aneis[m].area / 1e6) if aneis[m] is not None and not aneis[m].is_empty else None
+            por_anel[m]["area_km2"].append(area_km2)
             if dom is not None:
                 algum_anel_valido = True
                 peso_efetivo = PESO_ANEL.get(m, 0.0) * dom
@@ -290,6 +300,8 @@ def calcular_demanda(candidatos: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, mi
         candidatos[f"domicilios_anel{m}"] = por_anel[m]["dom"]
         candidatos[f"pct_apartamento_anel{m}"] = por_anel[m]["pct"]
         candidatos[f"renda_media_anel{m}"] = por_anel[m]["renda"]
+        candidatos[f"pct_18a24_anel{m}"] = por_anel[m]["pct_18a24"]  # C3 (CORRECOES_2.md)
+        candidatos[f"area_anel{m}_km2"] = por_anel[m]["area_km2"]  # C4.2 (CORRECOES_2.md)
 
     candidatos["domicilios_efetivo"] = domicilios_efetivo
     candidatos["pct_apartamento_efetivo"] = pct_apto_efetivo
@@ -314,6 +326,7 @@ def run() -> Path:
             candidatos[f"domicilios_anel{m}"] = None
             candidatos[f"pct_apartamento_anel{m}"] = None
             candidatos[f"renda_media_anel{m}"] = None
+            candidatos[f"area_anel{m}_km2"] = None
         candidatos["domicilios_efetivo"] = None
         candidatos["pct_apartamento_efetivo"] = None
         candidatos["renda_media_efetivo"] = None
@@ -334,6 +347,7 @@ def run() -> Path:
             candidatos[f"domicilios_anel{m}"] = None
             candidatos[f"pct_apartamento_anel{m}"] = None
             candidatos[f"renda_media_anel{m}"] = None
+            candidatos[f"area_anel{m}_km2"] = None
         candidatos["domicilios_efetivo"] = None
         candidatos["pct_apartamento_efetivo"] = None
         candidatos["renda_media_efetivo"] = None
