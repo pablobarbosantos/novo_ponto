@@ -15,10 +15,11 @@
     "n_clinicas_sem_loja": 0.2796701044229396
   },
   "pesos_eixos_score_final": {
-    "demanda_estimada": 0.3521185403116448,
-    "saturacao": 0.2978814596883553,
+    "demanda_estimada": 0.27086041562434215,
+    "saturacao": 0.2291395843756579,
     "oferta_imovel": 0.2,
-    "acesso": 0.15
+    "acesso": 0.15,
+    "vitalidade_comercial": 0.15
   },
-  "nota_metodologica": "A regressão de análogos (avaliações ~ variáveis do entorno de 1km dos pet shops independentes de Uberlândia) não tem nenhuma variável de oferta de imóvel nem de hierarquia viária/acesso — por isso só a divisão entre os eixos 'demanda estimada' e 'saturação' (65% do peso total) foi recalibrada pelos dados locais. 'Oferta de imóvel' (20%) e 'acesso' (15%) permanecem nos valores provisórios do plano de negócio (PLANO_ESCOLHA_DO_PONTO.md, Parte 2)."
+  "nota_metodologica": "A regressão de análogos (avaliações ~ variáveis do entorno de 1km dos pet shops independentes de Uberlândia) não tem nenhuma variável de oferta de imóvel nem de hierarquia viária/acesso — por isso só a divisão entre os eixos 'demanda estimada' e 'saturação' (65% do peso total, menos o eixo de vitalidade comercial quando ativo) foi recalibrada pelos dados locais. 'Oferta de imóvel' (20%) e 'acesso' (15%) permanecem nos valores provisórios do plano de negócio (PLANO_ESCOLHA_DO_PONTO.md, Parte 2). Eixo 'vitalidade_comercial' (15%, C1.4/CORRECOES_2.md) retirado proporcionalmente de 'demanda_estimada' e 'saturação'."
 }

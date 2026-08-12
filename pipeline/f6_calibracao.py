@@ -158,18 +158,25 @@ def _normalizar_pesos(coeficientes_brutos: dict) -> dict:
     return {v: abs_vals[v] / soma for v in coeficientes_brutos}
 
 
-def _derivar_pesos_eixos(pesos_entorno: dict) -> dict:
+def _derivar_pesos_eixos(pesos_entorno: dict, peso_vitalidade: float = 0.0) -> dict:
+    # C1.4 (CORRECOES_2.md) — vitalidade_comercial retira proporcionalmente de
+    # demanda_estimada e saturacao (não de oferta_imovel/acesso, que já são provisórios
+    # fixos do plano de negócio, sem relação com o fenômeno que C1 mede).
     peso_demanda_bruto = sum(pesos_entorno[v] for v in VARIAVEIS_DEMANDA)
     peso_saturacao_bruto = sum(pesos_entorno[v] for v in VARIAVEIS_SATURACAO)
     soma = peso_demanda_bruto + peso_saturacao_bruto
     if soma == 0:
         peso_demanda_bruto = peso_saturacao_bruto = soma = 1.0
-    return {
-        "demanda_estimada": SOMA_DEMANDA_SATURACAO * (peso_demanda_bruto / soma),
-        "saturacao": SOMA_DEMANDA_SATURACAO * (peso_saturacao_bruto / soma),
+    soma_disponivel = max(SOMA_DEMANDA_SATURACAO - peso_vitalidade, 0.0)
+    eixos = {
+        "demanda_estimada": soma_disponivel * (peso_demanda_bruto / soma),
+        "saturacao": soma_disponivel * (peso_saturacao_bruto / soma),
         "oferta_imovel": PESO_OFERTA_IMOVEL_PROVISORIO,
         "acesso": PESO_ACESSO_PROVISORIO,
     }
+    if peso_vitalidade > 0:
+        eixos["vitalidade_comercial"] = peso_vitalidade
+    return eixos
 
 
 def run() -> Path:
@@ -200,8 +207,14 @@ def run() -> Path:
         resultado = _metodo_quartis(df)
 
     pesos_entorno = _normalizar_pesos(resultado["coeficientes_brutos"])
-    pesos_eixos = _derivar_pesos_eixos(pesos_entorno)
+    peso_vitalidade = float(cfg.get("vitalidade_comercial", {}).get("peso_eixo", 0.0))
+    pesos_eixos = _derivar_pesos_eixos(pesos_entorno, peso_vitalidade)
 
+    nota_vitalidade = (
+        f" Eixo 'vitalidade_comercial' ({peso_vitalidade*100:.0f}%, C1.4/CORRECOES_2.md) retirado "
+        "proporcionalmente de 'demanda_estimada' e 'saturação'."
+        if peso_vitalidade > 0 else ""
+    )
     saida = {
         "metodo": resultado["metodo"],
         "confianca": resultado["confianca"],
@@ -213,9 +226,9 @@ def run() -> Path:
             "A regressão de análogos (avaliações ~ variáveis do entorno de 1km dos pet shops "
             "independentes de Uberlândia) não tem nenhuma variável de oferta de imóvel nem de "
             "hierarquia viária/acesso — por isso só a divisão entre os eixos 'demanda estimada' e "
-            "'saturação' (65% do peso total) foi recalibrada pelos dados locais. 'Oferta de imóvel' "
-            "(20%) e 'acesso' (15%) permanecem nos valores provisórios do plano de negócio "
-            "(PLANO_ESCOLHA_DO_PONTO.md, Parte 2)."
+            "'saturação' (65% do peso total, menos o eixo de vitalidade comercial quando ativo) foi "
+            "recalibrada pelos dados locais. 'Oferta de imóvel' (20%) e 'acesso' (15%) permanecem nos "
+            "valores provisórios do plano de negócio (PLANO_ESCOLHA_DO_PONTO.md, Parte 2)." + nota_vitalidade
         ),
     }
 
