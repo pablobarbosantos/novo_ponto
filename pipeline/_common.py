@@ -146,6 +146,7 @@ def download_if_needed(
     min_size_bytes: int = 1024,
     timeout: int = 120,
     headers: dict | None = None,
+    max_retries: int = 5,
 ) -> tuple[Path, bool]:
     """
     Baixa `url` para `dest` só se `dest` não existir ou for suspeitosamente
@@ -154,6 +155,12 @@ def download_if_needed(
 
     Idempotência: spec §1.1 — "Todo download vai para data/raw/ e é
     verificado por existência + tamanho antes de baixar de novo."
+
+    Retry com backoff exponencial pra falha de conexão/DNS transitória (ex.:
+    NameResolutionError observado em runtime baixando arquivos grandes da RFB
+    — sem isso, uma falha de rede no meio de um lote de downloads derruba a
+    fase inteira e perde o progresso já feito, mesmo com os arquivos
+    anteriores já em cache).
     """
     dest.parent.mkdir(parents=True, exist_ok=True)
 
@@ -161,22 +168,34 @@ def download_if_needed(
         logger.info("cache hit, não baixa de novo: %s", dest)
         return dest, False
 
-    logger.info("baixando %s -> %s", url, dest)
     tmp = dest.with_suffix(dest.suffix + ".part")
     headers_final = {**DEFAULT_HEADERS, **(headers or {})}
-    with requests.get(url, stream=True, timeout=timeout, headers=headers_final) as r:
-        r.raise_for_status()
-        total = int(r.headers.get("content-length", 0))
-        with open(tmp, "wb") as f, tqdm(
-            total=total or None, unit="B", unit_scale=True, desc=dest.name
-        ) as bar:
-            for chunk in r.iter_content(chunk_size=1 << 16):
-                if chunk:
-                    f.write(chunk)
-                    bar.update(len(chunk))
-    tmp.replace(dest)
-    logger.info("download concluído: %s (%d bytes)", dest, dest.stat().st_size)
-    return dest, True
+    last_exc = None
+    for attempt in range(max_retries):
+        logger.info("baixando %s -> %s (tentativa %d/%d)", url, dest, attempt + 1, max_retries)
+        try:
+            with requests.get(url, stream=True, timeout=timeout, headers=headers_final) as r:
+                r.raise_for_status()
+                total = int(r.headers.get("content-length", 0))
+                with open(tmp, "wb") as f, tqdm(
+                    total=total or None, unit="B", unit_scale=True, desc=dest.name
+                ) as bar:
+                    for chunk in r.iter_content(chunk_size=1 << 16):
+                        if chunk:
+                            f.write(chunk)
+                            bar.update(len(chunk))
+            tmp.replace(dest)
+            logger.info("download concluído: %s (%d bytes)", dest, dest.stat().st_size)
+            return dest, True
+        except requests.RequestException as exc:
+            last_exc = exc
+            wait = min(2.0 ** attempt, 60.0)
+            logger.warning(
+                "download de %s falhou (%s), tentativa %d/%d, aguardando %.1fs",
+                url, exc, attempt + 1, max_retries, wait,
+            )
+            time.sleep(wait)
+    raise RuntimeError(f"download de {url} esgotou {max_retries} tentativas: {last_exc}")
 
 
 def get_with_retry(
@@ -321,6 +340,23 @@ def clean_numeric(series: "pd.Series", decimal_sep: str = ".") -> "pd.Series":
         s = s.str.replace(".", "", regex=False)  # separador de milhar, se houver
         s = s.str.replace(",", ".", regex=False)
     return pd.to_numeric(s, errors="coerce")
+
+
+# ---------------------------------------------------------------------------
+# C1 (CORRECOES_2.md) — atribuir bairro a qualquer camada de pontos via nearest-sector
+# join contra setores.gpkg. Fatorado daqui porque o mesmo padrão já estava inline em
+# f4_candidatos.py — não existe layer de polígono de bairro no projeto (spec §3, Fase 3:
+# só zonas_permitidas.csv, sem zonas.gpkg), então "bairro" de qualquer ponto sempre vem
+# do setor censitário mais próximo.
+# ---------------------------------------------------------------------------
+
+def atribuir_bairro(gdf_pontos: "gpd.GeoDataFrame", setores: "gpd.GeoDataFrame", col_bairro: str = "NM_BAIRRO") -> "pd.Series":
+    """Retorna uma Series (mesmo índice de gdf_pontos) com o nome do bairro do setor
+    censitário mais próximo de cada ponto."""
+    import geopandas as gpd
+    juncao = gpd.sjoin_nearest(gdf_pontos[["geometry"]], setores[[col_bairro, "geometry"]], how="left")
+    juncao = juncao[~juncao.index.duplicated(keep="first")]  # sjoin_nearest pode empatar
+    return juncao[col_bairro].reindex(gdf_pontos.index)
 
 
 # ---------------------------------------------------------------------------
