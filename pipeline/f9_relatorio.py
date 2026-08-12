@@ -283,7 +283,7 @@ def _construir_mapa(dados: dict, crs_metrico: str) -> folium.Map:
             ).add_to(grupo_iso)
         grupo_iso.add_to(mapa)
 
-    grupo_finalistas = folium.FeatureGroup(name="Finalistas (Top 10)", show=True)
+    grupo_finalistas = folium.FeatureGroup(name=f"Finalistas (Top {len(top10)})", show=True)
     for i, row in enumerate(top10.itertuples(), start=1):
         popup_html = (
             f"<b>#{i} — {html.escape(str(row.bairro))}</b><br>"
@@ -374,6 +374,21 @@ def _fmt(v, casas=0, prefixo="", sufixo="", vazio="não coletado") -> str:
 
 
 def _resumo_executivo(top10: pd.DataFrame) -> str:
+    aviso_menos_de_10 = ""
+    if len(top10) < 10:
+        aviso_menos_de_10 = (
+            f"<p class='aviso'><b>Este ranking tem {len(top10)} candidatos, não 10.</b> "
+            "Achado real, não bug: o dedup geográfico de 800m (G2, critério de aceite do próprio "
+            "pipeline — nenhum par de finalistas pode ficar a menos de 800m um do outro) já reduz o "
+            "pool de 300 candidatos a pouco mais de uma dezena de sobreviventes por natureza "
+            "(candidatos se concentram geograficamente em poucos bairros densos — ver Limitações). "
+            "Desta pequena sobra, todos os candidatos do bairro Presidente Roosevelt foram descartados "
+            "pelo filtro de conhecimento local (C2 — ver seção 5), o que deixou o total abaixo de 10. "
+            "Preferiu-se reportar um Top menor e honesto a afrouxar o espaçamento mínimo de 800m ou "
+            "reverter a exclusão de Presidente Roosevelt só para completar a contagem — ambos "
+            "comprometeriam critérios já validados. A correção recomendada para uma próxima iteração é "
+            "aumentar a densidade/diversidade geográfica do pool gerado na Fase 4.</p>"
+        )
     itens = []
     for i, row in enumerate(top10.head(3).itertuples(), start=1):
         itens.append(
@@ -383,6 +398,7 @@ def _resumo_executivo(top10: pd.DataFrame) -> str:
         )
     melhor = top10.iloc[0]
     return (
+        aviso_menos_de_10 +
         "<ul>" + "".join(itens) + "</ul>"
         f"<p><b>Recomendação de visita:</b> comece por <b>{html.escape(str(melhor['bairro']))}</b> "
         f"(candidato {melhor['candidato_id']}), maior score do ranking. "
@@ -487,6 +503,10 @@ def _ficha_finalista(i: int, row, mini_mapa_html: str, concorrentes: gpd.GeoData
             <tr><th>Imóveis no teto (data/manual/imoveis.csv)</th><td>{_fmt(row.get('n_imoveis_no_teto'))}</td></tr>
             <tr><th>R$/m² médio</th><td>{_fmt(row.get('reais_m2_medio'), 2, 'R$ ')}</td></tr>
             <tr><th>Teste absoluto</th><td>{'✅ passou' if row['teste_absoluto_passou'] else '❌ reprovado'} — {motivo_teste}</td></tr>
+            <tr><th>Vitalidade comercial do bairro (C1)<span class="badge" title="taxa de mortalidade empresarial (CNPJs baixados nos últimos 36 meses / ativos+baixados), comércio varejista em geral (CNAE divisão 47), Receita Federal">mortalidade</span></th><td>{_fmt(row.get('taxa_mortalidade')*100 if pd.notna(row.get('taxa_mortalidade')) else None, 1, sufixo='%')}</td></tr>
+            <tr><th>Suspeita de moradia estudantil (C3)</th><td>{'⚠️ sim — fator de verticalização descontado' if row.get('suspeita_estudantil') else 'não'}{f" (campus a {_fmt(row.get('dist_campus_km'), 1)}km)" if pd.notna(row.get('dist_campus_km')) else ''}</td></tr>
+            <tr><th>Domicílios no raio de entrega viável (C4.2)<span class="badge" title="tempo porta-a-porta ≤ negocio.raio_entrega_max_min, considerando ida+volta+fricção de prédio — não é o mesmo raio da captação de balcão">≠ captação</span></th><td>{_fmt(row.get('domicilios_entrega_viavel'))}</td></tr>
+            <tr><th>Custo estimado por entrega</th><td>{_fmt(row.get('custo_por_entrega'), 2, 'R$ ')} <span class="nc" style="font-style:normal">(comparar com a margem por saco — Metodologia — pra definir o ticket mínimo de frete grátis)</span></td></tr>
           </table>
         </div>
       </div>
@@ -593,6 +613,7 @@ def run() -> Path:
         if taxa_aprovacao >= 0.999 else ""
     )
 
+    negocio_cfg = cfg.get("negocio", {})
     metodologia_html = f"""
     <p><b>Método de calibração:</b> {html.escape(pesos['metodo'])} — confiança <b>{html.escape(pesos['confianca'])}</b>
     (n={pesos['n_amostra']}{f", R²={pesos['detalhes_estatisticos'].get('r2'):.3f}" if 'r2' in pesos.get('detalhes_estatisticos', {}) else ''}).</p>
@@ -601,9 +622,49 @@ def run() -> Path:
     <ul>{pesos_html}</ul>
     {aviso_ausentes}
     {aviso_100pct}
+    <p><b>Parâmetros de negócio usados nas contas de viabilidade e entrega</b> (⚠ = PROVISÓRIO, sem calibração local):</p>
+    <ul>
+      <li>Margem por saco premium: R$ {negocio_cfg.get('margem_por_saco_premium', '?')} ⚠</li>
+      <li>Taxa de posse de pet por domicílio: {negocio_cfg.get('taxa_posse_pet_domicilio', '?')} ⚠</li>
+      <li>Gasto médio mensal por pet: R$ {negocio_cfg.get('gasto_medio_mensal_por_pet', '?')} ⚠</li>
+      <li>Custo por hora do entregador (C4.2): R$ {negocio_cfg.get('custo_hora_entregador', '?')} ⚠</li>
+    </ul>
     <p><b>Fontes de dados</b> (baixadas em {date.today().isoformat()}):</p>
     <ul>{''.join(f"<li>{html.escape(nome)} — <code>{html.escape(url)}</code></li>" for nome, url in FONTES_METODOLOGIA)}</ul>
     """
+
+    # C2 (CORRECOES_2.md) — toda exclusão/penalização por conhecimento local precisa
+    # aparecer numa seção própria, com o motivo declarado, pra a decisão ser rastreável e
+    # revisável depois.
+    conhecimento_local_cfg = cfg.get("conhecimento_local", {})
+    ranking_completo = dados["ranking_completo"]
+    excluidos_cfg = conhecimento_local_cfg.get("bairros_excluidos", [])
+    penalizados_cfg = conhecimento_local_cfg.get("bairros_penalizados", [])
+    if not excluidos_cfg and not penalizados_cfg:
+        conhecimento_local_html = "<p>Nenhuma exclusão ou penalização por conhecimento local configurada nesta rodada.</p>"
+    else:
+        blocos = []
+        if excluidos_cfg:
+            linhas = "".join(
+                f"<tr><td>{html.escape(b['nome'])}</td><td>{html.escape(b['motivo'])}</td>"
+                f"<td>{int((ranking_completo['bairro'] == b['nome']).sum())}</td></tr>"
+                for b in excluidos_cfg
+            )
+            blocos.append(
+                "<h4>Bairros excluídos (filtro duro — nenhum candidato desses bairros entra no Top10)</h4>"
+                f"<table class='tabela-ficha'><tr><th>Bairro</th><th>Motivo</th><th>Candidatos afetados no pool de 300</th></tr>{linhas}</table>"
+            )
+        if penalizados_cfg:
+            linhas = "".join(
+                f"<tr><td>{html.escape(b['nome'])}</td><td>×{b['fator']:.2f}</td><td>{html.escape(b['motivo'])}</td>"
+                f"<td>{int((ranking_completo['bairro'] == b['nome']).sum())}</td></tr>"
+                for b in penalizados_cfg
+            )
+            blocos.append(
+                "<h4>Bairros penalizados (score final multiplicado pelo fator — não elimina, só reduz a prioridade)</h4>"
+                f"<table class='tabela-ficha'><tr><th>Bairro</th><th>Fator</th><th>Motivo</th><th>Candidatos afetados no pool de 300</th></tr>{linhas}</table>"
+            )
+        conhecimento_local_html = "".join(blocos)
 
     limitacoes = dados["limitacoes"]
     if not limitacoes:
@@ -623,9 +684,11 @@ def run() -> Path:
         linhas_top10=linhas_top10,
         fichas_html="".join(fichas_html),
         metodologia_html=metodologia_html,
+        conhecimento_local_html=conhecimento_local_html,
         limitacoes_html=limitacoes_html,
         reprovados_html=reprovados_html,
         n_reprovados=len(reprovados),
+        n_top10=len(top10),
     )
 
     relatorio_path = OUTPUT_DIR / "relatorio.html"
@@ -654,10 +717,11 @@ def _montar_html(**kw) -> str:
   <p class="subtitulo">Relatório gerado em {hoje} · pipeline automatizado a partir de dados públicos + Google Places + OpenRouteService</p>
   <nav class="indice">
     <a href="#resumo">Resumo executivo</a>
-    <a href="#top10">Top 10</a>
+    <a href="#top10">Top {kw['n_top10']}</a>
     <a href="#mapa">Mapa</a>
     <a href="#fichas">Fichas individuais</a>
     <a href="#metodologia">Metodologia</a>
+    <a href="#conhecimento-local">Conhecimento local</a>
     <a href="#limitacoes">Limitações</a>
     <a href="#reprovados">Reprovados no teste absoluto</a>
   </nav>
@@ -670,7 +734,7 @@ def _montar_html(**kw) -> str:
   </section>
 
   <section id="top10">
-    <h2>2. Top 10 — ranqueado por score</h2>
+    <h2>2. Top {kw['n_top10']} — ranqueado por score</h2>
     <div class="tabela-scroll">
     <table id="tabela-top10" class="ordenavel">
       <thead><tr>
@@ -711,13 +775,18 @@ def _montar_html(**kw) -> str:
     {kw['metodologia_html']}
   </section>
 
+  <section id="conhecimento-local">
+    <h2>5. Conhecimento local declarado</h2>
+    {kw['conhecimento_local_html']}
+  </section>
+
   <section id="limitacoes">
-    <h2>5. Limitações</h2>
+    <h2>6. Limitações</h2>
     {kw['limitacoes_html']}
   </section>
 
   <section id="reprovados">
-    <h2>6. Reprovados no teste absoluto ({kw['n_reprovados']})</h2>
+    <h2>7. Reprovados no teste absoluto ({kw['n_reprovados']})</h2>
     {kw['reprovados_html']}
   </section>
 </main>
