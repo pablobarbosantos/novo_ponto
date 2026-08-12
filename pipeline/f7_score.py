@@ -679,6 +679,19 @@ def run() -> tuple[Path, Path]:
         n_excluidos, sorted(excluidos_cfg) or "nenhum bairro excluído configurado",
         n_penalizados, sorted(penalizados_cfg) or "nenhum bairro penalizado configurado",
     )
+    # A1/A7 (CORRECOES_3.md) — desde que a exclusão passou a rodar também na Fase 4 (antes do
+    # corte preliminar), esta checagem na Fase 7 é defesa em profundidade e DEVE ser um no-op:
+    # nenhum candidato de bairro vetado deveria nem chegar até aqui. Se chegar, é sinal de bug
+    # (ex.: nome de bairro grafado diferente entre as duas fases), não um resultado esperado.
+    if n_excluidos > 0:
+        LOGGER.warning(
+            "A1/A7 — defesa em profundidade: %d candidato(s) em bairro vetado chegaram à Fase 7 "
+            "mesmo devendo ter sido removidos na Fase 4 (A1, CORRECOES_3.md) — investigar bug na "
+            "exclusão da Fase 4 (nome de bairro pode não bater exatamente entre f4_candidatos.py "
+            "e config.yaml)", n_excluidos,
+        )
+    else:
+        LOGGER.info("A1/A7 — defesa em profundidade OK: nenhum candidato em bairro vetado chegou à Fase 7")
 
     # 7.7
     cand = _dedup_geografica(cand)

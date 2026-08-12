@@ -184,11 +184,17 @@ def _carregar_tudo(cfg: dict) -> dict:
     zonas_path = DATA_PROCESSED / "zonas_permitidas.csv"
     zonas = pd.read_csv(zonas_path) if zonas_path.exists() else pd.DataFrame()
 
+    # A5 (CORRECOES_3.md) — cobertura por bairro (avaliado ou não, e por quê), gravada pela
+    # Fase 4. Pode não existir ainda numa base antiga de candidatos.gpkg pré-CORRECOES_3.md.
+    cobertura_path = DATA_PROCESSED / "cobertura_bairros.csv"
+    cobertura_bairros = pd.read_csv(cobertura_path, sep=";", encoding="utf-8-sig") if cobertura_path.exists() else pd.DataFrame()
+
     return {
         "setores": setores, "concorrentes": concorrentes, "candidatos_geom": candidatos_geom,
         "isocronas": isocronas, "perimetro": perimetro, "top10": top10,
         "ranking_completo": ranking_completo, "reprovados": reprovados, "pesos": pesos,
         "pesos_efetivos": pesos_efetivos, "limitacoes": limitacoes, "zonas": zonas,
+        "cobertura_bairros": cobertura_bairros,
     }
 
 
@@ -371,6 +377,65 @@ def _fmt(v, casas=0, prefixo="", sufixo="", vazio="não coletado") -> str:
     if isinstance(v, (int, float)):
         return f"{prefixo}{v:,.{casas}f}{sufixo}".replace(",", "§").replace(".", ",").replace("§", ".")
     return html.escape(str(v))
+
+
+def _cobertura_html(cobertura_bairros: pd.DataFrame, top10: pd.DataFrame) -> str:
+    """A5 (CORRECOES_3.md) — mostra o que NÃO entrou na análise, não só o que entrou. Um
+    Top N sem esta seção parece dizer 'estes são os melhores da cidade' quando pode
+    significar 'os melhores de um punhado de bairros, o resto nunca avaliado' — a diferença
+    entre as duas frases é a decisão inteira."""
+    if cobertura_bairros.empty:
+        return (
+            "<p><i>Dados de cobertura não disponíveis — candidatos.gpkg foi gerado antes do "
+            "CORRECOES_3.md (A5). Rode a Fase 4 novamente para gerar "
+            "data/processed/cobertura_bairros.csv.</i></p>"
+        )
+
+    n_bairros_cidade = len(cobertura_bairros)
+    n_avaliados = int(cobertura_bairros["avaliado"].sum())
+    n_bairros_ranking = top10["bairro"].nunique()
+
+    nao_avaliados = cobertura_bairros[~cobertura_bairros["avaliado"]].copy()
+    nao_avaliados = nao_avaliados.sort_values("renda_media_responsavel_bairro", ascending=False)
+    falsos_negativos = nao_avaliados[nao_avaliados["renda_quartil_superior"].fillna(False)]
+
+    resumo = (
+        f"<p>De <b>{n_bairros_cidade} bairros</b> em Uberlândia, <b>{n_avaliados}</b> tiveram ao menos "
+        f"um candidato avaliado no pool de candidatos da Fase 4, e <b>{n_bairros_ranking}</b> aparecem "
+        f"no ranking final (Top {len(top10)}). Um bairro \"não avaliado\" aqui <b>nunca chegou a ser "
+        f"pontuado</b> — não é o mesmo que \"avaliado e reprovado\" (ver seção Reprovados).</p>"
+    )
+
+    def _linha(r):
+        return (
+            f"<tr><td>{html.escape(str(r['bairro']))}</td>"
+            f"<td data-v='{r['renda_media_responsavel_bairro']}'>{_fmt(r['renda_media_responsavel_bairro'], 0, 'R$ ')}</td>"
+            f"<td data-v='{r['domicilios_ocupados_bairro']}'>{_fmt(r['domicilios_ocupados_bairro'], 0)}</td>"
+            f"<td>{html.escape(str(r['motivo_nao_avaliado']))}</td></tr>"
+        )
+
+    if falsos_negativos.empty:
+        destaque = "<p>Nenhum bairro do quartil superior de renda da cidade ficou fora da avaliação nesta rodada.</p>"
+    else:
+        linhas_destaque = "".join(_linha(r) for _, r in falsos_negativos.iterrows())
+        destaque = (
+            "<p class='aviso'><b>Falsos negativos mais caros — bairros de renda no quartil superior "
+            "da cidade que não foram avaliados</b> (o tipo de erro que motivou o CORRECOES_3.md):</p>"
+            "<table class='tabela-ficha'><tr><th>Bairro</th><th>Renda média resp. (bairro)</th>"
+            f"<th>Domicílios (bairro)</th><th>Motivo</th></tr>{linhas_destaque}</table>"
+        )
+
+    if nao_avaliados.empty:
+        tabela_completa = "<p>Todos os bairros da cidade tiveram ao menos um candidato avaliado.</p>"
+    else:
+        linhas_todos = "".join(_linha(r) for _, r in nao_avaliados.iterrows())
+        tabela_completa = (
+            f"<details><summary>Todos os {len(nao_avaliados)} bairros não avaliados (clique para expandir)</summary>"
+            "<table class='tabela-ficha'><tr><th>Bairro</th><th>Renda média resp. (bairro)</th>"
+            f"<th>Domicílios (bairro)</th><th>Motivo</th></tr>{linhas_todos}</table></details>"
+        )
+
+    return resumo + destaque + tabela_completa
 
 
 def _resumo_executivo(top10: pd.DataFrame) -> str:
@@ -566,6 +631,8 @@ def run() -> Path:
 
     linhas_top10 = "".join(_linha_tabela(top10.iloc[i]) for i in range(len(top10)))
 
+    cobertura_html = _cobertura_html(dados["cobertura_bairros"], top10)
+
     reprovados = dados["reprovados"]
     if reprovados.empty:
         reprovados_html = (
@@ -613,6 +680,27 @@ def run() -> Path:
         if taxa_aprovacao >= 0.999 else ""
     )
 
+    # A6/A7 (CORRECOES_3.md) — pendências herdadas, registradas sem tentar consertar agora.
+    ranking_completo = dados["ranking_completo"]
+    total_municipal_dom = dados["setores"]["domicilios_ocupados"].sum()
+    pct_dom_efetivo = (
+        100 * ranking_completo["domicilios_efetivo"].median() / total_municipal_dom
+        if "domicilios_efetivo" in ranking_completo.columns and total_municipal_dom else None
+    )
+    concorrentes_google = dados["concorrentes"][dados["concorrentes"].get("fonte") == "google"] if "fonte" in dados["concorrentes"].columns else dados["concorrentes"]
+    n_com_avaliacao = int(concorrentes_google["data_ultima_avaliacao"].notna().sum()) if "data_ultima_avaliacao" in concorrentes_google.columns else 0
+    n_google = len(concorrentes_google)
+    vitalidade_no_score = pesos_efetivos and "vitalidade_comercial" in (pesos_efetivos.get("pesos_renormalizados") or {})
+    peso_vitalidade_pct = (pesos_efetivos["pesos_renormalizados"]["vitalidade_comercial"] * 100) if vitalidade_no_score else None
+    aviso_pendencias_a7 = f"""
+    <p class='aviso'><b>Pendências herdadas (CORRECOES_3.md, A6/A7) — registradas, não corrigidas nesta rodada:</b></p>
+    <ul>
+      {f"<li><b>Eixo vitalidade_comercial ({peso_vitalidade_pct:.1f}% do score)</b> se apoia num indicador (mortalidade empresarial via CNPJ da Receita) que <b>não passou na própria validação</b> exigida pelo CORRECOES_2.md — Centro ficou em 66º de 75 em mortalidade (quase o melhor da cidade) e Presidente Roosevelt em 24º, nenhum no quartil superior esperado. O filtro duro já foi desativado (C1.4); este eixo continua só informativo, com o peso vindo de um indicador não validado.</li>" if vitalidade_no_score else ""}
+      <li><b>Cobertura geográfica das isócronas (domicilios_efetivo):</b> mediana de {_fmt(pct_dom_efetivo, 1, sufixo='%') if pct_dom_efetivo is not None else 'não disponível'} do total de domicílios do município, acima do alvo original de 15% (B1). A malha viária de Uberlândia é geometricamente generosa mesmo em isócronas de 5min nos pontos bem conectados — característica local documentada em log, não um erro de cálculo, mas o número precisa ficar visível aqui, não só no log.</li>
+      <li><b>Recência de avaliações (C1.3):</b> {n_com_avaliacao}/{n_google} concorrentes de fonte Google têm data de última avaliação coletada. A causa raiz confirmada nesta sessão não é só cota temporária: mesmo as respostas 200&nbsp;OK do Place Details nunca trouxeram o campo <code>reviews</code>, o que aponta para uma limitação de tier de billing (Enterprise+Atmosphere) da chave configurada, não algo que se resolva sozinho esperando a cota renovar. Ver <code>f2_concorrentes.py</code> (C1.3) para o histórico completo da investigação.</li>
+    </ul>
+    """
+
     negocio_cfg = cfg.get("negocio", {})
     metodologia_html = f"""
     <p><b>Método de calibração:</b> {html.escape(pesos['metodo'])} — confiança <b>{html.escape(pesos['confianca'])}</b>
@@ -622,6 +710,7 @@ def run() -> Path:
     <ul>{pesos_html}</ul>
     {aviso_ausentes}
     {aviso_100pct}
+    {aviso_pendencias_a7}
     <p><b>Parâmetros de negócio usados nas contas de viabilidade e entrega</b> (⚠ = PROVISÓRIO, sem calibração local):</p>
     <ul>
       <li>Margem por saco premium: R$ {negocio_cfg.get('margem_por_saco_premium', '?')} ⚠</li>
@@ -682,6 +771,7 @@ def run() -> Path:
         mapa_html_embutido=mapa_html_embutido,
         resumo_html=_resumo_executivo(top10),
         linhas_top10=linhas_top10,
+        cobertura_html=cobertura_html,
         fichas_html="".join(fichas_html),
         metodologia_html=metodologia_html,
         conhecimento_local_html=conhecimento_local_html,
@@ -718,6 +808,7 @@ def _montar_html(**kw) -> str:
   <nav class="indice">
     <a href="#resumo">Resumo executivo</a>
     <a href="#top10">Top {kw['n_top10']}</a>
+    <a href="#cobertura">Cobertura da análise</a>
     <a href="#mapa">Mapa</a>
     <a href="#fichas">Fichas individuais</a>
     <a href="#metodologia">Metodologia</a>
@@ -759,6 +850,11 @@ def _montar_html(**kw) -> str:
     <p class="nota-tabela">Clique no cabeçalho pra ordenar por qualquer coluna. "não coletado" = dado que depende de entrada manual ainda não preenchida (ver Limitações).</p>
   </section>
 
+  <section id="cobertura">
+    <h2>3. Cobertura da análise</h2>
+    {kw['cobertura_html']}
+  </section>
+
   <section id="mapa">
     <h2>Mapa interativo</h2>
     <p>Sem tiles de internet de propósito (spec: relatório funciona offline) — o contorno cinza tracejado é o perímetro urbano, e os polígonos coloridos são os setores censitários. Ligue/desligue camadas no controle do canto superior direito.</p>
@@ -766,27 +862,27 @@ def _montar_html(**kw) -> str:
   </section>
 
   <section id="fichas">
-    <h2>3. Fichas individuais dos finalistas</h2>
+    <h2>4. Fichas individuais dos finalistas</h2>
     {kw['fichas_html']}
   </section>
 
   <section id="metodologia">
-    <h2>4. Metodologia</h2>
+    <h2>5. Metodologia</h2>
     {kw['metodologia_html']}
   </section>
 
   <section id="conhecimento-local">
-    <h2>5. Conhecimento local declarado</h2>
+    <h2>6. Conhecimento local declarado</h2>
     {kw['conhecimento_local_html']}
   </section>
 
   <section id="limitacoes">
-    <h2>6. Limitações</h2>
+    <h2>7. Limitações</h2>
     {kw['limitacoes_html']}
   </section>
 
   <section id="reprovados">
-    <h2>7. Reprovados no teste absoluto ({kw['n_reprovados']})</h2>
+    <h2>8. Reprovados no teste absoluto ({kw['n_reprovados']})</h2>
     {kw['reprovados_html']}
   </section>
 </main>
