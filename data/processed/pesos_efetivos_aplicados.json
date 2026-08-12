@@ -1,21 +1,24 @@
 {
   "pesos_originais": {
-    "demanda_estimada": 0.3521185403116448,
-    "saturacao": 0.2978814596883553,
+    "demanda_estimada": 0.27086041562434215,
+    "saturacao": 0.2291395843756579,
     "oferta_imovel": 0.2,
-    "acesso": 0.15
+    "acesso": 0.15,
+    "vitalidade_comercial": 0.15
   },
   "eixos_disponiveis": [
     "demanda_estimada",
     "saturacao",
-    "acesso"
+    "acesso",
+    "vitalidade_comercial"
   ],
   "eixos_ausentes": [
     "oferta_imovel"
   ],
   "pesos_renormalizados": {
-    "demanda_estimada": 0.440148175389556,
-    "saturacao": 0.3723518246104441,
-    "acesso": 0.18749999999999997
+    "demanda_estimada": 0.3385755195304277,
+    "saturacao": 0.28642448046957236,
+    "acesso": 0.18749999999999997,
+    "vitalidade_comercial": 0.18749999999999997
   }
 }

@@ -19,6 +19,15 @@ negocio:
   captura_min: 0.05
   captura_max: 0.15
   multiplo_minimo_breakeven: 2.5
+  # C4.2 (CORRECOES_2.md) — raio de entrega viável, separado da captação que decide o
+  # ponto (C4.1). custo_hora_entregador é PROVISÓRIO — sem fonte calibrada no pipeline
+  # (nenhum dado de custo real de entregador/motoboy disponível); aproximado por um valor
+  # de mercado de entrega em cidade de porte médio, ajustar com dado real antes de decidir
+  # ticket mínimo de frete grátis.
+  custo_hora_entregador: 18          # PROVISÓRIO — substituir por dado real de custo de entregador
+  raio_entrega_max_min: 25           # tempo porta-a-porta máximo aceitável
+  fator_ida_volta_entrega: 2.5       # ida + volta + fricção, sobre o tempo de deslocamento puro
+  friccao_entrega_min: 6             # minutos fixos: portaria, interfone, espera, elevador
 
 isocronas:
   minutos: [5, 10, 15]
@@ -71,6 +80,21 @@ candidatos:
   # mínimos" como piso de renda do responsável, mas não há SM oficial vigente nas fontes que o
   # pipeline consome; aproximado em R$, ajustar com o valor oficial do salário mínimo do ano corrente.
   renda_minima_responsavel: 2000
+
+# C2 (CORRECOES_2.md) — conhecimento de quem opera na cidade há anos é dado, não palpite,
+# mas precisa ficar declarado e auditável, nunca embutido no código. Aplicado depois do
+# score, antes do corte do Top10 (f7_score.py); toda exclusão/penalização aparece numa
+# seção própria do relatório com o motivo declarado.
+conhecimento_local:
+  bairros_excluidos:
+    - nome: "Centro"
+      motivo: "comércio de rua em decadência; fluxo diurno de passagem, não residencial; estacionamento difícil"
+    - nome: "Presidente Roosevelt"
+      motivo: "região onde comércio fecha; remanescentes com desempenho fraco"
+  bairros_penalizados:
+    - nome: "Santa Mônica"
+      fator: 0.5
+      motivo: "uma das maiores concentrações de concorrência do setor na cidade; proximidade de Petz e Cobasi; alta presença de moradia estudantil (UFU) infla % apartamento sem demanda pet correspondente"
 
 redes_conhecidas:
   - {nome: "Petz Rondon Pacheco", endereco: "Av. Rondon Pacheco, 505"}

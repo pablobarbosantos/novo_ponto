@@ -77,17 +77,36 @@ def rodar_testes_sanidade(dados: dict, cfg: dict, logger) -> tuple[bool, list[st
     else:
         logger.info("C6.2 — pulado (conhecimento_local.bairros_excluidos ainda não configurado nesta etapa do plano)")
 
-    # 3 — Vitalidade: nenhum candidato do Top10 no quartil superior de mortalidade empresarial
+    # 3 — Vitalidade: nenhum candidato do Top10 no quartil superior de mortalidade empresarial.
+    # NÃO BLOQUEANTE (decisão do usuário) — a validação que o CORRECOES_2.md exige pra esse
+    # indicador (Centro/Presidente Roosevelt precisam estar entre os piores) FALHOU com dado
+    # real de produção (RFB CNPJ: Centro #66/75, Presidente Roosevelt #24/75 — nenhum no
+    # quartil superior). C1.4 já desativou o filtro duro correspondente em f7_score.py pelo
+    # mesmo motivo; este item vira aviso, não abort, pra não bloquear o relatório com base
+    # numa métrica que não validou. C2 (bairros_excluidos) continua sendo o mecanismo real
+    # de exclusão de Centro/Presidente Roosevelt — ver item 2, acima, que é bloqueante.
     vitalidade_path = DATA_PROCESSED / "vitalidade_bairro.csv"
     if vitalidade_path.exists():
         vit = pd.read_csv(vitalidade_path)
         percentil = (cfg.get("vitalidade_comercial") or {}).get("percentil_filtro_mortalidade", 0.75)
         if "taxa_mortalidade" in vit.columns and vit["taxa_mortalidade"].notna().any():
             limite = vit["taxa_mortalidade"].quantile(percentil)
-            top10_vit = top10.merge(vit[["bairro", "taxa_mortalidade"]], on="bairro", how="left")
+            # top10 já vem com taxa_mortalidade própria (join feito em f7_score.py, C1.4) —
+            # mergear de novo colidiria de nome (pandas sufixa _x/_y e o código abaixo quebra
+            # com KeyError). Só faz o merge aqui se essa coluna ainda não existir (defensivo,
+            # ex.: alguém rodando f9 sozinho sobre um top10.csv antigo, pré-C1.4).
+            if "taxa_mortalidade" in top10.columns:
+                top10_vit = top10
+            else:
+                top10_vit = top10.merge(vit[["bairro", "taxa_mortalidade"]], on="bairro", how="left")
             violacao = top10_vit[top10_vit["taxa_mortalidade"] >= limite]
             if not violacao.empty:
-                motivos.append(f"vitalidade: {len(violacao)} candidato(s) do Top10 em bairro no quartil superior de mortalidade empresarial")
+                logger.warning(
+                    "C6.3 — %d candidato(s) do Top10 em bairro no quartil superior de mortalidade empresarial "
+                    "(aviso, não bloqueia — filtro duro desativado, indicador não validou contra Centro/Presidente "
+                    "Roosevelt com dado real; ver f7_score.py C1.4)",
+                    len(violacao),
+                )
             else:
                 logger.info("C6.3 — OK: nenhum candidato do Top10 em bairro no quartil superior de mortalidade")
         else:

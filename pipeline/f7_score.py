@@ -49,7 +49,7 @@ MAX_POR_BAIRRO_TOP10 = 2  # G2 (CORRECOES.md) — dez esquinas de cinco bairros 
 PESO_CAPTACAO_BALCAO = {5: 1.00, 10: 0.25}
 
 
-def _demanda_estimada(cand: pd.DataFrame, cfg: dict) -> pd.Series:
+def _demanda_estimada(cand: pd.DataFrame, cfg: dict, universidades: gpd.GeoDataFrame | None = None) -> pd.Series:
     taxa_posse = cfg["negocio"]["taxa_posse_pet_domicilio"]
     gasto_medio = cfg["negocio"]["gasto_medio_mensal_por_pet"]
 
@@ -63,13 +63,59 @@ def _demanda_estimada(cand: pd.DataFrame, cfg: dict) -> pd.Series:
         PESO_CAPTACAO_BALCAO[m] * cand[f"domicilios_anel{m}"].fillna(0) * cand[f"renda_media_anel{m}"].fillna(0)
         for m in PESO_CAPTACAO_BALCAO
     ) / peso_total.replace(0, np.nan)
+    pct_18a24_captacao = sum(
+        PESO_CAPTACAO_BALCAO[m] * cand[f"domicilios_anel{m}"].fillna(0) * cand[f"pct_18a24_anel{m}"].fillna(0)
+        for m in PESO_CAPTACAO_BALCAO
+    ) / peso_total.replace(0, np.nan)
 
-    fator_verticalizacao = 1.0 + 0.4 * pct_apto_captacao.fillna(0)  # C3 desconta este fator depois (moradia estudantil)
+    fator_verticalizacao = 1.0 + 0.4 * pct_apto_captacao.fillna(0)
+
+    # C3 (CORRECOES_2.md) — desconta o fator de verticalização quando há suspeita de
+    # moradia estudantil: % de 18-24 anos alto (percentil 75 dos 300 candidatos) E perto
+    # de campus universitário. República/apartamento de estudante não é domicílio com pet
+    # nem comprador de ração premium.
+    cfg_estudantil = cfg.get("estudantil", {})
+    n_suspeitos = 0
+    if universidades is not None and not universidades.empty and pct_18a24_captacao.notna().any():
+        dist_campus_km = cand.geometry.apply(lambda g: universidades.distance(g).min() / 1000.0)
+        percentil_corte = cfg_estudantil.get("percentil_pct_18a24", 0.75)
+        limite = pct_18a24_captacao.quantile(percentil_corte)
+        dist_maxima = cfg_estudantil.get("distancia_campus_km", 2.0)
+        suspeita_estudantil = (pct_18a24_captacao > limite) & (dist_campus_km < dist_maxima)
+        fator_desconto = cfg_estudantil.get("fator_desconto_verticalizacao", 0.6)
+        fator_verticalizacao = fator_verticalizacao.where(~suspeita_estudantil, fator_verticalizacao * fator_desconto)
+        n_suspeitos = int(suspeita_estudantil.sum())
+        cand["dist_campus_km"] = dist_campus_km
+        cand["suspeita_estudantil"] = suspeita_estudantil
+    else:
+        cand["dist_campus_km"] = None
+        cand["suspeita_estudantil"] = False
+    LOGGER.info("C3 — %d candidato(s) com suspeita de verticalização estudantil (fator de verticalização ×%.1f aplicado)",
+                n_suspeitos, cfg_estudantil.get("fator_desconto_verticalizacao", 0.6))
+    if universidades is not None and not universidades.empty and "suspeita_estudantil" in cand.columns:
+        sm = cand[cand["bairro"] == "Santa Mônica"]
+        if not sm.empty and not sm["suspeita_estudantil"].any():
+            LOGGER.warning(
+                "C3 — validação do CORRECOES_2.md esperava Santa Mônica fortemente representado entre "
+                "os descontados; nenhum dos %d candidatos de Santa Mônica disparou o filtro (dist_campus_km "
+                "mín=%.2fkm, limite configurado=%.1fkm). Causa raiz investigada: o único ponto OSM "
+                "amenity=university nas proximidades (UFU Campus Santa Mônica) está com o campo 'name' "
+                "malformado no OSM ('1H', não o nome do campus) e representa um único prédio, não o "
+                "polígono do campus inteiro — a distância medida (mín. ~2,0km) fica bem na borda do corte "
+                "de %.1fkm. Não ajustado aqui (mudar o limite só pra encaixar Santa Mônica seria ajustar o "
+                "critério ao resultado desejado, não uma correção de bug). C2 (conhecimento local, "
+                "bairros_penalizados) já cobre esse mesmo efeito por conhecimento direto do avaliador, "
+                "então o score final não fica cego a isso — só o eixo automático C3 é que não sozinho.",
+                len(sm), sm["dist_campus_km"].min(), cfg_estudantil.get("distancia_campus_km", 2.0),
+                cfg_estudantil.get("distancia_campus_km", 2.0),
+            )
+
     potencial = domicilios_captacao * taxa_posse * fator_verticalizacao * gasto_medio
 
     cand["domicilios_captacao_efetivo"] = domicilios_captacao  # reusado por B2 (Huff) e C4.2 (raio de entrega)
     cand["pct_apartamento_captacao_efetivo"] = pct_apto_captacao
     cand["renda_media_captacao_efetivo"] = renda_captacao  # só descritivo — renda não entra na fórmula de demanda
+    cand["pct_18a24_captacao_efetivo"] = pct_18a24_captacao
     return potencial.where(domicilios_captacao.notna())
 
 
@@ -255,6 +301,47 @@ def _demanda_capturada(cand: gpd.GeoDataFrame, setores: gpd.GeoDataFrame, denom_
 
 
 # ---------------------------------------------------------------------------
+# C4.2 (CORRECOES_2.md) — raio de entrega viável, separado da captação que decide o ponto
+# (C4.1). Tempo de mapa != tempo de porta: ida+volta, fricção de prédio (portaria,
+# interfone, elevador). Serve pra dimensionar a ficha, não pra escolher o ponto.
+# ---------------------------------------------------------------------------
+
+def _raio_entrega(cand: pd.DataFrame, cfg: dict) -> tuple[pd.Series, pd.Series]:
+    fator = cfg["negocio"]["fator_ida_volta_entrega"]
+    friccao = cfg["negocio"]["friccao_entrega_min"]
+    teto_min = cfg["negocio"]["raio_entrega_max_min"]
+    custo_hora = cfg["negocio"]["custo_hora_entregador"]
+
+    # tempo de deslocamento (mapa, só ida) máximo que ainda cabe no teto de porta-a-porta
+    tempo_deslocamento_max = (teto_min - friccao) / fator  # (25-6)/2.5 = 7.6min
+    # só há dados nos anéis de 5/10min cacheados — interpola linearmente entre os dois
+    # (decisão confirmada: sem nova chamada ao ORS, sem custo extra de API)
+    frac = (tempo_deslocamento_max - 5) / (10 - 5)
+    domicilios_entrega = cand["domicilios_anel5"].fillna(0) + frac * cand["domicilios_anel10"].fillna(0)
+    tempo_porta_a_porta = tempo_deslocamento_max * fator + friccao  # ≈ teto_min, por construção
+    custo_por_entrega = pd.Series(tempo_porta_a_porta / 60.0 * custo_hora, index=cand.index)
+
+    # Raio equivalente só para o log de validação do CORRECOES_2.md — precisa vir de uma
+    # ÁREA interpolada (mesmos pesos 1.0/frac usados acima para domicílios), não de
+    # domicilios_entrega diretamente: um raio de sqrt(N_domicílios/π) mistura contagem de
+    # domicílios com m² e dá um número sem sentido físico (bug encontrado nesta sessão —
+    # produzia ~0.2km quando o esperado é 3-4km; "area_anel{5,10}_km2" vem de f5_isocronas.py).
+    if "area_anel5_km2" in cand.columns and "area_anel10_km2" in cand.columns:
+        area_interpolada_km2 = cand["area_anel5_km2"].fillna(0) + frac * cand["area_anel10_km2"].fillna(0)
+        raio_equivalente_km = (area_interpolada_km2.clip(lower=0) / 3.14159).pow(0.5)
+        raio_log = "%.1fkm" % raio_equivalente_km.median()
+    else:
+        raio_log = "não disponível (area_anel5_km2/area_anel10_km2 ausentes — rode f5_isocronas.py de novo)"
+    LOGGER.info(
+        "C4.2 — raio de entrega viável: tempo_deslocamento_max=%.1fmin, tempo_porta_a_porta=%.1fmin, "
+        "custo_por_entrega=R$%.2f, raio equivalente mediano=%s (esperado ~3-4km, CORRECOES_2.md)",
+        tempo_deslocamento_max, tempo_porta_a_porta, custo_por_entrega.iloc[0] if len(custo_por_entrega) else float("nan"),
+        raio_log,
+    )
+    return domicilios_entrega, custo_por_entrega
+
+
+# ---------------------------------------------------------------------------
 # 7.4 — Ponto de equilíbrio (aluguel real vem da Fase 8; aqui ainda não existe)
 # ---------------------------------------------------------------------------
 
@@ -375,10 +462,14 @@ def run() -> tuple[Path, Path]:
     concorrentes = gpd.read_file(DATA_PROCESSED / "concorrentes.gpkg")
     vias = gpd.read_file(DATA_PROCESSED / "vias.gpkg")
     setores = gpd.read_file(DATA_PROCESSED / "setores.gpkg")
+    universidades_path = DATA_PROCESSED / "universidades.gpkg"
+    universidades = gpd.read_file(universidades_path) if universidades_path.exists() else None
+    if universidades is None:
+        LOGGER.warning("C3 — data/processed/universidades.gpkg não existe ainda (rode f2c_universidades.py) — desconto de verticalização estudantil desativado nesta rodada")
     n_entrada = len(cand)
 
     # 7.1
-    cand["potencial_mensal"] = _demanda_estimada(cand, cfg)
+    cand["potencial_mensal"] = _demanda_estimada(cand, cfg, universidades)
 
     # 7.2 + 7.3
     forca = _forca_concorrencia(cand, concorrentes, cfg, crs_metrico)
@@ -423,6 +514,9 @@ def run() -> tuple[Path, Path]:
     # 7.4
     cand = pd.concat([cand, _ponto_equilibrio(cand, cfg)], axis=1)
 
+    # C4.2 — raio de entrega viável (informativo, não entra no score nem no teste absoluto)
+    cand["domicilios_entrega_viavel"], cand["custo_por_entrega"] = _raio_entrega(cand, cfg)
+
     # 7.5 — teste absoluto (filtro duro, independe do score)
     multiplo_min = cfg["negocio"]["multiplo_minimo_breakeven"]
     tem_dados_suficientes = cand["demanda_capturada"].notna()
@@ -464,6 +558,45 @@ def run() -> tuple[Path, Path]:
         cand["teste_absoluto_motivo"],
     )
 
+    # C1.4 (CORRECOES_2.md) — eixo vitalidade_comercial. vitalidade_bairro.csv é gerado por
+    # f2b_vitalidade.py (C1.1); sem ele, o eixo fica indisponível e M1 renormaliza —
+    # degradação graciosa, igual ao resto do pipeline.
+    #
+    # FILTRO DURO DESATIVADO (decisão do usuário, achado real de dados): a validação que o
+    # próprio CORRECOES_2.md exige ("rodar os indicadores contra Centro e Presidente
+    # Roosevelt — eles precisam estar entre os piores; se não, o indicador não está
+    # capturando o fenômeno, investigar antes de confiar nele") FALHOU com dado real de
+    # produção — RFB CNPJ, 356.420 estabelecimentos de Uberlândia, 73.116 de comércio
+    # varejista (divisão 47), 61.343 casados a bairro do IBGE: Centro tem mortalidade de
+    # 24,4% (abaixo da mediana de 29,9%, posição #66 de 75 — uma das MELHORES, não das
+    # piores) e Presidente Roosevelt 31,3% (#24 de 75, fora do quartil superior). C1.2
+    # (fechamento permanente no Google Places) deu 0/273 — o método de descoberta via
+    # textSearch estruturalmente não retorna loja já fechada. C1.3 confirmado indisponível
+    # (limitação de tier de API, ver f2_concorrentes.py). Nenhum dos 3 sub-indicadores de
+    # C1 validou. Eliminar candidatos por um filtro duro nessas condições arriscaria cortar
+    # bairros sem relação real com decadência comercial (ex.: Portal do Vale, maior
+    # mortalidade medida = 50%, sem nenhuma evidência de ser análogo a Centro/PR). O eixo
+    # continua entrando no score (informativo, peso 15%) — a exclusão de Centro/Presidente
+    # Roosevelt fica a cargo do C2 (conhecimento local, filtro duro explícito por nome).
+    vitalidade_path = DATA_PROCESSED / "vitalidade_bairro.csv"
+    cfg_vitalidade = cfg.get("vitalidade_comercial", {})
+    cand["filtro_vitalidade_passou"] = True  # sempre — filtro duro desativado, ver nota acima
+    if vitalidade_path.exists():
+        vitalidade_bairro = pd.read_csv(vitalidade_path)
+        cand = cand.merge(vitalidade_bairro[["bairro", "taxa_mortalidade"]], on="bairro", how="left")
+        cand["vitalidade_comercial_score"] = 1.0 - cand["taxa_mortalidade"]
+        percentil_filtro = cfg_vitalidade.get("percentil_filtro_mortalidade", 0.75)
+        limite_mortalidade = vitalidade_bairro["taxa_mortalidade"].quantile(percentil_filtro)
+        n_no_quartil_superior = int((cand["taxa_mortalidade"] >= limite_mortalidade).sum())
+        LOGGER.info(
+            "C1.4 — eixo informativo (filtro duro desativado): %d/%d candidatos estariam no quartil "
+            "superior de mortalidade (limite=%.3f) se o filtro estivesse ativo",
+            n_no_quartil_superior, len(cand), limite_mortalidade,
+        )
+    else:
+        LOGGER.warning("C1.4 — data/processed/vitalidade_bairro.csv não existe ainda (rode f2b_vitalidade.py) — eixo de vitalidade desativado nesta rodada")
+        cand["vitalidade_comercial_score"] = np.nan
+
     # 7.6 — score final por percentil
     cand["acesso_score"] = _acesso_score(cand, vias)
     cand["oferta_imovel_score"] = 0.0  # sem imoveis.csv preenchido ainda — penalidade explícita (spec §7.6), não zero "medido"
@@ -478,8 +611,12 @@ def run() -> tuple[Path, Path]:
         "saturacao": bool(cand["saturacao"].notna().any()),
         "acesso": bool(cand["acesso_score"].notna().any()),
         "oferta_imovel": bool(cand["oferta_imovel_disponivel"].any()),
+        "vitalidade_comercial": bool(cand["vitalidade_comercial_score"].notna().any()),
     }
-    eixos_disponiveis = [e for e, ok in disponibilidade.items() if ok]
+    # só entra na renormalização se tiver dado disponível E peso calibrado em pesos.json
+    # (ex.: se vitalidade_comercial.peso_eixo foi configurado mas a Fase 6 ainda não rodou
+    # de novo, o eixo não está em `pesos` — tratado como indisponível, não como peso 0 mudo)
+    eixos_disponiveis = [e for e, ok in disponibilidade.items() if ok and e in pesos]
     soma_disponivel = sum(pesos[e] for e in eixos_disponiveis)
     if soma_disponivel > 0:
         pesos_renormalizados = {e: pesos[e] / soma_disponivel for e in eixos_disponiveis}
@@ -492,6 +629,7 @@ def run() -> tuple[Path, Path]:
         "saturacao": cand["saturacao"].rank(pct=True, na_option="bottom"),
         "acesso": cand["acesso_score"].rank(pct=True, na_option="bottom"),
         "oferta_imovel": cand["oferta_imovel_score"].rank(pct=True, na_option="bottom"),
+        "vitalidade_comercial": cand["vitalidade_comercial_score"].rank(pct=True, na_option="bottom"),
     }
     percentis_disponiveis = {e: percentis[e] for e in eixos_disponiveis}
     cand["score_final"] = _compor_score_final(percentis_disponiveis, pesos_renormalizados)
@@ -511,13 +649,48 @@ def run() -> tuple[Path, Path]:
     }, indent=2, ensure_ascii=False), encoding="utf-8")
     LOGGER.info("gravado: %s", pesos_efetivos_path)
 
+    # C2 (CORRECOES_2.md) — conhecimento local declarado: aplicado depois do score, antes
+    # do corte do Top10. Exclusão vira filtro duro (junto com teste absoluto/dedup/força);
+    # penalização multiplica score_final, preservando o valor bruto pra auditoria.
+    conhecimento_local = cfg.get("conhecimento_local", {})
+    excluidos_cfg = {b["nome"]: b["motivo"] for b in conhecimento_local.get("bairros_excluidos", [])}
+    penalizados_cfg = {b["nome"]: (b["fator"], b["motivo"]) for b in conhecimento_local.get("bairros_penalizados", [])}
+
+    cand["excluido_conhecimento_local"] = cand["bairro"].isin(excluidos_cfg)
+    cand["motivo_exclusao_conhecimento_local"] = cand["bairro"].map(excluidos_cfg)
+    # mesma lógica de sobreposição de motivo do C5/C1.4 — sem isso, quem passa em todos os
+    # outros filtros mas é excluído por bairro apareceria como "passou" na tabela de reprovados
+    cand["teste_absoluto_motivo"] = np.where(
+        cand["teste_absoluto_passou"] & cand["filtro_forca_passou"] & cand["filtro_vitalidade_passou"] & cand["excluido_conhecimento_local"],
+        cand["bairro"].map(lambda b: f"bairro excluído por conhecimento local (C2): {excluidos_cfg.get(b, '')}"),
+        cand["teste_absoluto_motivo"],
+    )
+
+    cand["score_final_bruto"] = cand["score_final"]  # preserva o valor pré-penalidade para auditoria
+    fator_penalizacao = cand["bairro"].map(lambda b: penalizados_cfg.get(b, (1.0, None))[0])
+    cand["fator_penalizacao_conhecimento_local"] = fator_penalizacao
+    cand["motivo_penalizacao_conhecimento_local"] = cand["bairro"].map(lambda b: penalizados_cfg.get(b, (1.0, None))[1])
+    cand["score_final"] = cand["score_final_bruto"] * fator_penalizacao
+
+    n_excluidos = int(cand["excluido_conhecimento_local"].sum())
+    n_penalizados = int((fator_penalizacao != 1.0).sum())
+    LOGGER.info(
+        "C2 — conhecimento local: %d candidato(s) excluído(s) (%s), %d penalizado(s) (%s)",
+        n_excluidos, sorted(excluidos_cfg) or "nenhum bairro excluído configurado",
+        n_penalizados, sorted(penalizados_cfg) or "nenhum bairro penalizado configurado",
+    )
+
     # 7.7
     cand = _dedup_geografica(cand)
 
     aprovados = cand[
         cand["teste_absoluto_passou"] & ~cand["duplicata_geografica"] & cand["filtro_forca_passou"]
+        & ~cand["excluido_conhecimento_local"] & cand["filtro_vitalidade_passou"]
     ].sort_values("score_final", ascending=False)
-    reprovados = cand[~cand["teste_absoluto_passou"] | ~cand["filtro_forca_passou"]]
+    reprovados = cand[
+        ~cand["teste_absoluto_passou"] | ~cand["filtro_forca_passou"]
+        | cand["excluido_conhecimento_local"] | ~cand["filtro_vitalidade_passou"]
+    ]
     LOGGER.info(
         "teste absoluto: %d passaram, %d reprovados; dedup geográfica: %d duplicatas suprimidas",
         cand["teste_absoluto_passou"].sum(), len(reprovados), cand["duplicata_geografica"].sum(),
@@ -554,10 +727,14 @@ def run() -> tuple[Path, Path]:
         "candidato_id", "bairro",
         "domicilios_captacao_efetivo", "pct_apartamento_captacao_efetivo", "renda_media_captacao_efetivo",
         "domicilios_efetivo", "pct_apartamento_efetivo", "renda_media_efetivo",
+        "suspeita_estudantil", "dist_campus_km",
+        "taxa_mortalidade", "vitalidade_comercial_score",
         "n_concorrentes_15min", "forca_concorrencia", "n_clinicas_sem_loja",
         "saturacao", "potencial_mensal", "demanda_capturada", "oferta_imovel_disponivel", "aluguel_estimado_regiao",
         "aluguel_e_estimado", "custo_fixo_mensal", "sacos_breakeven",
-        "acesso_score", "score_final", "teste_absoluto_passou", "teste_absoluto_motivo",
+        "domicilios_entrega_viavel", "custo_por_entrega",
+        "excluido_conhecimento_local", "fator_penalizacao_conhecimento_local", "motivo_penalizacao_conhecimento_local",
+        "score_final_bruto", "acesso_score", "score_final", "teste_absoluto_passou", "teste_absoluto_motivo",
     ]
     colunas_saida = [c for c in colunas_saida if c in cand.columns]
 

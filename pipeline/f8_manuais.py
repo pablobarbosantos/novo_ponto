@@ -139,9 +139,15 @@ def run() -> tuple[Path, Path]:
     # porque o ranking completo (300 linhas) inclui todo mundo, não só quem passou nos filtros.
     # O mesmo vale pro cap de bairro (G2) e pro filtro de força de concorrência (C5): sem
     # reaplicar, o repique abaixo reintroduz o que os filtros da Fase 7 já tinham resolvido.
+    # filtro_vitalidade_passou (C1.4) e excluido_conhecimento_local (C2) só existem depois
+    # que essas correções rodarem em f7 — checagem defensiva pra este arquivo continuar
+    # funcionando em qualquer etapa do plano de correções.
     filtro_forca = ranking["filtro_forca_passou"] if "filtro_forca_passou" in ranking.columns else True
+    filtro_vitalidade = ranking["filtro_vitalidade_passou"] if "filtro_vitalidade_passou" in ranking.columns else True
+    nao_excluido_local = ~ranking["excluido_conhecimento_local"] if "excluido_conhecimento_local" in ranking.columns else True
     aprovados = ranking[
         ranking["teste_absoluto_passou"] & ~ranking["duplicata_geografica"] & filtro_forca
+        & filtro_vitalidade & nao_excluido_local
     ].sort_values("score_final", ascending=False)
     top10_capado, excedentes_bairro = aplicar_cap_bairro(aprovados, "bairro", MAX_POR_BAIRRO_TOP10, 10)
     LOGGER.info(
