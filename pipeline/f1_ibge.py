@@ -249,6 +249,13 @@ def run() -> Path:
     for var, nome in FAIXAS_ETARIAS.items():
         demog[nome] = clean_numeric(df_demog[var], dec_demog)
 
+    # C3 (CORRECOES_2.md) — pct_18a24 pra detectar suspeita de moradia estudantil perto de
+    # campus. O Censo só tem faixas de 5 em 5 anos (15-19, 20-24), não 18-24 exato —
+    # aproximação documentada: 40% da faixa 15-19 (assume distribuição uniforme dentro da
+    # faixa, cobrindo 18-19) + 100% da faixa 20-24.
+    pct_18a24_num = demog["idade_15_19"].fillna(0) * 0.4 + demog["idade_20_24"].fillna(0)
+    demog["pct_18a24"] = (pct_18a24_num / demog["populacao_demografia"]).clip(lower=0, upper=1)
+
     renda = pd.DataFrame({"CD_SETOR": df_renda["CD_SETOR"]})
     renda["n_responsaveis_com_renda"] = clean_numeric(df_renda[VAR_RENDA_N_RESPONSAVEIS], dec_renda)
     renda["renda_media_responsavel"] = clean_numeric(df_renda[VAR_RENDA_MEDIA], dec_renda)
