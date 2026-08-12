@@ -1,0 +1,76 @@
+﻿bairro;avaliado;motivo_nao_avaliado;domicilios_ocupados_bairro;renda_media_responsavel_bairro;renda_quartil_superior
+Aclimação;True;;4332.0;4099.192426131116;False
+Alto Umuarama;True;;2738.0;5015.181990504017;False
+Alvorada;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;508.0;1921.4274803149606;False
+Bom Jesus;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1331.0;2639.2437941397443;False
+Brasil;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);4201.0;3942.1774363246845;False
+Carajás;True;;888.0;3561.26079954955;False
+Cazeca;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1058.0;5478.574924385633;False
+Centro;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);2986.0;6632.7827026121895;True
+Chácaras Tubalina e Quartel;True;;5816.0;2934.562051237964;False
+Cidade Jardim;False;setor sem domicílio ocupado, ou renda do responsável abaixo do piso;2409.0;6997.591187214613;True
+Custódio Pereira;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;3575.0;2518.4380027972034;False
+Daniel Fonseca;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1586.0;3136.846235813367;False
+Distrito Industrial;False;abaixo do piso de domicílios no buffer de 1500m (A4, CORRECOES_3.md);6.0;19285.33;True
+Dona Zulmira;True;;1588.0;2652.9503337531487;False
+Fundinho;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);855.0;7912.279309941521;True
+Granada;True;;5061.0;3750.7940110650075;False
+Grand Ville;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;1271.0;3420.448568056648;False
+Granja Marileusa;True;;829.0;13037.099167671895;True
+Guarani;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;2786.0;2184.703137114142;False
+Gávea;True;;1157.0;7742.187640449438;True
+Jaraguá;True;;2391.0;2692.212777080719;False
+Jardim Brasília;True;;6139.0;2638.2109105717545;False
+Jardim Canaã;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;6197.0;2002.510004841052;False
+Jardim Europa;True;;5815.0;3410.738010318143;False
+Jardim Holanda;True;;5766.0;3223.2429517863334;False
+Jardim Inconfidência;True;;934.0;7720.711895074947;True
+Jardim Ipanema;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;2781.0;2413.4620352391225;False
+Jardim Karaíba;True;;1456.0;14535.392190934066;True
+Jardim Patrícia;True;;4151.0;3798.273603950855;False
+Jardim Sul;True;;631.0;18740.764627575274;True
+Jardim das Palmeiras;True;;4392.0;2639.196714480874;False
+Lagoinha;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1224.0;2934.779199346405;False
+Laranjeiras;True;;8420.0;3089.071985748218;False
+Luizote de Freitas;True;;5956.0;2225.394689388852;False
+Lídice;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1540.0;7459.087175324676;True
+Mansour;True;;4547.0;2206.0267517044203;False
+Maravilha;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;2478.0;2458.7437409200966;False
+Marta Helena;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;2990.0;2762.7752408026754;False
+Martins;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);3084.0;4357.112269779507;False
+Minas Gerais;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;3377.0;2653.992688777021;False
+Morada da Colina;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1331.0;14092.89366641623;True
+Morada do Sol;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;291.0;20521.561271477665;True
+Morada dos Pássaros;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;336.0;3284.9752976190475;False
+Morumbi;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;9132.0;2294.478452693824;False
+Nossa Senhora Aparecida;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);3416.0;3895.8855971896955;False
+Nossa Senhora das Graças;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;2901.0;2964.12400551534;False
+Nova Alvorada;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;1406.0;6105.354366998577;True
+Nova Uberlândia;True;;1885.0;11593.550435013261;True
+Novo Mundo;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;656.0;4699.62618902439;False
+Osvaldo Rezende;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);6090.0;3962.294725779967;False
+Pacaembú;True;;3023.0;2924.883582533907;False
+Pampulha;True;;1513.0;3181.287514871117;False
+Panorama;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;2611.0;2376.5981194944466;False
+Patrimônio;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);2584.0;6494.732198142415;True
+Pequis;False;setor sem domicílio ocupado, ou renda do responsável abaixo do piso;3719.0;1549.9598655552568;False
+Planalto;True;;4732.0;2752.6339095519866;False
+Portal do Vale;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;544.0;2002.6108455882354;False
+Presidente Roosevelt;False;bairro vetado por conhecimento local (C2);8049.0;3407.762054913654;False
+Residencial Gramado;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;808.0;3564.7888861386136;False
+Residencial Integração;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;5242.0;1659.0069172071728;False
+Santa Luzia;True;;2401.0;2844.114439816743;False
+Santa Mônica;True;;16163.0;5586.623233929344;True
+Santa Rosa;True;;3991.0;3177.3986695063895;False
+Saraiva;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);3965.0;7031.391344262295;True
+Segismundo Pereira;True;;6309.0;3736.1796259312096;False
+Shopping Park;True;;10720.0;2608.5071333955225;False
+São Jorge;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;10209.0;2087.110168478793;False
+São José;False;setor sem domicílio ocupado, ou renda do responsável abaixo do piso;161.0;1877.17;False
+Tabajaras;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);2452.0;7284.819078303427;True
+Taiaman;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;3049.0;2460.2447392587733;False
+Tibery;False;setor sem domicílio ocupado, ou renda do responsável abaixo do piso;5925.0;3233.3672033755274;False
+Tocantins;False;não entrou no corte final de candidatos por score preliminar/cota por bairro;4531.0;1981.0171860516448;False
+Tubalina;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);3922.0;4524.863416624172;False
+Umuarama;True;;1570.0;5400.598987261146;False
+Vigilato Pereira;False;todos os pontos do bairro ficaram perto demais de uma rede conhecida (Petz/Cobasi);1578.0;8319.143548795944;True

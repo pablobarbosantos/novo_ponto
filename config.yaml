@@ -80,6 +80,13 @@ candidatos:
   # mínimos" como piso de renda do responsável, mas não há SM oficial vigente nas fontes que o
   # pipeline consome; aproximado em R$, ajustar com o valor oficial do salário mínimo do ano corrente.
   renda_minima_responsavel: 2000
+  # A4 (CORRECOES_3.md) — piso de sanidade de DENSIDADE, não de renda: o piso de renda acima
+  # barra o extremo pobre, mas nada barrava um ponto isolado em área cara-e-vazia (ex.: zona
+  # empresarial de alta renda e poucos domicílios). Abaixo disso, a área no buffer de 1,5km
+  # não sustenta loja de rua. Escolhido abaixo do total de domicílios de Granja Marileusa no
+  # buffer (o bairro que motivou o A4 tem renda alta mas poucos domicílios no próprio setor —
+  # o buffer de 1,5km alcança vizinhança além dele, então não é descartado por este piso).
+  domicilios_minimos_buffer_1500m: 2500
 
 # C2 (CORRECOES_2.md) — conhecimento de quem opera na cidade há anos é dado, não palpite,
 # mas precisa ficar declarado e auditável, nunca embutido no código. Aplicado depois do
